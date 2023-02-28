@@ -1,0 +1,130 @@
+html {
+  height: 100%;
+  background-color: #c0d3d8;
+}
+
+body {
+  min-height: 100%;
+  margin: 0px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  border: none;
+  width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+input, 
+button {
+  display: block;
+  width: 300px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-family: "Lato", sans-serif;
+  padding: 6px 20px 6px;
+  font-weight: 700px;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+input {
+  color: white;
+  font-size: 16px;
+}
+
+input:focus, 
+input:hover {
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0);
+}
+
+input:hover {
+  transition: all 0.2s;
+}
+
+button {
+  width: 340px;
+  height: 50px;
+  opacity: 1;
+  background-color: #5f6f7a;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #505f6a;
+  transition: background-color 0.2s;
+}
+
+button:active {
+  background-color: #3b4953;
+}
+
+.podjelaForme {
+  margin: 0px 0px 0px 0px;
+  width: 340px;
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr;
+  align-items: center;
+}
+
+.podjelaForme span {
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.podjelaForme:before,
+.podjelaForme:after {
+  content: "";
+  height: 0.1px;
+  background-color: rgb(255, 255, 255);
+  display: block;
+}
+
+.registracijaDugme {
+  background-color: #ffc599;
+}
+
+.registracijaDugme:hover {
+  background-color: #fbb580;
+}
+
+.registracijaDugme:active {
+  background-color: #ffa662;
+}
+
+.promjenaLozinke {
+  font-size: 13px;
+  margin: -10px 0px 0px 0px;
+  color: white;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  width: 330px;
+}
+
+.promjenaLozinke:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgba(250, 255, 255, 0.85);
+}
+
+
