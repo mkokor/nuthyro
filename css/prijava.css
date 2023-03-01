@@ -1,6 +1,24 @@
+@media screen and (max-width: 700px) {
+  
+  html {
+    background-image: url("../slike/pozadine/pozadinaPrijavaVertikalno.jpg");
+  }
+
+}
+
+@media screen and (min-width: 701px) {
+  
+  html {
+    background-image: url("../slike/pozadine/pozadinaPrijavaHorizontalno.jpg");
+  }
+
+}
+
 html {
+  background-color: #878787;
   height: 100%;
-  background-color: #c0d3d8;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 body {
