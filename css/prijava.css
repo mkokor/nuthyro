@@ -15,7 +15,7 @@
 }
 
 html {
-  background-color: #878787;
+  background-color: #5e7055;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -31,8 +31,8 @@ body {
 
 form {
   border: none;
-  width: 400px;
-  height: 500px;
+  width: 380px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,19 +78,19 @@ button {
   width: 340px;
   height: 50px;
   opacity: 1;
-  background-color: #5f6f7a;
+  background-color: #345746;
   color: white;
   transition: background-color 0.2s;
 }
 
 button:hover {
   cursor: pointer;
-  background-color: #505f6a;
+  background-color: #2b4b3b;
   transition: background-color 0.2s;
 }
 
 button:active {
-  background-color: #3b4953;
+  background-color: #223c2f;
 }
 
 .podjelaForme {
@@ -119,15 +119,15 @@ button:active {
 }
 
 .registracijaDugme {
-  background-color: #ffc599;
+  background-color: #ffd5a8;
 }
 
 .registracijaDugme:hover {
-  background-color: #fbb580;
+  background-color: #f7cb9d;
 }
 
 .registracijaDugme:active {
-  background-color: #ffa662;
+  background-color: #fcbd8c;
 }
 
 .promjenaLozinke {
