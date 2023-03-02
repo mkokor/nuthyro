@@ -78,7 +78,6 @@ button {
   width: 340px;
   height: 50px;
   opacity: 1;
-  /* background-color: #5f6f7a; */
   background-color: #5f6f7a;
   color: white;
   transition: background-color 0.2s;
