@@ -12,7 +12,7 @@
   <body>
     <nav id="navigacija">
       <div class="logo">
-        <img class="logoIkona" src="../slike/ikone/favicon.png" alt="LOGO">
+        <img class="logoIkona" src="../slike/ikone/favicon.png" alt="logo">
         <h1>NuThyro</h1>
       </div>
       <div id="meni">
@@ -20,22 +20,29 @@
         <a class="meniStavka">Dnevna aktivnost</a>
         <a class="meniStavka">Ishrana</a>
         <div class="korisničkeOpcije">
-          <img src="../slike/ikone/odjava.png" alt="PROFIL">
+          <img src="../slike/ikone/odjava.png" alt="odjava">
           <label>Odjavi Se</label>
         </div>
       </div>
-      <button class="hamburgerMeni">
+      <button id="hamburgerMeni">
         <img src="../slike/ikone/meni.png" alt="meni">
       </button>
     </nav>
     <div id="pomoćniMeni">
+      <button id="zatvaranje">
+        <img src="../slike/ikone/zatvaranje.png" alt="zatvori">
+      </button>
       <div>
-        <a>Početna</a>
-        <a>Dnevna aktivnost</a>
-        <a>Ishrana</a>
-        <a class="odjava">Odjavi Se</a>
+        <a class="meniStavka aktivnaStavka">Početna</a>
+        <a class="meniStavka">Dnevna aktivnost</a>
+        <a class="meniStavka">Ishrana</a>
+        <button class="odjava">
+          <img src="../slike/ikone/odjava.png" alt="odjava">
+          <label>Odjavi Se</label>
+        </button>
       </div>
     </div>
     <div id="sadržaj"></div>
+    <script src="../javascript/početna.js"></script>
   </body>
 </html>

@@ -20,7 +20,7 @@
     visibility: hidden;
   }
 
-  .hamburgerMeni {
+  #hamburgerMeni {
     visibility: visible;
   }
 
@@ -28,7 +28,7 @@
 
 @media screen and (min-width: 851px) {
 
-  .hamburgerMeni {
+  #hamburgerMeni {
     visibility: hidden;
   }
 
@@ -112,7 +112,8 @@ h1 {
 }
 
 .aktivnaStavka,
-.aktivnaStavka:hover {
+.aktivnaStavka:hover,
+#pomoćniMeni .aktivnaStavka:hover {
   cursor: default;
   color: black;
   font-weight: 700;
@@ -136,7 +137,7 @@ h1 {
   cursor: pointer;
 }
 
-.hamburgerMeni {
+#hamburgerMeni {
   position: fixed;
   z-index: 100;
   height: 40px;
@@ -146,12 +147,13 @@ h1 {
   transition: opacity 0.2s;
 }
 
-.hamburgerMeni:hover {
+#zatvaranje:hover,
+#hamburgerMeni:hover {
   opacity: 0.6;
   cursor: pointer;
 }
 
-.hamburgerMeni img {
+#hamburgerMeni img {
   height: 100%;
 }
 
@@ -167,7 +169,8 @@ h1 {
   width: 170px;
   background-color: #e6f8ea;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-  visibility: hidden;
+  margin-right: -170px;
+  transition: 0.4s;
 }
 
 #pomoćniMeni div {
@@ -176,21 +179,62 @@ h1 {
   flex-direction: column;
   font-size: 20px;
   font-family: "Lato", sans-serif;
-  align-items: center;
-  width: 100%;
-}
-
-.odjava {
-  border-top: 1px solid rgb(205, 205, 205);
+  width: 139px;
+  font-size: 18px;
 }
 
 #pomoćniMeni a {
   display: flex;
+  justify-content: left;
+  width: 100%;
+  font-size: 18px;
+}
+
+.odjava {
+  cursor: pointer;
+  position: absolute;
+  height: 30px;
+  bottom: 21px;
+  right: 16px;
+  border: none;
+  padding: 0px 0px 0px;
+  background-color: transparent;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  gap: 2px;
+  transition: opacity 0.2s;
+}
+
+.odjava:hover {
+  opacity: 0.6;
+}
+
+.odjava img {
+  height: 100%;
+}
+
+.odjava label:hover {
+  cursor: pointer;
+}
+
+#zatvaranje {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 0px 0px 0px;
+  transition: opacity 0.2s;
+}
+
+#zatvaranje img {
   width: 100%;
 }
 
-#pomoćniMeni a:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
