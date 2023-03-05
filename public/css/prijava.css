@@ -1,19 +1,3 @@
-@media screen and (max-width: 700px) {
-  
-  html {
-    background-image: url("../slike/pozadine/pozadinaPrijavaVertikalno.jpg");
-  }
-
-}
-
-@media screen and (min-width: 701px) {
-  
-  html {
-    background-image: url("../slike/pozadine/pozadinaPrijavaHorizontalno.jpg");
-  }
-
-}
-
 html {
   background-color: #5e7055;
   height: 100%;
@@ -29,7 +13,7 @@ body {
   justify-content: center;
 }
 
-form {
+div {
   border: none;
   width: 380px;
   height: 380px;
@@ -64,7 +48,8 @@ input {
 }
 
 input:focus, 
-input:hover {
+input:hover,
+.neispravanUnos {
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.4);
   background-color: rgba(255, 255, 255, 0);
@@ -119,17 +104,17 @@ button:active {
   display: block;
 }
 
-.registracijaDugme {
+#registracijaDugme {
   background-color: white;
   border: 2px solid #375d4a;
   color: #375d4a;
 }
 
-.registracijaDugme:hover {
+#registracijaDugme:hover {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
-.registracijaDugme:active {
+#registracijaDugme:active {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -148,4 +133,23 @@ button:active {
   color: rgba(250, 255, 255, 0.85);
 }
 
+.neispravanUnos,
+.neispravanUnos:hover {
+  border: 1px solid rgb(185, 0, 0);
+}
 
+@media screen and (max-width: 700px) {
+  
+  html {
+    background-image: url("../slike/pozadine/pozadinaPrijavaVertikalno.jpg");
+  }
+
+}
+
+@media screen and (min-width: 701px) {
+  
+  html {
+    background-image: url("../slike/pozadine/pozadinaPrijavaHorizontalno.jpg");
+  }
+
+}

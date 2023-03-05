@@ -5,6 +5,7 @@ const pomoćniMeni = document.getElementById("pomoćniMeni");
 const otvaranjePomoćnogMenija = document.getElementById("hamburgerMeni");
 const navigacija = document.getElementById("navigacija");
 const stavkeMenija = Array.from(document.getElementsByClassName("meniStavka"));
+const sadržaj = document.getElementById("sadržaj");
 
 
 // FUNKCIJE ZA OBRADU JEDNOSTAVNIH KORISNIČKIH RADNJI
