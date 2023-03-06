@@ -3,7 +3,7 @@
 const unosEmaila = document.getElementById("email");
 const unosKorisničkogImena = document.getElementById("korisničkoIme");
 const unosLozinke = document.querySelector("input[type=password]");
-const registracija = document.getElementById("registracijaDugme");
+const registracija = document.getElementById("registracijaDugme");ž
 
 
 // FUNKCIJE ZA OBRADU JEDNOSTAVNIH KORISNIČKIH RADNJI
@@ -48,4 +48,10 @@ registracija.addEventListener("click", () => {
     return;
   }
   return;
+});
+
+[unosKorisničkogImena, unosLozinke, unosEmaila].forEach(poljeZaUnos => {
+  poljeZaUnos.addEventListener("focus", () => {
+    poljeZaUnos.classList.remove("neispravanUnos");
+  });
 });
