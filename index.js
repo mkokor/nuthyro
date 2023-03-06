@@ -12,7 +12,6 @@ application.use(bodyParser.json());
 // RUTE
 
 application.post("/registracija", (request, response) => {
-  console.log(request.body);
   response.setHeader("Content-Type", "application/json");
   response.status(200);
   response.send(JSON.stringify({
@@ -20,6 +19,15 @@ application.post("/registracija", (request, response) => {
     "korisničkoIme": true,
     "lozinka": true
   }));
+});
+
+application.post("/prijava", (request, response) => {
+  response.setHeader("Content-Type", "application/json");
+  response.status(200);
+  response.send(JSON.stringify({
+    "korisničkoIme": true,
+    "lozinka": true
+  }));  
 });
 
 

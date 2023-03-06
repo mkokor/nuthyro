@@ -9,9 +9,9 @@
 // tražene podatke (ukoliko su uspješno vraćeni) ili poruku o grešci (ukoliko se ista dogodila).
 
 
-const UpravljačZahtjevima = () => {
+const UpravljačZahtjevima = (() => {
 
-  const postaviObraduOdgovora = (http) => {
+  const postaviObraduOdgovora = (http, obradiOdgovor) => {
     http.onreadystatechange = () => {
       if (http.readyState == 4)
         obradiOdgovor(http.status == 200 ? false : true, http.responseText);
@@ -20,7 +20,7 @@ const UpravljačZahtjevima = () => {
 
   const uputiZahtjevZaRegistraciju = (email, korisničkoIme, lozinka, obradiOdgovor) => {
     const http = new XMLHttpRequest();
-    postaviObraduOdgovora(http);
+    postaviObraduOdgovora(http, obradiOdgovor);
     http.open("POST", "/registracija", true);
     http.setRequestHeader("Content-Type", "application/json");
     http.send(JSON.stringify({
@@ -30,8 +30,20 @@ const UpravljačZahtjevima = () => {
     }));
   }
 
-  return {
-    uputiZahtjevZaRegistraciju: uputiZahtjevZaRegistraciju
+  const uputiZahtjevZaPrijavu = (korisničkoIme, lozinka, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("POST", "/prijava", true);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(JSON.stringify({
+      "korisničkoIme": korisničkoIme,
+      "lozinka": lozinka
+    }));
   }
 
-}
+  return {
+    uputiZahtjevZaRegistraciju: uputiZahtjevZaRegistraciju,
+    uputiZahtjevZaPrijavu: uputiZahtjevZaPrijavu
+  }
+
+})();

@@ -1,0 +1,30 @@
+html {
+  background-color: #5e7055;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+body {
+  min-height: 100%;
+  margin: 0px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 700px) {
+  
+  html {
+    background-image: url("../slike/pozadine/pozadinaPrijavaVertikalno.jpg");
+  }
+
+}
+
+@media screen and (min-width: 701px) {
+  
+  html {
+    background-image: url("../slike/pozadine/pozadinaPrijavaHorizontalno.jpg");
+  }
+
+}
