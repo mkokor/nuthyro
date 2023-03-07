@@ -56,8 +56,10 @@ promjenaLozinke.addEventListener("click", () => {
   location.href = "/html/promjenaLozinke.html";
 })
 
-[unosKorisničkogImena, unosLozinke].forEach(poljeZaUnos => {
-  poljeZaUnos.addEventListener("focus", () => {
-    poljeZaUnos.classList.remove("neispravanUnos");
-  });
+unosKorisničkogImena.addEventListener("focus", () => {
+  unosKorisničkogImena.classList.remove("neispravanUnos");
+});
+
+unosLozinke.addEventListener("focus", () => {
+  unosLozinke.classList.remove("neispravanUnos");
 });
