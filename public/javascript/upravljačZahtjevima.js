@@ -1,7 +1,7 @@
 // Za upravljanje zahtjevima koristi se AJAX tehnologija!
 // Svaka metoda za slanje zahtjeva, pored neophodnih parametara, prima i
 // (callback) funkciju koja se poziva nakon što je odgovor na upućeni zahtjev dobiven.
-// Na ovaj način, napisani modul će se moći korisiti za razne svrhe, tj. isti podaci 
+// Na ovaj način, napisani modul će se moći koristiti za razne svrhe, tj. isti podaci 
 // (dobiveni u vidu HTTP odgovora od servera) moći će se obrađivati na različite načine
 // zavisno od potrebe. 
 // Podrazumijeva se da spomenuta funkcija prima dva parametra,
@@ -21,7 +21,7 @@ const UpravljačZahtjevima = (() => {
   const uputiZahtjevZaRegistraciju = (email, korisničkoIme, lozinka, obradiOdgovor) => {
     const http = new XMLHttpRequest();
     postaviObraduOdgovora(http, obradiOdgovor);
-    http.open("POST", "/registracija", true);
+    http.open("POST", "/registracija");
     http.setRequestHeader("Content-Type", "application/json");
     http.send(JSON.stringify({
       "email": email,
@@ -33,7 +33,7 @@ const UpravljačZahtjevima = (() => {
   const uputiZahtjevZaPrijavu = (korisničkoIme, lozinka, obradiOdgovor) => {
     const http = new XMLHttpRequest();
     postaviObraduOdgovora(http, obradiOdgovor);
-    http.open("POST", "/prijava", true);
+    http.open("POST", "/prijava");
     http.setRequestHeader("Content-Type", "application/json");
     http.send(JSON.stringify({
       "korisničkoIme": korisničkoIme,
@@ -41,9 +41,17 @@ const UpravljačZahtjevima = (() => {
     }));
   }
 
+  const uputiZahtjevZaValidacijuEmaila = (email, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", `/provjeraEmaila?email=${encodeURIComponent(email)}`);
+    http.send();
+  }
+
   return {
     uputiZahtjevZaRegistraciju: uputiZahtjevZaRegistraciju,
-    uputiZahtjevZaPrijavu: uputiZahtjevZaPrijavu
+    uputiZahtjevZaPrijavu: uputiZahtjevZaPrijavu,
+    uputiZahtjevZaValidacijuEmaila: uputiZahtjevZaValidacijuEmaila
   }
 
 })();

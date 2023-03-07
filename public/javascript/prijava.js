@@ -5,6 +5,7 @@ const unosKorisničkogImena = document.getElementById("korisničkoIme");
 const unosLozinke = document.querySelector("input[type=password]");
 const registracija = document.getElementById("registracijaDugme");
 const upravljačZahtjevima = UpravljačZahtjevima;
+const promjenaLozinke = document.getElementById("promjenaLozinke");
 
 
 // FUNKCIJE ZA OBRADU KORISNIČKIH RADNJI
@@ -40,7 +41,7 @@ const obradiValidacijuPodataka = (greška, sadržaj) => {
       return;
   } else
       return;
-  location.href = "glavna.html";
+  location.href = "/html/glavna.html";
 }
 
 potvrdaPrijave.addEventListener("click", () => {
@@ -48,8 +49,12 @@ potvrdaPrijave.addEventListener("click", () => {
 });
 
 registracija.addEventListener("click", () => {
-  location.href = "registracija.html";
+  location.href = "/html/registracija.html";
 });
+
+promjenaLozinke.addEventListener("click", () => {
+  location.href = "/html/promjenaLozinke.html";
+})
 
 [unosKorisničkogImena, unosLozinke].forEach(poljeZaUnos => {
   poljeZaUnos.addEventListener("focus", () => {

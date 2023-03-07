@@ -11,6 +11,9 @@ application.use(bodyParser.json());
 
 // RUTE
 
+// URL: http://localhost:3000/registracija
+// TIJELO ZAHTJEVA: { email: *, korisničkoIme: *, lozinka: * }
+// ODGOVOR: { email: true/false, korisničkoIme: true/false, lozinka: true/false }
 application.post("/registracija", (request, response) => {
   response.setHeader("Content-Type", "application/json");
   response.status(200);
@@ -21,6 +24,9 @@ application.post("/registracija", (request, response) => {
   }));
 });
 
+// URL: http://localhost:3000/prijava
+// TIJELO ZAHTJEVA: { korisničkoIme: *, lozinka: * }
+// ODGOVOR: { korisničkoIme: true/false, lozinka: true/false }
 application.post("/prijava", (request, response) => {
   response.setHeader("Content-Type", "application/json");
   response.status(200);
@@ -28,6 +34,17 @@ application.post("/prijava", (request, response) => {
     "korisničkoIme": true,
     "lozinka": true
   }));  
+});
+
+// URL: http://localhost:3000/provjeraEmaila?email=*
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: { email: true/false }
+application.get("/provjeraEmaila", (request, response) => {
+  response.setHeader("Content-Type", "application/json");
+  response.status(200);
+  response.send(JSON.stringify({
+    "email": true
+  }));
 });
 
 
