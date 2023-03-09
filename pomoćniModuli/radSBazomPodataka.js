@@ -20,8 +20,8 @@ const validirajRegistracijskePodatke = (registracijskiPodaci) => {
     Promise.all(validacija) // Prvi element niza je rezultat validacije email-a, a drugi korisničkog imena.
       .then((rezultat) => {
         resolve({
-          "email": !rezultat[0] && validirajEmail(registracijskiPodaci.email),
-          "korisničkoIme": !rezultat[1] && registracijskiPodaci.korisničkoIme != "",
+          "email": rezultat[0] === null && validirajEmail(registracijskiPodaci.email),
+          "korisničkoIme": rezultat[1] === null && registracijskiPodaci.korisničkoIme != "",
           "lozinka": registracijskiPodaci.lozinka != ""
         });
       })
@@ -41,7 +41,7 @@ const postojiLiKorisničkiRačun = (nazivAtributa, vrijednostAtributa) => {
   return new Promise((resolve, reject) => {
     bazaPodataka.KorisničkiRačun.findOne({ "where": { [nazivAtributa]: vrijednostAtributa } })
       .then((korisničkiRačun) => {
-        resolve(korisničkiRačun ? true : false);
+        resolve(korisničkiRačun !== null ? korisničkiRačun : null);
       })
       .catch(() => {
         reject("Greška u pristupu bazi podataka!");
@@ -83,7 +83,38 @@ const kreirajKorisničkiRačun = (podaci) => {
 }
 
 
+// Funkcija u bazi podataka traži korisnički račun čiji podaci odgovaraju proslijeđenim,
+// te vraća Promise koji nosi informaciju o validnosti proslijeđenih podataka.
+const izvršiPrijavuNaKorisničkiRačun = (podaci) => {
+  return new Promise((resolve, reject) => {
+    postojiLiKorisničkiRačun("korisničkoIme", podaci.korisničkoIme)
+    .then((korisničkiRačun) => {
+      if (korisničkiRačun) {
+        sigurnost.dekriptujPodatak(podaci.lozinka, korisničkiRačun.kodLozinke)
+          .then((validnaLozinka) => {
+            resolve({
+              "korisničkoIme": korisničkiRačun !== null ? false : true,
+              "lozinka": korisničkiRačun === null ? false : validnaLozinka  
+            });
+          })
+          .catch(() => {
+            reject("Greška pri dekripciji!");
+          });
+      }
+      resolve({
+        "korisničkoIme": false,
+        "lozinka": false  
+      });
+    })
+    .catch(() => {
+      reject("Greška u pristupu bazi podataka!");
+    });
+  });
+}
+
+
 module.exports = {
   postojiLiKorisničkiRačun: postojiLiKorisničkiRačun,
-  kreirajKorisničkiRačun: kreirajKorisničkiRačun
+  kreirajKorisničkiRačun: kreirajKorisničkiRačun,
+  izvršiPrijavuNaKorisničkiRačun: izvršiPrijavuNaKorisničkiRačun
 }

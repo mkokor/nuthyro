@@ -29,11 +29,13 @@ application.post("/registracija", (request, response) => {
 // TIJELO ZAHTJEVA: { korisničkoIme: *, lozinka: * }
 // ODGOVOR: { korisničkoIme: true/false, lozinka: true/false }
 application.post("/prijava", (request, response) => {
-  response.status(200);
-  response.send(JSON.stringify({
-    "korisničkoIme": true,
-    "lozinka": true
-  }));  
+  console.log(request.body);
+  bazaPodataka.izvršiPrijavuNaKorisničkiRačun(request.body)
+    .then((validacijaPodataka) => {
+      response.setHeader("Content-Type", "application/json");
+      response.status(validacijaPodataka.korisničkoIme && validacijaPodataka.lozinka ? 200 : 401);
+      response.send(JSON.stringify(validacijaPodataka));
+    });
 });
 
 // URL: http://localhost:3000/provjeraEmaila?email=*
