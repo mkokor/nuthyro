@@ -1,12 +1,20 @@
-// KONTROLE KORISNIČKOG INTERFEJSA
+// KONTROLE KORISNIČKOG INTERFEJSA I VARIJABLE
 
 const unosEmaila = document.getElementById("email");
 const unosKorisničkogImena = document.getElementById("korisničkoIme");
 const unosLozinke = document.querySelector("input[type=password]");
 const registracija = document.getElementById("registracijaDugme");
+
 const upravljačZahtjevima = UpravljačZahtjevima;
 
 // FUNKCIJE ZA OBRADU JEDNOSTAVNIH KORISNIČKIH RADNJI
+
+window.onload = () => {
+  upravljačZahtjevima.uputiZahtjevZaProvjeruPrijave((greška, sadržaj) => {
+    if (!greška)
+      location.href = "/html/glavna.html";
+  });
+}
 
 const dajKorisničkoIme = () => {
   return unosKorisničkogImena.value;

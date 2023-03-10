@@ -48,10 +48,26 @@ const UpravljačZahtjevima = (() => {
     http.send();
   }
 
+  const uputiZahtjevZaProvjeruPrijave = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/provjeraPrijave");
+    http.send();
+  }
+
+  const uputiZahtjevZaOdjavu = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("POST", "/odjava");
+    http.send();
+  }
+
   return {
     uputiZahtjevZaRegistraciju: uputiZahtjevZaRegistraciju,
     uputiZahtjevZaPrijavu: uputiZahtjevZaPrijavu,
-    uputiZahtjevZaValidacijuEmaila: uputiZahtjevZaValidacijuEmaila
+    uputiZahtjevZaValidacijuEmaila: uputiZahtjevZaValidacijuEmaila,
+    uputiZahtjevZaProvjeruPrijave: uputiZahtjevZaProvjeruPrijave,
+    uputiZahtjevZaOdjavu: uputiZahtjevZaOdjavu
   }
 
 })();

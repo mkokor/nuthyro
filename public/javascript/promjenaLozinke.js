@@ -1,13 +1,21 @@
-// KONTROLE KORISNIČKOG INTERFEJSA
+// KONTROLE KORISNIČKOG INTERFEJSA I VARIJABLE
 
 const potvrdaUnosa = document.getElementById("potvrdaUnosa");
 const unosEmaila = document.getElementById("email");
-const upravljačZahtjevima = UpravljačZahtjevima;
 const infoTekst = document.getElementById("infoTekst");
 const sadržaj = document.getElementById("sadržaj");
 
+const upravljačZahtjevima = UpravljačZahtjevima;
+
 
 // FUNKCIJE ZA OBRADU KORISNIČKIH RADNJI
+
+window.onload = () => {
+  upravljačZahtjevima.uputiZahtjevZaProvjeruPrijave((greška, sadržaj) => {
+    if (!greška)
+      location.href = "/html/glavna.html";
+  });
+}
 
 const dajEmail = () => {
   return unosEmaila.value;

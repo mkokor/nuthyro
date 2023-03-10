@@ -1,18 +1,21 @@
-// KONTROLE KORISNIČKOG INTERFEJSA
+// KONTROLE KORISNIČKOG INTERFEJSA I VARIJABLE
 
 const potvrdaPrijave = document.getElementById("prijavaDugme");
 const unosKorisničkogImena = document.getElementById("korisničkoIme");
 const unosLozinke = document.querySelector("input[type=password]");
 const registracija = document.getElementById("registracijaDugme");
-const upravljačZahtjevima = UpravljačZahtjevima;
 const promjenaLozinke = document.getElementById("promjenaLozinke");
+
+const upravljačZahtjevima = UpravljačZahtjevima;
 
 
 // FUNKCIJE ZA OBRADU KORISNIČKIH RADNJI
 
 window.onload = () => {
-  // Ovdje će postojati provjera da li je korisnik već prijavljen (tj. da li postoji aktivna sesija za istog).
-  // U slučaju da je već prijavljen preusmjeravat će se na početnu stranicu. 
+  upravljačZahtjevima.uputiZahtjevZaProvjeruPrijave((greška, sadržaj) => {
+    if (!greška)
+      location.href = "/html/glavna.html";
+  });
 }
 
 const dajKorisničkoIme = () => {
