@@ -74,7 +74,8 @@ const kreirajKorisničkiRačun = (podaci) => {
             .catch(() => { 
               reject("Greška pri enkripciji!"); 
             });
-         resolve(rezultatValidacije)
+        else 
+          resolve(rezultatValidacije);
       })
       .catch(() => {
         reject("Greška u pristupu bazi podataka!");
@@ -88,27 +89,28 @@ const kreirajKorisničkiRačun = (podaci) => {
 const izvršiPrijavuNaKorisničkiRačun = (podaci) => {
   return new Promise((resolve, reject) => {
     postojiLiKorisničkiRačun("korisničkoIme", podaci.korisničkoIme)
-    .then((korisničkiRačun) => {
-      if (korisničkiRačun) {
-        sigurnost.dekriptujPodatak(podaci.lozinka, korisničkiRačun.kodLozinke)
-          .then((validnaLozinka) => {
-            resolve({
-              "korisničkoIme": korisničkiRačun !== null ? false : true,
-              "lozinka": korisničkiRačun === null ? false : validnaLozinka  
+      .then((korisničkiRačun) => {
+        if (korisničkiRačun) {
+          sigurnost.dekriptujPodatak(podaci.lozinka, korisničkiRačun.kodLozinke)
+            .then((validnaLozinka) => {
+              resolve({
+                "korisničkoIme": korisničkiRačun === null ? false : true,
+                "lozinka": korisničkiRačun === null ? false : validnaLozinka  
+              });
+            })
+            .catch(() => {
+              reject("Greška pri dekripciji!");
             });
-          })
-          .catch(() => {
-            reject("Greška pri dekripciji!");
+        }
+        else
+          resolve({
+            "korisničkoIme": false,
+            "lozinka": false  
           });
-      }
-      resolve({
-        "korisničkoIme": false,
-        "lozinka": false  
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
       });
-    })
-    .catch(() => {
-      reject("Greška u pristupu bazi podataka!");
-    });
   });
 }
 

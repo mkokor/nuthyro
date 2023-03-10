@@ -29,7 +29,6 @@ application.post("/registracija", (request, response) => {
 // TIJELO ZAHTJEVA: { korisničkoIme: *, lozinka: * }
 // ODGOVOR: { korisničkoIme: true/false, lozinka: true/false }
 application.post("/prijava", (request, response) => {
-  console.log(request.body);
   bazaPodataka.izvršiPrijavuNaKorisničkiRačun(request.body)
     .then((validacijaPodataka) => {
       response.setHeader("Content-Type", "application/json");
