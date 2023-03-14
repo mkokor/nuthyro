@@ -24,6 +24,14 @@ bazaPodataka.konekcijaNaBazuPodataka = konekcijaNaBazuPodataka;
 
 // KREIRANJE MODELA (koji će se mapirati u odgovarajuće tabele)
 bazaPodataka.KorisničkiRačun = require("./modeli/korisničkiRačun.js")(bazaPodataka.konekcijaNaBazuPodataka);
+bazaPodataka.SigurnosniToken = require("./modeli/sigurnosniToken.js")(bazaPodataka.konekcijaNaBazuPodataka);
+
+
+// POSTAVLJANJE RELACIJA IZMEĐU MODELA
+bazaPodataka.KorisničkiRačun.hasOne(bazaPodataka.SigurnosniToken, {
+  "foreignKey": "idKorisnika"
+});
+bazaPodataka.SigurnosniToken.belongsTo(bazaPodataka.KorisničkiRačun);
 
 
 module.exports = bazaPodataka;

@@ -4,6 +4,7 @@
 
 
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 
 // Parametar "podatak" je tekst (tj. string) koji se enkodira.
@@ -33,10 +34,15 @@ const dekriptujPodatak = (podatak, enkriptovanPodatak) => {
   });
 }
 
+const generišiRandomString = () => {
+  return crypto.randomBytes(20).toString("hex");
+}
+
 
 module.exports = {
   enkriptujPodatak: enkriptujPodatak,
-  dekriptujPodatak: dekriptujPodatak
+  dekriptujPodatak: dekriptujPodatak,
+  generišiRandomString: generišiRandomString
 }
 
 

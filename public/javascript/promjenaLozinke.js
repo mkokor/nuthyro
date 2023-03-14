@@ -6,6 +6,7 @@ const infoTekst = document.getElementById("infoTekst");
 const sadržaj = document.getElementById("sadržaj");
 
 const upravljačZahtjevima = UpravljačZahtjevima;
+let email = null; // Kada email bude validan pohranit će se u ovu varijablu.
 
 
 // FUNKCIJE ZA OBRADU KORISNIČKIH RADNJI
@@ -34,6 +35,9 @@ const kreirajPoljeZaUnos = (id, placeholder) => {
   const poljeZaUnos = document.createElement("input");
   poljeZaUnos.id = id;
   poljeZaUnos.placeholder = placeholder;
+  poljeZaUnos.addEventListener("focus", () => {
+    poljeZaUnos.classList.remove("neispravanUnos");
+  });
   return poljeZaUnos;
 }
 
@@ -49,7 +53,8 @@ const kreirajFormuZaUnosKoda = () => {
 // (tj. u ovom slučaju se na osnovu sadržaja odgovora može lako saznati da li je došlo do greške pa je ta prednost iskorištena).
 const obradiValidacijuEmaila = (greška, sadržaj) => {
   sadržaj = JSON.parse(sadržaj);
-  if (obradiValidacijuPolja(unosEmaila, sadržaj.email))
+  email = sadržaj.email;
+  if (obradiValidacijuPolja(unosEmaila, sadržaj.email !== null))
     kreirajFormuZaUnosKoda();
   return;
 }
@@ -77,12 +82,12 @@ const potvrdiKod = () => {
 }
 
 const potvrdiEmail = () => {
-  upravljačZahtjevima.uputiZahtjevZaValidacijuEmaila(dajEmail(), obradiValidacijuEmaila);
+  upravljačZahtjevima.uputiZahtjevZaPromjenuLozinke(dajEmail(), obradiValidacijuEmaila);
 }
 
 potvrdaUnosa.addEventListener("click", potvrdiEmail);
 
 unosEmaila.addEventListener("focus", () => {
-    poljeZaUnos.classList.remove("neispravanUnos");
+    unosEmaila.classList.remove("neispravanUnos");
 });
 

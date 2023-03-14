@@ -114,9 +114,38 @@ const izvršiPrijavuNaKorisničkiRačun = (podaci) => {
   });
 }
 
+const kreirajSigurnosniToken = (email) => {
+  return new Promise((resolve, reject) => {
+    postojiLiKorisničkiRačun("email", email)
+      .then((korisničkiRačun) => {
+        if (!korisničkiRačun) {
+          resolve({ "email": null });
+          return;
+        }
+        sigurnost.enkriptujPodatak(sigurnost.generišiRandomString())
+          .then((sigurnosniToken) => {
+            bazaPodataka.SigurnosniToken.create({ "token": sigurnosniToken, "idKorisnika": korisničkiRačun.id})
+              .then(() => {
+                resolve({ "email": email });
+              })
+              .catch(() => {
+                reject("Greška u pristupu bazi podataka!");
+              });
+          })
+          .catch(() => {
+            reject("Greška pri kodiranju!");
+          });
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
+
 
 module.exports = {
   postojiLiKorisničkiRačun: postojiLiKorisničkiRačun,
   kreirajKorisničkiRačun: kreirajKorisničkiRačun,
-  izvršiPrijavuNaKorisničkiRačun: izvršiPrijavuNaKorisničkiRačun
+  izvršiPrijavuNaKorisničkiRačun: izvršiPrijavuNaKorisničkiRačun,
+  kreirajSigurnosniToken: kreirajSigurnosniToken
 }

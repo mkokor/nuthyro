@@ -97,16 +97,18 @@ application.post("/odjava", (request, response) => {
   response.send(JSON.stringify({ "poruka": "Korisnik nije bio ni prijavljen!" }));
 });
 
-// URL: http://localhost:3000/provjeraEmaila?email=*
-// TIJELO ZAHTJEVA: /
-// ODGOVOR: { email: true/false }
-// NEDOVRŠENO
-application.get("/provjeraEmaila", (request, response) => {
+// URL: http://localhost:3000/promjenaLozinke?
+// TIJELO ZAHTJEVA: { email: * }
+// ODGOVOR: { email: true, token: * } ili { email: false }
+application.post("/promjenaLozinke", (request, response) => {
+  if (obradiPostojanjeSesije(request, response))
+    return;
   response.setHeader("Content-Type", "application/json");
-  response.status(200);
-  response.send(JSON.stringify({
-    "email": true
-  }));
+  bazaPodataka.kreirajSigurnosniToken(request.body.email)
+    .then((rezultat) => {
+        response.status(rezultat.email !== null ? 200 : 401);
+        response.send(JSON.stringify(rezultat));
+    });
 });
 
 

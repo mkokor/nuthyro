@@ -41,11 +41,14 @@ const UpravljačZahtjevima = (() => {
     }));
   }
 
-  const uputiZahtjevZaValidacijuEmaila = (email, obradiOdgovor) => {
+  const uputiZahtjevZaPromjenuLozinke = (email, obradiOdgovor) => {
     const http = new XMLHttpRequest();
     postaviObraduOdgovora(http, obradiOdgovor);
-    http.open("GET", `/provjeraEmaila?email=${encodeURIComponent(email)}`);
-    http.send();
+    http.open("POST", `/promjenaLozinke`);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(JSON.stringify({
+      "email": email,
+    }));
   }
 
   const uputiZahtjevZaProvjeruPrijave = (obradiOdgovor) => {
@@ -65,7 +68,7 @@ const UpravljačZahtjevima = (() => {
   return {
     uputiZahtjevZaRegistraciju: uputiZahtjevZaRegistraciju,
     uputiZahtjevZaPrijavu: uputiZahtjevZaPrijavu,
-    uputiZahtjevZaValidacijuEmaila: uputiZahtjevZaValidacijuEmaila,
+    uputiZahtjevZaPromjenuLozinke: uputiZahtjevZaPromjenuLozinke,
     uputiZahtjevZaProvjeruPrijave: uputiZahtjevZaProvjeruPrijave,
     uputiZahtjevZaOdjavu: uputiZahtjevZaOdjavu
   }
