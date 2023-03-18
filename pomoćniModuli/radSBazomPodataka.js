@@ -124,13 +124,20 @@ const kreirajSigurnosniToken = (email) => {
         }
         sigurnost.enkriptujPodatak(sigurnost.generišiRandomString())
           .then((sigurnosniToken) => {
-            bazaPodataka.SigurnosniToken.create({ "token": sigurnosniToken, "idKorisnika": korisničkiRačun.id})
-              .then((token) => {
-                resolve({ "email": email, "token": token.token });
-              })
-              .catch(() => {
-                reject("Greška u pristupu bazi podataka!");
-              });
+            bazaPodataka.SigurnosniToken.findOrCreate({
+              "where": { "idKorisnika": korisničkiRačun.id },
+              "defaults": { "token": sigurnosniToken }
+            })
+            .then(([zapis, nijePostojao]) => {
+              if (!nijePostojao) {
+                zapis.token = sigurnosniToken;
+                zapis.save();
+              }
+              resolve({ "email": email, "token": sigurnosniToken });
+            })
+            .catch(() => {
+              reject("Greška u pristupu bazi podataka!");      
+            });
           })
           .catch(() => {
             reject("Greška pri kodiranju!");

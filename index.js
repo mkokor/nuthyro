@@ -33,7 +33,7 @@ const obradiPostojanjeSesije = (request, response) => {
 const kreirajSadržajEmaila = (sigurnosniKod) => {
   return `Poštovani,
   
-Pokrenuli ste akciju promjene lozinke na Vašem NuThyro korisničkom računu. Ispod se nalazi sugurnosni kod koji Vam je za istu neophodan.
+Pokrenuli ste akciju promjene lozinke na Vašem NuThyro korisničkom računu. Ispod se nalazi sigurnosni kod koji Vam je za istu neophodan.
 Sigurnosni kod: ${sigurnosniKod}
   
 NuThyro`;

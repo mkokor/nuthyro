@@ -72,7 +72,6 @@ const potvrdiLozinku = () => {
 }
 
 const potvrdiKod = () => {
-  
   kreirajFormuZaUnosNoveLozinke();
 }
 
