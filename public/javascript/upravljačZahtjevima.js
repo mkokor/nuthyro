@@ -66,11 +66,11 @@ const UpravljačZahtjevima = (() => {
   }
 
   return {
-    uputiZahtjevZaRegistraciju: uputiZahtjevZaRegistraciju,
-    uputiZahtjevZaPrijavu: uputiZahtjevZaPrijavu,
-    uputiZahtjevZaPromjenuLozinke: uputiZahtjevZaPromjenuLozinke,
-    uputiZahtjevZaProvjeruPrijave: uputiZahtjevZaProvjeruPrijave,
-    uputiZahtjevZaOdjavu: uputiZahtjevZaOdjavu
+    "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
+    "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
+    "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke,
+    "uputiZahtjevZaProvjeruPrijave": uputiZahtjevZaProvjeruPrijave,
+    "uputiZahtjevZaOdjavu": uputiZahtjevZaOdjavu
   }
 
 })();

@@ -31,7 +31,9 @@ bazaPodataka.SigurnosniToken = require("./modeli/sigurnosniToken.js")(bazaPodata
 bazaPodataka.KorisničkiRačun.hasOne(bazaPodataka.SigurnosniToken, {
   "foreignKey": "idKorisnika"
 });
-bazaPodataka.SigurnosniToken.belongsTo(bazaPodataka.KorisničkiRačun);
+bazaPodataka.SigurnosniToken.belongsTo(bazaPodataka.KorisničkiRačun, {
+  "foreignKey": "idKorisnika"
+});
 
 
 module.exports = bazaPodataka;

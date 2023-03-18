@@ -125,8 +125,8 @@ const kreirajSigurnosniToken = (email) => {
         sigurnost.enkriptujPodatak(sigurnost.generišiRandomString())
           .then((sigurnosniToken) => {
             bazaPodataka.SigurnosniToken.create({ "token": sigurnosniToken, "idKorisnika": korisničkiRačun.id})
-              .then(() => {
-                resolve({ "email": email });
+              .then((token) => {
+                resolve({ "email": email, "token": token.token });
               })
               .catch(() => {
                 reject("Greška u pristupu bazi podataka!");
@@ -144,8 +144,8 @@ const kreirajSigurnosniToken = (email) => {
 
 
 module.exports = {
-  postojiLiKorisničkiRačun: postojiLiKorisničkiRačun,
-  kreirajKorisničkiRačun: kreirajKorisničkiRačun,
-  izvršiPrijavuNaKorisničkiRačun: izvršiPrijavuNaKorisničkiRačun,
-  kreirajSigurnosniToken: kreirajSigurnosniToken
+  "postojiLiKorisničkiRačun": postojiLiKorisničkiRačun,
+  "kreirajKorisničkiRačun": kreirajKorisničkiRačun,
+  "izvršiPrijavuNaKorisničkiRačun": izvršiPrijavuNaKorisničkiRačun,
+  "kreirajSigurnosniToken": kreirajSigurnosniToken
 }

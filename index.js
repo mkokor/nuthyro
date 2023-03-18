@@ -1,9 +1,9 @@
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const nodemailer = require("nodemailer");
 
-const bazaPodataka = require("./pomoćniModuli/radSBazomPodataka");
+const bazaPodataka = require("./pomoćniModuli/radSBazomPodataka.js");
+const komunikacija = require("./pomoćniModuli/elektronskaKomunikacija.js");
 
 
 const application = express();
@@ -28,6 +28,15 @@ const obradiPostojanjeSesije = (request, response) => {
     return true;
   }
   return false;
+}
+
+const kreirajSadržajEmaila = (sigurnosniKod) => {
+  return ` Poštovani,
+  
+  Pokrenuli ste akciju promjene lozinke na Vašem NuThyro korisničkom računu. Ispod se nalazi sugurnosni kod koji Vam je za istu neophodan.
+  Sigurnosni kod: ${sigurnosniKod}
+  
+  NuThyro`;
 }
 
 
@@ -99,15 +108,20 @@ application.post("/odjava", (request, response) => {
 
 // URL: http://localhost:3000/promjenaLozinke?
 // TIJELO ZAHTJEVA: { email: * }
-// ODGOVOR: { email: true, token: * } ili { email: false }
+// ODGOVOR: { email: null/email }
 application.post("/promjenaLozinke", (request, response) => {
   if (obradiPostojanjeSesije(request, response))
     return;
   response.setHeader("Content-Type", "application/json");
   bazaPodataka.kreirajSigurnosniToken(request.body.email)
     .then((rezultat) => {
-        response.status(rezultat.email !== null ? 200 : 401);
-        response.send(JSON.stringify(rezultat));
+        if (rezultat.email) {
+          komunikacija.pošaljiEmail(rezultat.email, "NuThyro | Promjena Lozinka", kreirajSadržajEmaila(rezultat.token))
+            .then(() => {
+              response.status(rezultat.email !== null ? 200 : 401);
+              response.send(JSON.stringify(rezultat));
+            });
+        }
     });
 });
 

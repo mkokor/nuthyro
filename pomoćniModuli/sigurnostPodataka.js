@@ -40,9 +40,9 @@ const generišiRandomString = () => {
 
 
 module.exports = {
-  enkriptujPodatak: enkriptujPodatak,
-  dekriptujPodatak: dekriptujPodatak,
-  generišiRandomString: generišiRandomString
+  "enkriptujPodatak": enkriptujPodatak,
+  "dekriptujPodatak": dekriptujPodatak,
+  "generišiRandomString": generišiRandomString
 }
 
 
