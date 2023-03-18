@@ -31,12 +31,12 @@ const obradiPostojanjeSesije = (request, response) => {
 }
 
 const kreirajSadržajEmaila = (sigurnosniKod) => {
-  return ` Poštovani,
+  return `Poštovani,
   
-  Pokrenuli ste akciju promjene lozinke na Vašem NuThyro korisničkom računu. Ispod se nalazi sugurnosni kod koji Vam je za istu neophodan.
-  Sigurnosni kod: ${sigurnosniKod}
+Pokrenuli ste akciju promjene lozinke na Vašem NuThyro korisničkom računu. Ispod se nalazi sugurnosni kod koji Vam je za istu neophodan.
+Sigurnosni kod: ${sigurnosniKod}
   
-  NuThyro`;
+NuThyro`;
 }
 
 
@@ -119,7 +119,7 @@ application.post("/promjenaLozinke", (request, response) => {
           komunikacija.pošaljiEmail(rezultat.email, "NuThyro | Promjena Lozinka", kreirajSadržajEmaila(rezultat.token))
             .then(() => {
               response.status(rezultat.email !== null ? 200 : 401);
-              response.send(JSON.stringify(rezultat));
+              response.send(JSON.stringify({ "email": rezultat.email }));
             });
         }
     });

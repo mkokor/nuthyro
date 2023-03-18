@@ -65,6 +65,13 @@ const UpravljačZahtjevima = (() => {
     http.send();
   }
 
+  const uputiZahtjevZaProvjeruSigurnosnogKoda = (email, sigurnosniKod, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/odjava");
+    http.send();
+  }
+
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,

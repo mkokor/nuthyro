@@ -72,12 +72,7 @@ const potvrdiLozinku = () => {
 }
 
 const potvrdiKod = () => {
-  // Na ovom mjestu će se vršiti provjera koda (tj. da li je jednak onome koji je poslan na unesenu email adresu).
-  // Zamišljeno je da nakon potvrde email-a (što se dešava prethodno na serveru) server odmah uputi email sa spomenutim kodom.
-  // Treba još utvrditi da li će na zahtjev za potvrdu email-a server kao odgovor (u slučaju uspjeha) odgovoriti sa kodom
-  // (što bi omogućilo provjeru validnosti unesenog koda na klijentovoj strani), ili će se kod sačuvati na serveru te će se novim zahtjevom
-  // vršiti njegova validacija. 
-  // Nakon uspješne potvrde koda, korisniku će se omogućiti promjena postojeće lozinke.
+  
   kreirajFormuZaUnosNoveLozinke();
 }
 
