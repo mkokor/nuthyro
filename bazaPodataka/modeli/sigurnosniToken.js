@@ -5,7 +5,11 @@ module.exports = (konekcijaNaBazuPodataka) => {
     "token": {
       "type": DataTypes.STRING,
       "allowNull": false
-    } 
+    },
+    "odobreno": {
+      "type": DataTypes.BOOLEAN,
+      "allowNull": false
+    }
   }
   const dodatneOpcije = {
     "tableName": "SigurnosniToken"

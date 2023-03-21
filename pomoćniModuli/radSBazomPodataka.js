@@ -126,11 +126,12 @@ const kreirajSigurnosniToken = (email) => {
           .then((sigurnosniToken) => {
             bazaPodataka.SigurnosniToken.findOrCreate({
               "where": { "idKorisnika": korisničkiRačun.id },
-              "defaults": { "token": sigurnosniToken }
+              "defaults": { "token": sigurnosniToken, "odobreno": false }
             })
             .then(([zapis, nijePostojao]) => {
               if (!nijePostojao) {
                 zapis.token = sigurnosniToken;
+                zapis.odobreno = false;
                 zapis.save();
               }
               resolve({ "email": email, "token": sigurnosniToken });
@@ -149,10 +150,37 @@ const kreirajSigurnosniToken = (email) => {
   });
 }
 
+const provjeriSigurnosniToken = (email, sigurnosniToken) => {
+  return new Promise((resolve, reject) => {
+    bazaPodataka.KorisničkiRačun.findOne({ "where": { "email": email } })
+      .then(korisničkiRačun => {
+        if (!korisničkiRačun) {
+          resolve({ "email": false, "token": false });
+          return;
+        }
+        bazaPodataka.SigurnosniToken.findOne({ "where": { "idKorisnika": korisničkiRačun.id, "token": sigurnosniToken } })
+          .then(tokenIzBaze => {
+            if (tokenIzBaze) {
+              tokenIzBaze.odobreno = true;
+              tokenIzBaze.save();
+            }
+            resolve({ "email": true, "token": tokenIzBaze ? true : false});
+          })
+          .catch(() => {
+            reject("Greška u pristupu bazi podataka!");
+          });
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
+
 
 module.exports = {
   "postojiLiKorisničkiRačun": postojiLiKorisničkiRačun,
   "kreirajKorisničkiRačun": kreirajKorisničkiRačun,
   "izvršiPrijavuNaKorisničkiRačun": izvršiPrijavuNaKorisničkiRačun,
-  "kreirajSigurnosniToken": kreirajSigurnosniToken
+  "kreirajSigurnosniToken": kreirajSigurnosniToken,
+  "provjeriSigurnosniToken": provjeriSigurnosniToken
 }

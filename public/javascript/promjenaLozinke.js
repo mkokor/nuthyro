@@ -22,6 +22,11 @@ const dajEmail = () => {
   return unosEmaila.value;
 }
 
+const dajSigurnosniKod = () => {
+  const unosKoda = document.getElementById("unosKoda");
+  return unosKoda ? unosKoda.value : null;
+}
+
 const obradiValidacijuPolja = (poljeZaUnos, validanUnos) => {
   if (!validanUnos) {
     poljeZaUnos.classList.add("neispravanUnos");
@@ -49,16 +54,6 @@ const kreirajFormuZaUnosKoda = () => {
   sadržaj.insertBefore(kreirajPoljeZaUnos("unosKoda", "Kod"), potvrdaUnosa);
 }
 
-// U ovom slučaju, "greška" se ne koristi jer se u odgovoru na konkretno ovaj zahtjev kriju svi potrebni podaci za njegovu obradu
-// (tj. u ovom slučaju se na osnovu sadržaja odgovora može lako saznati da li je došlo do greške pa je ta prednost iskorištena).
-const obradiValidacijuEmaila = (greška, sadržaj) => {
-  sadržaj = JSON.parse(sadržaj);
-  email = sadržaj.email;
-  if (obradiValidacijuPolja(unosEmaila, sadržaj.email !== null))
-    kreirajFormuZaUnosKoda();
-  return;
-}
-
 const kreirajFormuZaUnosNoveLozinke = () => {
   potvrdaUnosa.removeEventListener("click", potvrdiKod);
   potvrdaUnosa.addEventListener("click", potvrdiLozinku);
@@ -67,12 +62,28 @@ const kreirajFormuZaUnosNoveLozinke = () => {
   sadržaj.insertBefore(kreirajPoljeZaUnos("unosLozinke", "Lozinka"), potvrdaUnosa);
 }
 
+// U ovom slučaju, "greška" se ne koristi jer se u odgovoru na konkretno ovaj zahtjev kriju svi potrebni podaci za njegovu obradu
+// (tj. u ovom slučaju se na osnovu sadržaja odgovora može lako saznati da li je došlo do greške pa je ta prednost iskorištena).
+const obradiValidacijuEmaila = (greška, sadržaj) => {
+  sadržaj = JSON.parse(sadržaj);
+  email = sadržaj.email;
+  if (obradiValidacijuPolja(unosEmaila, sadržaj.email !== null))
+    kreirajFormuZaUnosKoda();
+}
+
+const obradiValidacijuSigurnosnogKoda = (greška, sadržaj) => {
+  sadržaj = JSON.parse(sadržaj);
+  const unosKoda = document.getElementById("unosKoda");
+  if (unosKoda && obradiValidacijuPolja(unosKoda, sadržaj.sigurnosniKod))
+    kreirajFormuZaUnosNoveLozinke();
+}
+
 const potvrdiLozinku = () => {
   location.href = "/html/prijava.html"
 }
 
 const potvrdiKod = () => {
-  kreirajFormuZaUnosNoveLozinke();
+  upravljačZahtjevima.uputiZahtjevZaPotvrduSigurnosnogKoda(email, dajSigurnosniKod(), obradiValidacijuSigurnosnogKoda);
 }
 
 const potvrdiEmail = () => {

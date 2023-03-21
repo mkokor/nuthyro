@@ -115,13 +115,30 @@ application.post("/promjenaLozinke", (request, response) => {
   response.setHeader("Content-Type", "application/json");
   bazaPodataka.kreirajSigurnosniToken(request.body.email)
     .then((rezultat) => {
-        if (rezultat.email) {
+        if (rezultat.email)
           komunikacija.pošaljiEmail(rezultat.email, "NuThyro | Promjena Lozinka", kreirajSadržajEmaila(rezultat.token))
             .then(() => {
-              response.status(rezultat.email !== null ? 200 : 401);
+              response.status(200);
               response.send(JSON.stringify({ "email": rezultat.email }));
             });
+        else {
+          response.status(401);
+          response.send(JSON.stringify({ "email": null }));
         }
+    });
+});
+
+// URL: http://localhost:3000/provjeraSigurnosnogKoda
+// TIJELO ZAHTJEVA: { email: *, sigurnosniKod: * }
+// ODGOVOR: { sigurnosnKod: true/false }
+application.post("/potvrdaSigurnosnogKoda", (request, response) => {
+  if (obradiPostojanjeSesije(request, response))
+    return;
+  bazaPodataka.provjeriSigurnosniToken(request.body.email, request.body.sigurnosniKod)
+    .then((rezultat) => {
+      response.setHeader("Content-Type", "application/json");
+      response.status(rezultat.email ? 200 : 400);
+      response.send(JSON.stringify({ "sigurnosniKod": rezultat.token }));
     });
 });
 
