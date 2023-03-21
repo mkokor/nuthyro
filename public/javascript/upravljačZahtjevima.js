@@ -41,10 +41,10 @@ const UpravljačZahtjevima = (() => {
     }));
   }
 
-  const uputiZahtjevZaPromjenuLozinke = (email, obradiOdgovor) => {
+  const uputiZahtjevZaKreiranjeSigurnosnogKoda = (email, obradiOdgovor) => {
     const http = new XMLHttpRequest();
     postaviObraduOdgovora(http, obradiOdgovor);
-    http.open("POST", `/promjenaLozinke`);
+    http.open("POST", `/kreiranjeSigurnosnogTokena`);
     http.setRequestHeader("Content-Type", "application/json");
     http.send(JSON.stringify({
       "email": email,
@@ -76,13 +76,26 @@ const UpravljačZahtjevima = (() => {
     }));
   }
 
+  const uputiZahtjevZaPromjenuLozinke = (email, sigurnosniKod, novaLozinka, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("POST", "/promjenaLozinke");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(JSON.stringify({
+      "email": email,
+      "sigurnosniKod": sigurnosniKod,
+      "novaLozinka": novaLozinka
+    }));
+  }
+
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
-    "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke,
+    "uputiZahtjevZaKreiranjeSigurnosnogKoda": uputiZahtjevZaKreiranjeSigurnosnogKoda,
     "uputiZahtjevZaProvjeruPrijave": uputiZahtjevZaProvjeruPrijave,
     "uputiZahtjevZaOdjavu": uputiZahtjevZaOdjavu,
-    "uputiZahtjevZaPotvrduSigurnosnogKoda": uputiZahtjevZaPotvrduSigurnosnogKoda
+    "uputiZahtjevZaPotvrduSigurnosnogKoda": uputiZahtjevZaPotvrduSigurnosnogKoda,
+    "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke
   }
 
 })();

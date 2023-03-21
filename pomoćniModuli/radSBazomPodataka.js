@@ -2,6 +2,7 @@
 // Razlog za njegovo postojanje je da se u datoteci "index.js" (tj. serverskoj datoteci) ne
 // ne bi gomilalo mnogo programskih jedinica raznovrsne prirode.
 
+
 const bazaPodataka = require("../bazaPodataka/inicijalizacijaBazePodataka.js");
 const sigurnost = require("./sigurnostPodataka.js");
 
@@ -126,12 +127,11 @@ const kreirajSigurnosniToken = (email) => {
           .then((sigurnosniToken) => {
             bazaPodataka.SigurnosniToken.findOrCreate({
               "where": { "idKorisnika": korisničkiRačun.id },
-              "defaults": { "token": sigurnosniToken, "odobreno": false }
+              "defaults": { "token": sigurnosniToken }
             })
             .then(([zapis, nijePostojao]) => {
               if (!nijePostojao) {
                 zapis.token = sigurnosniToken;
-                zapis.odobreno = false;
                 zapis.save();
               }
               resolve({ "email": email, "token": sigurnosniToken });
@@ -160,11 +160,41 @@ const provjeriSigurnosniToken = (email, sigurnosniToken) => {
         }
         bazaPodataka.SigurnosniToken.findOne({ "where": { "idKorisnika": korisničkiRačun.id, "token": sigurnosniToken } })
           .then(tokenIzBaze => {
-            if (tokenIzBaze) {
-              tokenIzBaze.odobreno = true;
-              tokenIzBaze.save();
-            }
             resolve({ "email": true, "token": tokenIzBaze ? true : false});
+          })
+          .catch(() => {
+            reject("Greška u pristupu bazi podataka!");
+          });
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
+
+const promijeniLozinkuZaKorisničkiRačun = (email, sigurnosniKod, novaLozinka) => {
+  return new Promise((resolve, reject) => {
+    postojiLiKorisničkiRačun("email", email)
+      .then((korisničkiRačun) => {
+        if (!korisničkiRačun) {
+          resolve({ "email": false });
+          return;
+        }
+        bazaPodataka.SigurnosniToken.findOne({ "where": { "idKorisnika": korisničkiRačun.id, "token": sigurnosniKod } })
+          .then(tokenIzBaze => {
+            if (!tokenIzBaze) {
+              resolve({ "email": true, "token": false });
+              return;
+            }
+            if (novaLozinka !== "") {
+              sigurnost.enkriptujPodatak(novaLozinka)
+                .then((kodLozinke) => {
+                  korisničkiRačun.kodLozinke = kodLozinke;
+                  korisničkiRačun.save();
+                  resolve({ "email": true, "token": true, "novaLozinka": true });
+                });
+            } else 
+              resolve({ "email": true, "token": true, "novaLozinka": false });
           })
           .catch(() => {
             reject("Greška u pristupu bazi podataka!");
@@ -182,5 +212,6 @@ module.exports = {
   "kreirajKorisničkiRačun": kreirajKorisničkiRačun,
   "izvršiPrijavuNaKorisničkiRačun": izvršiPrijavuNaKorisničkiRačun,
   "kreirajSigurnosniToken": kreirajSigurnosniToken,
-  "provjeriSigurnosniToken": provjeriSigurnosniToken
+  "provjeriSigurnosniToken": provjeriSigurnosniToken,
+  "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun
 }

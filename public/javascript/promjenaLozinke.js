@@ -7,6 +7,7 @@ const sadržaj = document.getElementById("sadržaj");
 
 const upravljačZahtjevima = UpravljačZahtjevima;
 let email = null; // Kada email bude validan pohranit će se u ovu varijablu.
+let sigurnosniKod = null; // Kada sigurnosni kod bude valida pohranit će se u ovu varijablu.
 
 
 // FUNKCIJE ZA OBRADU KORISNIČKIH RADNJI
@@ -25,6 +26,11 @@ const dajEmail = () => {
 const dajSigurnosniKod = () => {
   const unosKoda = document.getElementById("unosKoda");
   return unosKoda ? unosKoda.value : null;
+}
+
+const dajNovuLozinku = () => {
+  const unosLozinke = document.getElementById("unosLozinke");
+  return unosLozinke ? unosLozinke.value : null;
 }
 
 const obradiValidacijuPolja = (poljeZaUnos, validanUnos) => {
@@ -74,12 +80,16 @@ const obradiValidacijuEmaila = (greška, sadržaj) => {
 const obradiValidacijuSigurnosnogKoda = (greška, sadržaj) => {
   sadržaj = JSON.parse(sadržaj);
   const unosKoda = document.getElementById("unosKoda");
+  sigurnosniKod = sadržaj.sigurnosniKod;
   if (unosKoda && obradiValidacijuPolja(unosKoda, sadržaj.sigurnosniKod))
     kreirajFormuZaUnosNoveLozinke();
 }
 
 const potvrdiLozinku = () => {
-  location.href = "/html/prijava.html"
+  upravljačZahtjevima.uputiZahtjevZaPromjenuLozinke(email, sigurnosniKod, dajNovuLozinku(), (greška, sadržaj) => {
+    if (obradiValidacijuPolja(document.getElementById("unosLozinke"), !greška))
+      location.href = "/html/prijava.html";
+  });
 }
 
 const potvrdiKod = () => {
@@ -87,7 +97,7 @@ const potvrdiKod = () => {
 }
 
 const potvrdiEmail = () => {
-  upravljačZahtjevima.uputiZahtjevZaPromjenuLozinke(dajEmail(), obradiValidacijuEmaila);
+  upravljačZahtjevima.uputiZahtjevZaKreiranjeSigurnosnogKoda(dajEmail(), obradiValidacijuEmaila);
 }
 
 potvrdaUnosa.addEventListener("click", potvrdiEmail);

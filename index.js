@@ -106,10 +106,10 @@ application.post("/odjava", (request, response) => {
   response.send(JSON.stringify({ "poruka": "Korisnik nije bio ni prijavljen!" }));
 });
 
-// URL: http://localhost:3000/promjenaLozinke?
+// URL: http://localhost:3000/kreiranjeSigurnosnogTokena
 // TIJELO ZAHTJEVA: { email: * }
 // ODGOVOR: { email: null/email }
-application.post("/promjenaLozinke", (request, response) => {
+application.post("/kreiranjeSigurnosnogTokena", (request, response) => {
   if (obradiPostojanjeSesije(request, response))
     return;
   response.setHeader("Content-Type", "application/json");
@@ -130,7 +130,7 @@ application.post("/promjenaLozinke", (request, response) => {
 
 // URL: http://localhost:3000/provjeraSigurnosnogKoda
 // TIJELO ZAHTJEVA: { email: *, sigurnosniKod: * }
-// ODGOVOR: { sigurnosnKod: true/false }
+// ODGOVOR: { sigurnosnKod: null/sigurnosniKod }
 application.post("/potvrdaSigurnosnogKoda", (request, response) => {
   if (obradiPostojanjeSesije(request, response))
     return;
@@ -138,10 +138,24 @@ application.post("/potvrdaSigurnosnogKoda", (request, response) => {
     .then((rezultat) => {
       response.setHeader("Content-Type", "application/json");
       response.status(rezultat.email ? 200 : 400);
-      response.send(JSON.stringify({ "sigurnosniKod": rezultat.token }));
+      response.send(JSON.stringify({ "sigurnosniKod": rezultat.token ? request.body.sigurnosniKod : null }));
     });
 });
 
+// URL: http://localhost:3000/promjenaLozinke
+// TIJELO ZAHTJEVA: { email: *, sigurnosniKod: *, novaLozinka: * }
+// ODGOVOR: { poruka: "Lozinka uspješno promijenjena!"/"Nevalidni podaci!" }
+application.post("/promjenaLozinke", (request, response) => {
+  if (obradiPostojanjeSesije(request, response))
+    return;
+  bazaPodataka.promijeniLozinkuZaKorisničkiRačun(request.body.email, request.body.sigurnosniKod, request.body.novaLozinka)
+    .then((rezultat) => {
+      const validacija = rezultat.email && rezultat.token && rezultat.novaLozinka;
+      response.setHeader("Content-Type", "application/json");
+      response.status(validacija ? 200 : 401);
+      response.send(JSON.stringify({ "poruka": validacija ? "Lozinka uspješno promijenjena!" : "Nevalidni podaci!" }));
+    });
+});
 
 application.listen(3000, (greška) => {
   if (greška)
