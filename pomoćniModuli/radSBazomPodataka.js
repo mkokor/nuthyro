@@ -132,7 +132,14 @@ const kreirajSigurnosniToken = (email) => {
             .then(([zapis, nijePostojao]) => {
               if (!nijePostojao) {
                 zapis.token = sigurnosniToken;
-                zapis.save();
+                zapis.save()
+                  .then(() => {
+                    resolve({ "email": email, "token": sigurnosniToken });
+                  })
+                  .catch(() => {
+                    reject("Greška u pristupu bazi podataka!");
+                  });
+                return;
               }
               resolve({ "email": email, "token": sigurnosniToken });
             })
@@ -190,8 +197,19 @@ const promijeniLozinkuZaKorisničkiRačun = (email, sigurnosniKod, novaLozinka) 
               sigurnost.enkriptujPodatak(novaLozinka)
                 .then((kodLozinke) => {
                   korisničkiRačun.kodLozinke = kodLozinke;
-                  korisničkiRačun.save();
-                  resolve({ "email": true, "token": true, "novaLozinka": true });
+                  korisničkiRačun.save()
+                    .then(() => {
+                      tokenIzBaze.destroy()
+                        .then(() => {
+                          resolve({ "email": true, "token": true, "novaLozinka": true });
+                        })
+                        .catch(() => {
+                          reject("Greška u pristupu bazi podataka!");
+                        });
+                    })
+                    .catch(() => {
+                      reject("Greška u pristupu bazi podataka!");
+                    });
                 });
             } else 
               resolve({ "email": true, "token": true, "novaLozinka": false });
