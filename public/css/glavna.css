@@ -1,12 +1,12 @@
 html {
-  background-color: #5e7055;
+  background-color: #e9f8ed;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 body {
-  min-height: 100%;
+  height: 100%;
   margin: 0px 0px 0px 0px;
 }
 
@@ -78,7 +78,7 @@ h1 {
 .aktivnaStavka,
 .aktivnaStavka:hover,
 #pomoćniMeni .aktivnaStavka:hover {
-  cursor: default;
+  cursor: pointer;
   color: black;
   font-weight: 700;
 }
@@ -143,7 +143,7 @@ h1 {
   flex-direction: column;
   font-size: 20px;
   font-family: "Lato", sans-serif;
-  width: 139px;
+  width: 142px;
   font-size: 18px;
 }
 
@@ -202,6 +202,11 @@ h1 {
   width: 100%;
 }
 
+#sadržaj {
+  height: 100%;
+  padding-top: 90px;
+}
+
 @media screen and (max-width: 700px) {
   
   html {
@@ -231,10 +236,10 @@ h1 {
 }
 
 @media screen and (min-width: 701px) and (max-width: 850px) {
-  
+  /*
   html {
     background-image: url("../slike/pozadine/pozadinaPočetnaHorizontalno.jpg");
-  }
+  }*/
 
   #meni {
     visibility: hidden;
@@ -247,10 +252,10 @@ h1 {
 }
 
 @media screen and (min-width: 851px) {
-  
+  /*
   html {
     background-image: url("../slike/pozadine/pozadinaPočetnaHorizontalno.jpg");
-  }
+  }*/
 
   #hamburgerMeni {
     visibility: hidden;

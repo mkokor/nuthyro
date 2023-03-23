@@ -35,10 +35,12 @@ const obradiValidacijuPolja = (poljeZaUnos, validanUnos) => {
   return true;
 }
 
-// U ovom slučaju, "greška" se ne koristi jer se u odgovoru na konkretno ovaj zahtjev kriju svi potrebni podaci za njegovu obradu
-// (tj. u ovom slučaju se na osnovu sadržaja odgovora može lako saznati da li je došlo do greške pa je ta prednost iskorištena).
 const obradiValidacijuPodataka = (greška, sadržaj) => {
   sadržaj = JSON.parse(sadržaj);
+  if (sadržaj.poruka) {
+    document.body.innerText = `Već ste prijavljeni na korisničko ime \"${sadržaj.prijavljeniKorisnik}\"!`; // Ova funkcionalnost će biti dorađena!
+    return;
+  }
   if (obradiValidacijuPolja(unosKorisničkogImena, sadržaj.korisničkoIme)) {
     if (!obradiValidacijuPolja(unosLozinke, sadržaj.lozinka))
       return;

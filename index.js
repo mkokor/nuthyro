@@ -24,7 +24,10 @@ const obradiPostojanjeSesije = (request, response) => {
   if (request.session.korisničkoIme) {
     response.setHeader("Content-Type", "application/json");
     response.status(403);
-    response.send(JSON.stringify({ "poruka": "Postoji aktivna sesija za korisnički račun!" }));
+    response.send(JSON.stringify({ 
+      "poruka": "Postoji aktivna sesija",
+      "prijavljeniKorisnik": request.session.korisničkoIme 
+    }));
     return true;
   }
   return false;
