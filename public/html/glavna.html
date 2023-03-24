@@ -7,8 +7,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../slike/ikone/favicon.png">
-    <link rel="stylesheet" type="text/css" href="../css/glavna.css">
-    <link rel="stylesheet" type="text/css" href="../css/početna.css">
+    <link rel="stylesheet" type="text/css" href="../css/glavnaStranica/glavna.css">
+    <link rel="stylesheet" type="text/css" href="../css/glavnaStranica/početna.css">
+    <link rel="stylesheet" type="text/css" href="../css/glavnaStranica/dnevnaAktivnost.css">
   </head>
   <body>
     <nav id="navigacija">
@@ -44,9 +45,29 @@
       </div>
     </div>
     <div id="sadržaj">
-      <h1>POČETNA</h1>
+      <div id="dnevnaAktivnost">
+        <div id="forma">
+          <input type="text" placeholder="Dob">
+          <input type="text" placeholder="Visina">
+          <input type="text" placeholder="Težina">
+          <div id="faktorAktivnosti">
+            <label>Aktivnost</label>
+            <select>
+              <option>Lijen</option>
+              <option>Aktivan</option>
+            </select>
+          </div>
+          <button id="potvrdaDugme">Potvrdi</button>
+        </div>
+        <div id="objašnjenje">
+          <h1>Matija</h1>
+        </div>
+      </div>
     </div>
     <script type="text/javascript" src="../javascript/upravljačZahtjevima.js"></script>
+    <script type="text/javascript" src="../javascript/glavnaStranica/početna.js"></script>
+    <script type="text/javascript" src="../javascript/glavnaStranica/ishrana.js"></script>
+    <script type="text/javascript" src="../javascript/glavnaStranica/dnevnaAktivnost.js"></script>
     <script type="text/javascript" src="../javascript/glavnaStranica/navigacija.js"></script>
   </body>
 </html>

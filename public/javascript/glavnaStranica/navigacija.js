@@ -40,26 +40,26 @@ opcijeOdjave.forEach(opcijaOdjave => {
   });
 });
 
-const prebaciTab = (aktivne, pasivne, tekst) => {
+const prebaciTab = (aktivne, pasivne, generišiSadržaj) => {
   aktivne.forEach(stavka => { stavka.classList.add("aktivnaStavka"); });
   pasivne.forEach(stavka => stavka.classList.remove("aktivnaStavka"));
-  sadržaj.innerHTML = `<h1>${tekst}</h1>`;
+  generišiSadržaj(sadržaj);
 }
 
 početna.forEach(stavka => {
   stavka.addEventListener("click", () => { 
-    prebaciTab(početna, [...dnevnaAktivnost, ...ishrana], "POČETNA"); 
+    prebaciTab(početna, [...dnevnaAktivnost, ...ishrana], Početna); 
   });
 });
 
 dnevnaAktivnost.forEach(stavka => {
   stavka.addEventListener("click", () => { 
-    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], "DNEVNA AKTIVNOST"); 
+    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost); 
   });
 });
 
 ishrana.forEach(stavka => {
   stavka.addEventListener("click", () => { 
-    prebaciTab(ishrana, [...dnevnaAktivnost, ...početna], "ISHRANA"); 
+    prebaciTab(ishrana, [...dnevnaAktivnost, ...početna], Ishrana); 
   });
 });

@@ -1,9 +1,9 @@
-// Ovaj modul služi za kreiranje izgleda početne stranice.
+// Ovaj modul služi za kreiranje izgleda stranice za unos dnevne ishrane.
 // Korijen je element tipa "div" unutar kojeg će kompletan sadržaj
 // ove stranice biti pohranjen.
 
 
-const Početna = (korijen) => {
+const Ishrana = (korijen) => {
   
   const očistiKorijen = () => {
     korijen.innerText = "";
@@ -11,7 +11,7 @@ const Početna = (korijen) => {
 
   const kreirajIzgled = () => {
     const sadržaj = document.createElement("h1");
-    sadržaj.innerText = "POČETNA";
+    sadržaj.innerText = "ISHRANA";
     očistiKorijen();
     korijen.appendChild(sadržaj);
   }
