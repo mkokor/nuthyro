@@ -47,11 +47,21 @@
     <div id="sadržaj">
       <div id="dnevnaAktivnost">
         <div id="forma">
-          <input type="text" placeholder="Dob">
-          <input type="text" placeholder="Visina">
-          <input type="text" placeholder="Težina">
+          <div id="odabirSpola">
+            <div class="spol odabraniSpol" id="muško">
+              <label>Muško</label>
+              <img src="../slike/ikone/muško.png" alt="žensko">
+            </div>
+            <div class="spol neodabraniSpol" id="žensko">
+              <label>Žensko</label>
+              <img src="../slike/ikone/žensko.png" alt="žensko">
+            </div>
+          </div>
+          <input type="text" placeholder="Dob [godine]">
+          <input type="text" placeholder="Visina [cm]">
+          <input type="text" placeholder="Težina [kg]">
           <div id="faktorAktivnosti">
-            <label>Aktivnost</label>
+            <label>Aktivnost:</label>
             <select>
               <option>Lijen</option>
               <option>Aktivan</option>
@@ -60,7 +70,15 @@
           <button id="potvrdaDugme">Potvrdi</button>
         </div>
         <div id="objašnjenje">
-          <h1>Matija</h1>
+          <h1>Nutri Kalkulator</h1>
+          <p>
+            A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. 
+            Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.
+            A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. 
+            Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.
+          </p>
+          <h2>BMR = </h2>
+          <h2>TDEE = </h2>
         </div>
       </div>
     </div>

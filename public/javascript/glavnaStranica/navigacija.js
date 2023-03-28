@@ -40,10 +40,13 @@ opcijeOdjave.forEach(opcijaOdjave => {
   });
 });
 
-const prebaciTab = (aktivne, pasivne, generišiSadržaj) => {
+const prebaciTab = (aktivne, pasivne, generišiSadržaj, drugiParametarZaGenerisanje = null) => {
   aktivne.forEach(stavka => { stavka.classList.add("aktivnaStavka"); });
   pasivne.forEach(stavka => stavka.classList.remove("aktivnaStavka"));
-  generišiSadržaj(sadržaj);
+  if (drugiParametarZaGenerisanje)
+    generišiSadržaj(sadržaj, drugiParametarZaGenerisanje);
+  else
+    generišiSadržaj(sadržaj);
 }
 
 početna.forEach(stavka => {
@@ -54,7 +57,7 @@ početna.forEach(stavka => {
 
 dnevnaAktivnost.forEach(stavka => {
   stavka.addEventListener("click", () => { 
-    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost); 
+    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost, ["Lijen", "Aktivan"]); 
   });
 });
 
