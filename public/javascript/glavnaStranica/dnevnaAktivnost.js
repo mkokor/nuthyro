@@ -3,7 +3,7 @@
 // ove stranice biti pohranjen.
 
 
-const DnevnaAktivnost = (korijen, tipoviAktivnosti) => {
+const DnevnaAktivnost = (korijen, podaci) => {
 
   const potrebniPodaci = [
     { 
@@ -105,14 +105,92 @@ const DnevnaAktivnost = (korijen, tipoviAktivnosti) => {
     forma.id = "forma";
     forma.appendChild(kreirajSekcijaZaOdabirSpola());
     kreirajPoljaZaUnos(forma, potrebniPodaci);
-    forma.appendChild(kreirajSekcijuZaOdabirTipaAktivnosti(tipoviAktivnosti));
+    forma.appendChild(kreirajSekcijuZaOdabirTipaAktivnosti(podaci.tipoviAktivnosti));
     forma.appendChild(kreirajDugme("potvrdaDugme", "Potvrdi"));
     return forma;
+  }
+
+  const kreirajPodatkovniNaziv = (skraćenicaTekst, puniNazivTekst) => {
+    const sekcija = document.createElement("div");
+    sekcija.classList.add("nazivPodatka");
+    const skraćenicaElement = document.createElement("h2");
+    skraćenicaElement.classList.add("skraćenica");
+    skraćenicaElement.innerText = skraćenicaTekst;
+    const puniNazivElement = document.createElement("h3");
+    puniNazivElement.innerText = puniNazivTekst;
+    [skraćenicaElement, puniNazivElement].forEach(naziv => {
+      sekcija.appendChild(naziv);
+    });
+    return sekcija;
+  }
+
+  const kreirajPrvuPodatkovnuKolonu = (skraćenica, puniNaziv) => {
+    const prvaKolona = document.createElement("td");
+    prvaKolona.classList.add("prvaKolona");
+    prvaKolona.appendChild(kreirajPodatkovniNaziv(skraćenica, puniNaziv));
+    return prvaKolona;
+  }
+
+  const kreirajDruguPodatkovnuKolonu = (skraćenica) => {
+    const kolona = document.createElement("td");
+    kolona.classList.add("prvaKolona");
+    kolona.id = skraćenica.toLowerCase();
+    kolona.classList.add("brojčaniPodatak");
+    kolona.innerText = "/";
+    return kolona;
+  }
+
+  const kreirajPodatkovniRed = (skraćenica, puniNaziv) => {
+    const red = document.createElement("tr");
+    red.appendChild(kreirajPrvuPodatkovnuKolonu(skraćenica, puniNaziv));
+    red.appendChild(kreirajDruguPodatkovnuKolonu(skraćenica));
+    return red;
+  }
+
+  const kreirajNaslovniRed = () => {
+    const naslovniRed = document.createElement("tr");
+    const prvaKolona = document.createElement("th");
+    prvaKolona.classList.add("prvaKolona");
+    prvaKolona.innerText = "NAZIV";
+    const drugaKolona = document.createElement("th");
+    drugaKolona.innerText = "REZULTAT";
+    [prvaKolona, drugaKolona].forEach(kolona => {
+      naslovniRed.appendChild(kolona);
+    });
+    return naslovniRed;
+  }
+
+  const kreirajRedoveTabele = (tabela) => {
+    tabela.appendChild(kreirajNaslovniRed());
+    podaci.nutriVrijednosti.forEach(vrijednost => {
+      tabela.appendChild(kreirajPodatkovniRed(vrijednost.skraćenica, vrijednost.puniNaziv));
+    });
+  }
+
+  const kreirajTabeluSaPodacima = () => {
+    const tabela = document.createElement("table");
+    kreirajRedoveTabele(tabela);
+    return tabela;
+  }
+
+  const kreirajInfoTekst = (informacije) => {
+    const tekst = document.createElement("p");
+    tekst.innerText = informacije;
+    return tekst;
+  }
+
+  const kreirajNaslovObjašnjenja = () => {
+    const naslov = document.createElement("h1");
+    naslov.innerText = "Nutri Kalkulator";
+    return naslov;
   }
 
   const kreirajObjašnjenje = () => {
     const objašnjenje = document.createElement("div");
     objašnjenje.id = "objašnjenje";
+    objašnjenje.appendChild(kreirajNaslovObjašnjenja());
+    objašnjenje.appendChild(kreirajInfoTekst(podaci.infoTekst));
+    objašnjenje.appendChild(kreirajTabeluSaPodacima());
     return objašnjenje;
   }
 

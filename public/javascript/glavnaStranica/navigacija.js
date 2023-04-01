@@ -20,6 +20,10 @@ window.onload = () => {
   });
 }
 
+window.onbeforeunload = () => {
+  window.scrollTo(0, 0);
+}
+
 zatvaranjePomoćnogMenija.addEventListener("click", () => {
   pomoćniMeni.style.marginRight = "-170px";
   navigacija.style.backgroundColor = "#e6f8ea";
@@ -57,7 +61,17 @@ početna.forEach(stavka => {
 
 dnevnaAktivnost.forEach(stavka => {
   stavka.addEventListener("click", () => { 
-    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost, ["Lijen", "Aktivan"]); 
+    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost, {
+      "tipoviAktivnosti": ["Lijen", "Aktivan"],
+      "infoTekst": "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.",
+      "nutriVrijednosti": [{
+        "skraćenica": "BMR",
+        "puniNaziv": "Basal Metabolic Rate"
+      }, {
+        "skraćenica": "TDEE",
+        "puniNaziv": "Total Daily Energy Expenditure "
+      }]
+    }); 
   });
 });
 
