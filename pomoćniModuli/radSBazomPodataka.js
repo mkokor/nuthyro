@@ -235,6 +235,27 @@ const dajSveTipoveAktivnosti = () => {
   });
 }
 
+const dodajEnergetskeVrijednostiZaKorisnika = (korisničkoIme, bmr, tdee) => {
+  return new Promise((resolve, reject) => {
+    bazaPodataka.KorisničkiRačun.findOne({ "where": { "korisničkoIme": korisničkoIme } })
+      .then((rezultat) => {
+        if (!rezultat) {
+          resolve({ "korisničkoIme": false });
+          return;
+        }
+        bazaPodataka.EnergetskaVrijednost.create({
+          "bmr": bmr,
+          "tdee": tdee,
+          "idKorisnika": rezultat.id
+        });
+        resolve({ "korisničkoIme": true });
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
+
 module.exports = {
   "postojiLiKorisničkiRačun": postojiLiKorisničkiRačun,
   "kreirajKorisničkiRačun": kreirajKorisničkiRačun,
@@ -242,5 +263,6 @@ module.exports = {
   "kreirajSigurnosniToken": kreirajSigurnosniToken,
   "provjeriSigurnosniToken": provjeriSigurnosniToken,
   "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun,
-  "dajSveTipoveAktivnosti": dajSveTipoveAktivnosti
+  "dajSveTipoveAktivnosti": dajSveTipoveAktivnosti,
+  "dodajEnergetskeVrijednostiZaKorisnika": dodajEnergetskeVrijednostiZaKorisnika
 }

@@ -11,4 +11,3 @@ module.exports = (konekcijaNaBazuPodataka) => {
   }
   return konekcijaNaBazuPodataka.define("KorisničkiRačun", atributiModela, dodatneOpcije);
 }
-

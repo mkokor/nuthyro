@@ -177,6 +177,23 @@ application.get("/tipoviDnevneAktivnosti", (request, response) => {
     });
 });
 
+// URL: http://localhost:3000/dodavanjeEnergetskihVrijednosti
+// TIJELO ZAHTJEVA: { bmr: *, tdee: * }
+// ODGOVOR: { poruka: "Korisnik nije prijavljen na korisnički račun!"/"Uspješno dodane energetske vrijednosti za korisnika!" }
+application.post("/dodavanjeEnergetskihVrijednosti", (request, response) => {
+  response.setHeader("Content-Type", "application/json");
+  if (!request.session.korisničkoIme) {
+    response.status(401);
+    response.send(JSON.stringify({ "poruka": "Korisnik nije prijavljen na korisnički račun!" }));
+    return;
+  }
+  bazaPodataka.dodajEnergetskeVrijednostiZaKorisnika(request.session.korisničkoIme, request.body.bmr, request.body.tdee)
+    .then(() => {
+      response.status(200);
+      response.send(JSON.stringify({ "poruka": "Uspješno dodane energetske vrijednosti za korisnika!" }));
+    });
+});
+
 application.listen(3000, (greška) => {
   if (greška)
     console.log("Greška prilikom pokretanja servera!");

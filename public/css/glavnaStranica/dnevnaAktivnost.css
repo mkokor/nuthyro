@@ -253,7 +253,6 @@ th, td {
   background-color: #f0fcf3;
   left: 345px;
   visibility: hidden;
-  transition: visibility 0.2;
 }
 
 #tipAktivnostiInfo p {

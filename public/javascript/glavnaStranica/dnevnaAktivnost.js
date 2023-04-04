@@ -6,7 +6,7 @@
 
 const upravljač = UpravljačZahtjevima;
 let bmrVrijednost = null;
-let tddVrijednost = null;
+let tdeeVrijednost = null;
 
 
 const DnevnaAktivnost = (korijen, podaci) => {
@@ -327,11 +327,25 @@ const DnevnaAktivnost = (korijen, podaci) => {
     return 665.096 + (9.563 * težina) + (1.850 * visina) - (4.676 * dob);
   }
 
+  const izračunajTdee = (palVrijednost, bmr) => {
+    return palVrijednost * bmr;
+  }
+
+  const dajPalVrijednostTrenutneAktivnosti = () => {
+    return podaci.tipoviAktivnosti.filter(tipAktivnosti => tipAktivnosti.tip == odabirTipaAktivnosti.value)[0].palVrijednost;    
+  }
+
   const izračunajVrijednosti = () => {
     if (!validirajUlaze())
       return;
     bmrVrijednost = izračunajBmr(težina, visina, dob, dajSpol());
     bmrPolje.innerText = bmrVrijednost.toFixed(3);
+    tdeeVrijednost = izračunajTdee(dajPalVrijednostTrenutneAktivnosti(), bmrVrijednost);
+    tdeePolje.innerText = tdeeVrijednost.toFixed(3);
+    upravljač.uputiZahtjevZaDodavanjeEnergetskihVrijednosti(bmrVrijednost, tdeeVrijednost, (greška, rezultat) => {
+      if (greška)
+        location.href = "/html/prijava.html";
+    });
   }
 
   const zamijeniSpol = (odabrani, neodabrani) => {

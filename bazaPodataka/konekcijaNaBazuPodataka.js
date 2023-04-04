@@ -26,6 +26,7 @@ bazaPodataka.konekcijaNaBazuPodataka = konekcijaNaBazuPodataka;
 bazaPodataka.KorisničkiRačun = require("./modeli/korisničkiRačun.js")(bazaPodataka.konekcijaNaBazuPodataka);
 bazaPodataka.SigurnosniToken = require("./modeli/sigurnosniToken.js")(bazaPodataka.konekcijaNaBazuPodataka);
 bazaPodataka.DnevnaAktivnost = require("./modeli/dnevnaAktivnost.js")(bazaPodataka.konekcijaNaBazuPodataka);
+bazaPodataka.EnergetskaVrijednost = require("./modeli/energetskaVrijednost.js")(bazaPodataka.konekcijaNaBazuPodataka);
 
 
 // POSTAVLJANJE RELACIJA IZMEĐU MODELA
@@ -33,6 +34,12 @@ bazaPodataka.KorisničkiRačun.hasOne(bazaPodataka.SigurnosniToken, {
   "foreignKey": "idKorisnika"
 });
 bazaPodataka.SigurnosniToken.belongsTo(bazaPodataka.KorisničkiRačun, {
+  "foreignKey": "idKorisnika"
+});
+bazaPodataka.KorisničkiRačun.hasOne(bazaPodataka.EnergetskaVrijednost, {
+  "foreignKey": "idKorisnika"
+});
+bazaPodataka.EnergetskaVrijednost.belongsTo(bazaPodataka.KorisničkiRačun, {
   "foreignKey": "idKorisnika"
 });
 
