@@ -88,6 +88,13 @@ const UpravljačZahtjevima = (() => {
     }));
   }
 
+  const uputiZahtjevZaTipoveAktivnosti = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/tipoviDnevneAktivnosti");
+    http.send();
+  }
+
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
@@ -95,7 +102,8 @@ const UpravljačZahtjevima = (() => {
     "uputiZahtjevZaProvjeruPrijave": uputiZahtjevZaProvjeruPrijave,
     "uputiZahtjevZaOdjavu": uputiZahtjevZaOdjavu,
     "uputiZahtjevZaPotvrduSigurnosnogKoda": uputiZahtjevZaPotvrduSigurnosnogKoda,
-    "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke
+    "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke,
+    "uputiZahtjevZaTipoveAktivnosti": uputiZahtjevZaTipoveAktivnosti
   }
 
 })();

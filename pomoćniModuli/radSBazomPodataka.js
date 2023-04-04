@@ -84,7 +84,6 @@ const kreirajKorisničkiRačun = (podaci) => {
   });
 }
 
-
 // Funkcija u bazi podataka traži korisnički račun čiji podaci odgovaraju proslijeđenim,
 // te vraća Promise koji nosi informaciju o validnosti proslijeđenih podataka.
 const izvršiPrijavuNaKorisničkiRačun = (podaci) => {
@@ -224,6 +223,17 @@ const promijeniLozinkuZaKorisničkiRačun = (email, sigurnosniKod, novaLozinka) 
   });
 }
 
+const dajSveTipoveAktivnosti = () => {
+  return new Promise((resolve, reject) => {
+    bazaPodataka.DnevnaAktivnost.findAll()
+      .then((sviTipoviAktivnosti) => {
+        resolve(sviTipoviAktivnosti);
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
 
 module.exports = {
   "postojiLiKorisničkiRačun": postojiLiKorisničkiRačun,
@@ -231,5 +241,6 @@ module.exports = {
   "izvršiPrijavuNaKorisničkiRačun": izvršiPrijavuNaKorisničkiRačun,
   "kreirajSigurnosniToken": kreirajSigurnosniToken,
   "provjeriSigurnosniToken": provjeriSigurnosniToken,
-  "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun
+  "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun,
+  "dajSveTipoveAktivnosti": dajSveTipoveAktivnosti
 }

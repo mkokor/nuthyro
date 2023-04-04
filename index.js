@@ -160,6 +160,23 @@ application.post("/promjenaLozinke", (request, response) => {
     });
 });
 
+// URL: http://localhost:3000/tipoviDnevneAktivnosti
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: { tipoviAktivnosti: * }
+application.get("/tipoviDnevneAktivnosti", (request, response) => {
+  response.setHeader("Content-Type", "application/json");
+  if (!request.session.korisničkoIme) {
+    response.status(401);
+    response.send(JSON.stringify({ "poruka": "Korisnik nije prijavljen na korisnički račun!" }));
+    return;
+  }
+  bazaPodataka.dajSveTipoveAktivnosti()
+    .then((tipoviAktivnosti) => {
+      response.status(200);
+      response.send(JSON.stringify({ "tipoviAktivnosti": tipoviAktivnosti  }));
+    });
+});
+
 application.listen(3000, (greška) => {
   if (greška)
     console.log("Greška prilikom pokretanja servera!");

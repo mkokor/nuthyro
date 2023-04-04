@@ -45,12 +45,38 @@ opcijeOdjave.forEach(opcijaOdjave => {
 });
 
 const prebaciTab = (aktivne, pasivne, generišiSadržaj, drugiParametarZaGenerisanje = null) => {
-  aktivne.forEach(stavka => { stavka.classList.add("aktivnaStavka"); });
-  pasivne.forEach(stavka => stavka.classList.remove("aktivnaStavka"));
-  if (drugiParametarZaGenerisanje)
-    generišiSadržaj(sadržaj, drugiParametarZaGenerisanje);
-  else
-    generišiSadržaj(sadržaj);
+  upravljačZahtjevima.uputiZahtjevZaProvjeruPrijave((greška, rezultat) => {
+    if (greška) {
+      location.href = "/html/prijava.html";
+      return;
+    }
+    aktivne.forEach(stavka => { stavka.classList.add("aktivnaStavka"); });
+    pasivne.forEach(stavka => stavka.classList.remove("aktivnaStavka"));
+    if (drugiParametarZaGenerisanje)
+      generišiSadržaj(sadržaj, drugiParametarZaGenerisanje);
+    else
+      generišiSadržaj(sadržaj);
+  });
+}
+
+const prebaciNaDnevnuAktivnost = () => {
+  upravljačZahtjevima.uputiZahtjevZaTipoveAktivnosti((greška, rezultat) => {
+    if (greška) {
+      location.href = "/html/prijava.html";
+      return;
+    }
+    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost, {
+      "tipoviAktivnosti": JSON.parse(rezultat).tipoviAktivnosti,
+      "infoTekst": "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.",
+      "nutriVrijednosti": [{
+        "skraćenica": "BMR",
+        "puniNaziv": "Basal Metabolic Rate"
+      }, {
+        "skraćenica": "TDEE",
+        "puniNaziv": "Total Daily Energy Expenditure "
+      }]
+    });
+  }); 
 }
 
 početna.forEach(stavka => {
@@ -60,19 +86,7 @@ početna.forEach(stavka => {
 });
 
 dnevnaAktivnost.forEach(stavka => {
-  stavka.addEventListener("click", () => { 
-    prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost, {
-      "tipoviAktivnosti": ["Lijen", "Aktivan"],
-      "infoTekst": "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.",
-      "nutriVrijednosti": [{
-        "skraćenica": "BMR",
-        "puniNaziv": "Basal Metabolic Rate"
-      }, {
-        "skraćenica": "TDEE",
-        "puniNaziv": "Total Daily Energy Expenditure "
-      }]
-    }); 
-  });
+  stavka.addEventListener("click", prebaciNaDnevnuAktivnost);
 });
 
 ishrana.forEach(stavka => {

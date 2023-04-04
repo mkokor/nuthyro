@@ -1,6 +1,12 @@
 // Ovaj modul služi za kreiranje izgleda stranice za unos dnevne aktivnosti.
 // Korijen je element tipa "div" unutar kojeg će kompletan sadržaj
 // ove stranice biti pohranjen.
+// Pored toga, modul je odgovoran i za obradu nekih korisničkih radnji
+// koje se vezuju za sadržaj koji on generiše.
+
+const upravljač = UpravljačZahtjevima;
+let bmrVrijednost = null;
+let tddVrijednost = null;
 
 
 const DnevnaAktivnost = (korijen, podaci) => {
@@ -85,11 +91,35 @@ const DnevnaAktivnost = (korijen, podaci) => {
     return poljeZaOdabir;
   }
 
+  const kreirajInfoPolje = () => {
+    const infoPolje = document.createElement("div");
+    infoPolje.id = "tipAktivnostiInfo";
+    const tekst = document.createElement("p");
+    tekst.id = "infoTekst";
+    tekst.innerText = "Veoma intenzivna fizička aktivnost 6-7 dana sedmično (nekada i 2 puta dnevno), uz težak fizički posao ili aktivno bavljenje sportom";
+    infoPolje.appendChild(tekst);
+    return infoPolje;
+  }
+
+  const kreirajInfoDugme = () => {
+    const infoDugme = document.createElement("button");
+    infoDugme.id = "infoDugme";
+    const ikona = document.createElement("img");
+    ikona.src = "../../slike/ikone/info.png";
+    ikona.alt = "info";
+    infoDugme.appendChild(ikona);
+    return infoDugme;
+  }
+
+  // Na ovom mjestu, jedna opcija aktivnosti predstavljena je kao JSON objekat sa atributima: tip (tj. naziv),
+  // opis i palVrijednosti (i još neki koji su manje bitni, a pokupljeni su iz baze podataka).
   const kreirajSekcijuZaOdabirTipaAktivnosti = (opcijeAktivnosti) => {
     const faktorAktivnosti = document.createElement("div");
     faktorAktivnosti.id = "faktorAktivnosti";
+    faktorAktivnosti.appendChild(kreirajInfoPolje());
     faktorAktivnosti.appendChild(kreirajLabelu("Aktivnost:"));
-    faktorAktivnosti.appendChild(kreirajPoljaZaOdabir(opcijeAktivnosti));
+    faktorAktivnosti.appendChild(kreirajPoljaZaOdabir(opcijeAktivnosti.map(opcija => opcija.tip)));
+    faktorAktivnosti.appendChild(kreirajInfoDugme());
     return faktorAktivnosti;
   }
 
@@ -153,7 +183,12 @@ const DnevnaAktivnost = (korijen, podaci) => {
     prvaKolona.classList.add("prvaKolona");
     prvaKolona.innerText = "NAZIV";
     const drugaKolona = document.createElement("th");
-    drugaKolona.innerText = "REZULTAT";
+    const naslov = document.createElement("h2");
+    naslov.innerText = "REZULTAT";
+    const mjernaJedinica = document.createElement("h3");
+    mjernaJedinica.innerText = "[kalorija po danu]";
+    drugaKolona.appendChild(naslov);
+    drugaKolona.appendChild(mjernaJedinica);
     [prvaKolona, drugaKolona].forEach(kolona => {
       naslovniRed.appendChild(kolona);
     });
@@ -216,5 +251,133 @@ const DnevnaAktivnost = (korijen, podaci) => {
   }
 
   kreirajIzgled();
+
+
+
+  // Nakon što je korisnički interfejs generisan, moguće je postaviti
+  // odgovarajuće EventListener-e na kontrole.
+  
+
+  const muškiSpolKartica = document.getElementById("muško");
+  const ženskiSpolKartica = document.getElementById("žensko");
+  const potvrdaDugme = document.getElementById("potvrdaDugme");
+  const unosDobi = document.getElementById("dob");
+  const unosVisine = document.getElementById("visina");
+  const unosTežine = document.getElementById("težina");
+  const bmrPolje = document.getElementById("bmr");
+  const tdeePolje = document.getElementById("tdee");
+  const infoDugme = document.getElementById("infoDugme");
+  const tipAktivnostiInfo = document.getElementById("tipAktivnostiInfo");
+  const infoTekst = document.getElementById("infoTekst");
+  const odabirTipaAktivnosti = Array.from(document.getElementsByTagName("select"))[0];
+
+  let dob = null;
+  let visina = null;
+  let težina = null;
+  const validacija = [
+    {
+      "regularniIzraz": /^[1-9][0-9]*$/,
+      "poljeZaUnos": unosDobi
+    }, 
+    {
+      "regularniIzraz": /^(\d{2,3})(\.{0,1})(\d*)$/,
+      "poljeZaUnos": unosVisine
+    },
+    {
+      "regularniIzraz": /^(\d{2,3})(\.{0,1})(\d*)$/,
+      "poljeZaUnos": unosTežine
+    }
+  ]
+
+
+  const validirajVrijednost = (regularniIzraz, polje) => {
+    if (!regularniIzraz.test(polje.value)) {
+      polje.classList.add("neispravanUnos");
+      return false;
+    }
+    polje.classList.remove("neispravanUnos");
+    return true;
+  }
+
+  const validirajUlaze = () => {
+    let rezultat = true;
+    validacija.forEach(vrijednost => {
+      if (validirajVrijednost(vrijednost.regularniIzraz, vrijednost.poljeZaUnos))
+        if (vrijednost.poljeZaUnos.id === "dob")
+          dob = parseInt(vrijednost.poljeZaUnos.value);
+        else if (vrijednost.poljeZaUnos.id === "visina")
+          visina = parseFloat(vrijednost.poljeZaUnos.value);
+        else
+          težina = parseFloat(vrijednost.poljeZaUnos.value);
+      else
+        rezultat = false;
+    });
+    return rezultat;
+  }
+
+  const dajSpol = () => {
+    if (muškiSpolKartica.classList.contains("odabraniSpol"))
+      return "muško";
+    return "žensko";
+  }
+
+  const izračunajBmr = (težina, visina, dob, spol) => {
+    if (spol=== "muško")
+      return 66.473 + (13.752 * težina) + (5.003 * visina) - (6.755 * dob);
+    return 665.096 + (9.563 * težina) + (1.850 * visina) - (4.676 * dob);
+  }
+
+  const izračunajVrijednosti = () => {
+    if (!validirajUlaze())
+      return;
+    bmrVrijednost = izračunajBmr(težina, visina, dob, dajSpol());
+    bmrPolje.innerText = bmrVrijednost.toFixed(3);
+  }
+
+  const zamijeniSpol = (odabrani, neodabrani) => {
+    if (odabrani.classList.contains("odabraniSpol"))
+      return;
+    neodabrani.classList.remove("odabraniSpol");
+    neodabrani.classList.add("neodabraniSpol");
+    odabrani.classList.add("odabraniSpol");
+    odabrani.classList.remove("neodabraniSpol");
+  }
+
+  const dajOpisTrenutneAktivnosti = () => {
+    return podaci.tipoviAktivnosti.filter(tipAktivnosti => tipAktivnosti.tip == odabirTipaAktivnosti.value)[0].opis;
+  }
+
+
+  muškiSpolKartica.addEventListener("click", () => {
+    zamijeniSpol(muškiSpolKartica, ženskiSpolKartica);
+  });
+
+  ženskiSpolKartica.addEventListener("click", () => {
+    zamijeniSpol(ženskiSpolKartica, muškiSpolKartica);
+  });
+
+  potvrdaDugme.addEventListener("click", () => {
+    upravljač.uputiZahtjevZaProvjeruPrijave((greška, rezultat) => {
+      if (greška)
+        location.href = "/html/prijava.html";
+      else
+        izračunajVrijednosti();
+    });
+  });
+
+  [unosDobi, unosVisine, unosTežine].forEach(unos => {
+    unos.addEventListener("focus", () =>  {
+      unos.classList.remove("neispravanUnos");
+    });
+  });
+
+  infoDugme.addEventListener("mouseover", () => {
+    infoTekst.innerText = dajOpisTrenutneAktivnosti();
+    tipAktivnostiInfo.style.visibility = "visible";
+  });
+
+  infoDugme.addEventListener("mouseleave", () => {
+    tipAktivnostiInfo.style.visibility = "hidden";
+  });
 
 }

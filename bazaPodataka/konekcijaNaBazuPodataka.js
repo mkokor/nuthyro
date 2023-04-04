@@ -25,6 +25,7 @@ bazaPodataka.konekcijaNaBazuPodataka = konekcijaNaBazuPodataka;
 // KREIRANJE MODELA (koji će se mapirati u odgovarajuće tabele)
 bazaPodataka.KorisničkiRačun = require("./modeli/korisničkiRačun.js")(bazaPodataka.konekcijaNaBazuPodataka);
 bazaPodataka.SigurnosniToken = require("./modeli/sigurnosniToken.js")(bazaPodataka.konekcijaNaBazuPodataka);
+bazaPodataka.DnevnaAktivnost = require("./modeli/dnevnaAktivnost.js")(bazaPodataka.konekcijaNaBazuPodataka);
 
 
 // POSTAVLJANJE RELACIJA IZMEĐU MODELA

@@ -36,8 +36,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus, 
-input[type="text"]:hover,
-.neispravanUnos {
+input[type="text"]:hover {
   outline: none;
   border: 1px solid #375d4a;
   background-color: rgba(255, 255, 255, 0);
@@ -83,13 +82,14 @@ input[type="text"]:hover {
   align-items: center;
   justify-content: flex-end;
   gap: 7px;
+  position: relative;
 }
 
 #faktorAktivnosti select {
   border: 1px solid rgba(255, 255, 255, 0);
   border-radius: 25px;
   height: 50px;
-  width: 150px;
+  width: 190px;
   outline: none;
   background-color: #a2c5aa;
   color: rgb(255, 255, 255);
@@ -125,7 +125,6 @@ input[type="text"]:hover {
 #objašnjenje p {
   text-align: justify;
   color: rgba(0, 0, 0, 0.8);
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.4); */
   margin: 10px 0px 0px 0px;
   padding-bottom: 15px;
 }
@@ -175,6 +174,10 @@ input[type="text"]:hover {
   cursor: pointer;
 }
 
+.neodabraniSpol label:hover {
+  cursor: pointer;
+}
+
 table, th, td {
   border-collapse: collapse;
   width: 100%;
@@ -189,8 +192,18 @@ table, th, td {
   text-align: center;
 }
 
-th {
-  font-size: 22px;
+th,
+th h2 {
+  font-size: 22px !important;
+}
+
+th h3 {
+  margin: 0px 0px 0px 0px;
+  font-size: 10px;
+}
+
+th h2 {
+  margin: 0px 0px 0px 0px;
 }
 
 .nazivPodatka {
@@ -219,6 +232,57 @@ th, td {
   height: 50px;
 }
 
+.neispravanUnos,
+.neispravanUnos:hover {
+  background-color: rgba(255, 255, 255, 0) !important;
+  border: 1px solid rgb(185, 0, 0) !important;
+  color: #375d4a !important;
+}
+
+.neispravanUnos::placeholder {
+  color: rgba(55, 93, 74, 0.7) !important;
+}
+
+#tipAktivnostiInfo {
+  display: inline-block;
+  position: absolute;
+  width: 180px;
+  border-radius: 25px;
+  padding: 8px 8px 8px;
+  box-shadow: 0px 0px 8px rgba(55, 93, 74, 0.3);
+  background-color: #f0fcf3;
+  left: 345px;
+  visibility: hidden;
+  transition: visibility 0.2;
+}
+
+#tipAktivnostiInfo p {
+  margin: 0px 0px 0px 0px;
+  text-align: center;
+  color: black;
+}
+
+#infoDugme img {
+  width: 100%;
+}
+
+#infoDugme {
+  background-color: transparent;
+  border: none;
+  width: 20px;
+  height: 20px;
+  padding: 0px 0px 0px;
+}
+
+#infoDugme {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#infoDugme:hover {
+  opacity: 0.6;
+}
+
 @media screen and (max-width: 800px) {
   
   #dnevnaAktivnost {
@@ -232,6 +296,7 @@ th, td {
   #objašnjenje {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
     padding: 0px 0px 20px;
+    margin: 0px 0px 0px 0px;
   }
 
   body {
