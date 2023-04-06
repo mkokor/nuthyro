@@ -243,15 +243,57 @@ const dodajEnergetskeVrijednostiZaKorisnika = (korisničkoIme, bmr, tdee) => {
           resolve({ "korisničkoIme": false });
           return;
         }
-        bazaPodataka.EnergetskaVrijednost.create({
-          "bmr": bmr,
-          "tdee": tdee,
-          "idKorisnika": rezultat.id
+        bazaPodataka.EnergetskaVrijednost.findOrCreate({
+              "where": { "idKorisnika": rezultat.id },
+              "defaults": { "bmr": bmr, "tdee": tdee }
+        })
+        .then(([zapis, nijePostojao]) => {
+          if (!nijePostojao) {
+            zapis.bmr = bmr;
+            zapis.tdee = tdee;
+            zapis.save()
+              .then(() => {
+                resolve({ "korisničkoIme": true });
+              })
+              .catch(() => {
+                reject("Greška u pristupu bazi podataka!");
+              });
+              return;
+          }
+          resolve({ "korisničkoIme": true });
+        })
+        .catch(() => {
+          reject("Greška u pristupu bazi podataka!");
         });
-        resolve({ "korisničkoIme": true });
       })
       .catch(() => {
         reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
+
+const dajEnergetskeVrijednostiZaKorisnika = (korisničkoIme) => {
+  return new Promise((resolve, reject) => {
+    postojiLiKorisničkiRačun("korisničkoIme", korisničkoIme)
+      .then((rezultat) => {
+        if (!rezultat) {
+          resolve({ "korisničkoIme": false });
+          return;
+        }
+        bazaPodataka.EnergetskaVrijednost.findOne({ "where": { "idKorisnika": rezultat.idKorisnika } })
+          .then((rezultat) => {
+            if (!rezultat) {
+              resolve({ "korisničkoIme": true, "bmr": null, "tdee": null });
+              return;
+            }
+            resolve({ "korisničkoIme": true, "bmr": rezultat.bmr, "tdee": rezultat.tdee });
+          })
+          .catch(() => {
+            reject("Greška pri pristupu bazi podataka!");
+          })
+      })
+      .catch(() => {
+        reject("Greška pri pristupu bazi podataka!");
       });
   });
 }
@@ -264,5 +306,5 @@ module.exports = {
   "provjeriSigurnosniToken": provjeriSigurnosniToken,
   "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun,
   "dajSveTipoveAktivnosti": dajSveTipoveAktivnosti,
-  "dodajEnergetskeVrijednostiZaKorisnika": dodajEnergetskeVrijednostiZaKorisnika
+  "dajEnergetskeVrijednostiZaKorisnika": dajEnergetskeVrijednostiZaKorisnika
 }

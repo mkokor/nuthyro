@@ -33,6 +33,16 @@ const obradiPostojanjeSesije = (request, response) => {
   return false;
 }
 
+const obradiNepostojanjeSesije = (request, response) => {
+  if (!request.session.korisničkoIme) {
+    response.setHeader("Content-Type", "application/json");
+    response.status(401);
+    response.send(JSON.stringify({ "poruka": "Korisnik nije prijavljen na korisnički račun!" }));
+    return true;
+  } 
+  return false;
+}
+
 const kreirajSadržajEmaila = (sigurnosniKod) => {
   return `Poštovani,
   
@@ -164,14 +174,11 @@ application.post("/promjenaLozinke", (request, response) => {
 // TIJELO ZAHTJEVA: /
 // ODGOVOR: { tipoviAktivnosti: * }
 application.get("/tipoviDnevneAktivnosti", (request, response) => {
-  response.setHeader("Content-Type", "application/json");
-  if (!request.session.korisničkoIme) {
-    response.status(401);
-    response.send(JSON.stringify({ "poruka": "Korisnik nije prijavljen na korisnički račun!" }));
+  if (obradiNepostojanjeSesije(request, response))
     return;
-  }
   bazaPodataka.dajSveTipoveAktivnosti()
     .then((tipoviAktivnosti) => {
+      response.setHeader("Content-Type", "application/json");
       response.status(200);
       response.send(JSON.stringify({ "tipoviAktivnosti": tipoviAktivnosti  }));
     });
@@ -181,16 +188,32 @@ application.get("/tipoviDnevneAktivnosti", (request, response) => {
 // TIJELO ZAHTJEVA: { bmr: *, tdee: * }
 // ODGOVOR: { poruka: "Korisnik nije prijavljen na korisnički račun!"/"Uspješno dodane energetske vrijednosti za korisnika!" }
 application.post("/dodavanjeEnergetskihVrijednosti", (request, response) => {
-  response.setHeader("Content-Type", "application/json");
-  if (!request.session.korisničkoIme) {
-    response.status(401);
-    response.send(JSON.stringify({ "poruka": "Korisnik nije prijavljen na korisnički račun!" }));
+  if (obradiNepostojanjeSesije(request, response))
     return;
-  }
   bazaPodataka.dodajEnergetskeVrijednostiZaKorisnika(request.session.korisničkoIme, request.body.bmr, request.body.tdee)
     .then(() => {
+      response.setHeader("Content-Type", "application/json");
       response.status(200);
       response.send(JSON.stringify({ "poruka": "Uspješno dodane energetske vrijednosti za korisnika!" }));
+    });
+});
+
+// URL: http://localhost:3000/energertskeVrijednostiZaKorisnika
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: { bmr: *, tdee: * } / { poruka: "Korisnik nije prijavljen na korisnički račun!" }
+application.get("/energetskeVrijednostiZaKorisnika", (request, response) => {
+  if (obradiNepostojanjeSesije(request, response))
+    return;
+  response.setHeader("Content-Type", "application/json");
+  bazaPodataka.dajEnergetskeVrijednostiZaKorisnika(request.session.korisničkoIme)
+    .then((rezultat) => {
+      if (!rezultat.bmr) {
+        response.status(404);
+        response.send(JSON.stringify({ "poruka": "Korisnik još uvijek nije popunio formu!" }));
+        return;
+      }
+      response.status(200);
+      response.send(JSON.stringify({ "bmr": rezultat.bmr, "tdee": rezultat.tdee }));
     });
 });
 
