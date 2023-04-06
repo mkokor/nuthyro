@@ -95,14 +95,15 @@ const UpravljačZahtjevima = (() => {
     http.send();
   }
 
-  const uputiZahtjevZaDodavanjeEnergetskihVrijednosti = (bmr, tdee, obradiOdgovor) => {
+  const uputiZahtjevZaDodavanjeEnergetskihVrijednosti = (bmr, tdee, bmi, obradiOdgovor) => {
     const http = new XMLHttpRequest();
     postaviObraduOdgovora(http, obradiOdgovor);
     http.open("POST", "/dodavanjeEnergetskihVrijednosti");
     http.setRequestHeader("Content-Type", "application/json");
     http.send(JSON.stringify({
       "bmr": bmr,
-      "tdee": tdee
+      "tdee": tdee,
+      "bmi": bmi
     }));
   }
 

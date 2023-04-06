@@ -7,6 +7,7 @@
 const upravljač = UpravljačZahtjevima;
 let bmrVrijednost = null;
 let tdeeVrijednost = null;
+let bmiVrijednost = null;
 
 
 const DnevnaAktivnost = (korijen, podaci) => {
@@ -185,10 +186,7 @@ const DnevnaAktivnost = (korijen, podaci) => {
     const drugaKolona = document.createElement("th");
     const naslov = document.createElement("h2");
     naslov.innerText = "REZULTAT";
-    const mjernaJedinica = document.createElement("h3");
-    mjernaJedinica.innerText = "[kalorija po danu]";
     drugaKolona.appendChild(naslov);
-    drugaKolona.appendChild(mjernaJedinica);
     [prvaKolona, drugaKolona].forEach(kolona => {
       naslovniRed.appendChild(kolona);
     });
@@ -264,7 +262,7 @@ const DnevnaAktivnost = (korijen, podaci) => {
   const unosDobi = document.getElementById("dob");
   const unosVisine = document.getElementById("visina");
   const unosTežine = document.getElementById("težina");
-  const bmrPolje = document.getElementById("bmr");
+  const bmiPolje = document.getElementById("bmi");
   const tdeePolje = document.getElementById("tdee");
   const infoDugme = document.getElementById("infoDugme");
   const tipAktivnostiInfo = document.getElementById("tipAktivnostiInfo");
@@ -297,7 +295,8 @@ const DnevnaAktivnost = (korijen, podaci) => {
       rezultat = JSON.parse(rezultat);
       bmrVrijednost = rezultat.bmr;
       tdeeVrijednost = rezultat.tdee;
-      bmrPolje.innerText = bmrVrijednost.toFixed(3);
+      bmiVrijednost = rezultat.bmi;
+      bmiPolje.innerText = bmiVrijednost.toFixed(3);
       tdeePolje.innerText = tdeeVrijednost.toFixed(3);
     });
   }
@@ -345,6 +344,10 @@ const DnevnaAktivnost = (korijen, podaci) => {
     return palVrijednost * bmr;
   }
 
+  const izračunajBmi = (težina, visina) => {
+    return težina / (visina * visina);
+  }
+
   const dajPalVrijednostTrenutneAktivnosti = () => {
     return podaci.tipoviAktivnosti.filter(tipAktivnosti => tipAktivnosti.tip == odabirTipaAktivnosti.value)[0].palVrijednost;    
   }
@@ -353,10 +356,11 @@ const DnevnaAktivnost = (korijen, podaci) => {
     if (!validirajUlaze())
       return;
     bmrVrijednost = izračunajBmr(težina, visina, dob, dajSpol());
-    bmrPolje.innerText = bmrVrijednost.toFixed(3);
     tdeeVrijednost = izračunajTdee(dajPalVrijednostTrenutneAktivnosti(), bmrVrijednost);
     tdeePolje.innerText = tdeeVrijednost.toFixed(3);
-    upravljač.uputiZahtjevZaDodavanjeEnergetskihVrijednosti(bmrVrijednost, tdeeVrijednost, (greška, rezultat) => {
+    bmiVrijednost = izračunajBmi(težina, visina / 100);
+    bmiPolje.innerText = bmiVrijednost.toFixed(3);
+    upravljač.uputiZahtjevZaDodavanjeEnergetskihVrijednosti(bmrVrijednost, tdeeVrijednost, bmiVrijednost, (greška, rezultat) => {
       if (greška)
         location.href = "/html/prijava.html";
     });

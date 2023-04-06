@@ -7,7 +7,8 @@ const { DataTypes } = require("sequelize");
 module.exports = (konekcijaNaBazuPodataka) => {
   const atributiModela = {
     "bmr": DataTypes.DOUBLE,
-    "tdee": DataTypes.DOUBLE
+    "tdee": DataTypes.DOUBLE,
+    "bmi": DataTypes.DOUBLE
   }
   const dodatneOpcije = {
     "tableName": "EnergetskaVrijednost"

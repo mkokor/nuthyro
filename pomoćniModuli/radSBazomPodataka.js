@@ -235,7 +235,7 @@ const dajSveTipoveAktivnosti = () => {
   });
 }
 
-const dodajEnergetskeVrijednostiZaKorisnika = (korisničkoIme, bmr, tdee) => {
+const dodajEnergetskeVrijednostiZaKorisnika = (korisničkoIme, bmr, tdee, bmi) => {
   return new Promise((resolve, reject) => {
     bazaPodataka.KorisničkiRačun.findOne({ "where": { "korisničkoIme": korisničkoIme } })
       .then((rezultat) => {
@@ -245,12 +245,13 @@ const dodajEnergetskeVrijednostiZaKorisnika = (korisničkoIme, bmr, tdee) => {
         }
         bazaPodataka.EnergetskaVrijednost.findOrCreate({
               "where": { "idKorisnika": rezultat.id },
-              "defaults": { "bmr": bmr, "tdee": tdee }
+              "defaults": { "bmr": bmr, "tdee": tdee, "bmi": bmi }
         })
         .then(([zapis, nijePostojao]) => {
           if (!nijePostojao) {
             zapis.bmr = bmr;
             zapis.tdee = tdee;
+            zapis.bmi = bmi;
             zapis.save()
               .then(() => {
                 resolve({ "korisničkoIme": true });
@@ -283,10 +284,10 @@ const dajEnergetskeVrijednostiZaKorisnika = (korisničkoIme) => {
         bazaPodataka.EnergetskaVrijednost.findOne({ "where": { "idKorisnika": rezultat.id } })
           .then((rezultat) => {
             if (!rezultat) {
-              resolve({ "korisničkoIme": true, "bmr": null, "tdee": null });
+              resolve({ "korisničkoIme": true, "bmr": null, "tdee": null, "bmi": null });
               return;
             }
-            resolve({ "korisničkoIme": true, "bmr": rezultat.bmr, "tdee": rezultat.tdee });
+            resolve({ "korisničkoIme": true, "bmr": rezultat.bmr, "tdee": rezultat.tdee, "bmi": rezultat.bmi });
           })
           .catch(() => {
             reject("Greška pri pristupu bazi podataka!");

@@ -9,6 +9,7 @@ const početna = Array.from(document.getElementsByClassName("početna"));
 const dnevnaAktivnost = Array.from(document.getElementsByClassName("dnevnaAktivnost"));
 const ishrana = Array.from(document.getElementsByClassName("ishrana"));
 const sadržaj = document.getElementById("sadržaj");
+const zatamnjivač = document.getElementById("zatamnjivač");
 
 const upravljačZahtjevima = UpravljačZahtjevima;
 
@@ -26,14 +27,10 @@ window.onbeforeunload = () => {
 
 zatvaranjePomoćnogMenija.addEventListener("click", () => {
   pomoćniMeni.style.marginRight = "-170px";
-  navigacija.style.backgroundColor = "#e6f8ea";
-  document.body.style.backgroundColor = "rgba(0, 0, 0, 0)";
 });
 
 otvaranjePomoćnogMenija.addEventListener("click", () => {
   pomoćniMeni.style.marginRight = "0px";
-  navigacija.style.backgroundColor = "rgba(0, 0, 0, 0)";
-  document.body.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
 });
 
 opcijeOdjave.forEach(opcijaOdjave => {
@@ -69,8 +66,8 @@ const prebaciNaDnevnuAktivnost = () => {
       "tipoviAktivnosti": JSON.parse(rezultat).tipoviAktivnosti,
       "infoTekst": "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.",
       "nutriVrijednosti": [{
-        "skraćenica": "BMR",
-        "puniNaziv": "Basal Metabolic Rate"
+        "skraćenica": "BMI",
+        "puniNaziv": "Body Mass Index"
       }, {
         "skraćenica": "TDEE",
         "puniNaziv": "Total Daily Energy Expenditure "
