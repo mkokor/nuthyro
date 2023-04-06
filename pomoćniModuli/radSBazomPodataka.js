@@ -280,7 +280,7 @@ const dajEnergetskeVrijednostiZaKorisnika = (korisničkoIme) => {
           resolve({ "korisničkoIme": false });
           return;
         }
-        bazaPodataka.EnergetskaVrijednost.findOne({ "where": { "idKorisnika": rezultat.idKorisnika } })
+        bazaPodataka.EnergetskaVrijednost.findOne({ "where": { "idKorisnika": rezultat.id } })
           .then((rezultat) => {
             if (!rezultat) {
               resolve({ "korisničkoIme": true, "bmr": null, "tdee": null });
@@ -306,5 +306,6 @@ module.exports = {
   "provjeriSigurnosniToken": provjeriSigurnosniToken,
   "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun,
   "dajSveTipoveAktivnosti": dajSveTipoveAktivnosti,
+  "dodajEnergetskeVrijednostiZaKorisnika": dodajEnergetskeVrijednostiZaKorisnika,
   "dajEnergetskeVrijednostiZaKorisnika": dajEnergetskeVrijednostiZaKorisnika
 }

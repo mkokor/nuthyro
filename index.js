@@ -200,7 +200,7 @@ application.post("/dodavanjeEnergetskihVrijednosti", (request, response) => {
 
 // URL: http://localhost:3000/energertskeVrijednostiZaKorisnika
 // TIJELO ZAHTJEVA: /
-// ODGOVOR: { bmr: *, tdee: * } / { poruka: "Korisnik nije prijavljen na korisnički račun!" }
+// ODGOVOR: { bmr: *, tdee: * } / { poruka: "Korisnik nije prijavljen na korisnički račun!" } / { poruka: "Korisnik još uvijek nije popunio formu!" }
 application.get("/energetskeVrijednostiZaKorisnika", (request, response) => {
   if (obradiNepostojanjeSesije(request, response))
     return;

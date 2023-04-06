@@ -106,6 +106,13 @@ const UpravljačZahtjevima = (() => {
     }));
   }
 
+  const uputiZahtjevZaDobavljanjeEnergetskihVrijednosti = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/energetskeVrijednostiZaKorisnika");
+    http.send();
+  }
+
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
@@ -115,7 +122,8 @@ const UpravljačZahtjevima = (() => {
     "uputiZahtjevZaPotvrduSigurnosnogKoda": uputiZahtjevZaPotvrduSigurnosnogKoda,
     "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke,
     "uputiZahtjevZaTipoveAktivnosti": uputiZahtjevZaTipoveAktivnosti,
-    "uputiZahtjevZaDodavanjeEnergetskihVrijednosti": uputiZahtjevZaDodavanjeEnergetskihVrijednosti
+    "uputiZahtjevZaDodavanjeEnergetskihVrijednosti": uputiZahtjevZaDodavanjeEnergetskihVrijednosti,
+    "uputiZahtjevZaDobavljanjeEnergetskihVrijedosti": uputiZahtjevZaDobavljanjeEnergetskihVrijednosti
   }
 
 })();

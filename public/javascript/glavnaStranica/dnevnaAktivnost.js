@@ -289,6 +289,20 @@ const DnevnaAktivnost = (korijen, podaci) => {
     }
   ]
 
+  
+  const popuniPolja = () => {
+    upravljač.uputiZahtjevZaDobavljanjeEnergetskihVrijedosti((greška, rezultat) => {
+      if (greška)
+        return;
+      rezultat = JSON.parse(rezultat);
+      bmrVrijednost = rezultat.bmr;
+      tdeeVrijednost = rezultat.tdee;
+      bmrPolje.innerText = bmrVrijednost.toFixed(3);
+      tdeePolje.innerText = tdeeVrijednost.toFixed(3);
+    });
+  }
+
+  popuniPolja(); // Ukoliko je korisnik prethodno ispunio formu, bit će mu dat prikaz njegovih rezultata (sa posljednjeg pokretanja računanja).
 
   const validirajVrijednost = (regularniIzraz, polje) => {
     if (!regularniIzraz.test(polje.value)) {
