@@ -261,3 +261,27 @@ h1 {
 
 }
 
+
+/* 
+   Ispod je dat stil scrollbar-a, ali nije garantovano da će biti
+   primijenjen u svim pretraživačima.
+*/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); 
+  background: #e6fceb;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a3c3ab;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
