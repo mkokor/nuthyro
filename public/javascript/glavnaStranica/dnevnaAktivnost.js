@@ -208,7 +208,7 @@ const DnevnaAktivnost = (korijen, podaci) => {
 
   const kreirajInfoTekst = (informacije) => {
     const tekst = document.createElement("p");
-    tekst.innerText = informacije;
+    tekst.innerHTML = informacije;
     return tekst;
   }
 
@@ -263,7 +263,7 @@ const DnevnaAktivnost = (korijen, podaci) => {
   const unosVisine = document.getElementById("visina");
   const unosTežine = document.getElementById("težina");
   const bmiPolje = document.getElementById("bmi");
-  const tdeePolje = document.getElementById("tdee");
+  const tdeePolje = document.getElementById("tdee [kcal/dan]");
   const infoDugme = document.getElementById("infoDugme");
   const tipAktivnostiInfo = document.getElementById("tipAktivnostiInfo");
   const infoTekst = document.getElementById("infoTekst");

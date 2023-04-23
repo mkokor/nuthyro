@@ -64,12 +64,12 @@ const prebaciNaDnevnuAktivnost = () => {
     }
     prebaciTab(dnevnaAktivnost, [...početna, ...ishrana], DnevnaAktivnost, {
       "tipoviAktivnosti": JSON.parse(rezultat).tipoviAktivnosti,
-      "infoTekst": "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs.",
+      "infoTekst": "BMI (eng. <i>Body Mass Index</i>) je vrijednost kojom se definiše stepen uhranjenosti. Skala vrijednosti glasi: <br />1. Pothranjenost (< 18.5)<br />2. Adekvatna tjelesna masa (18.5 - 24.9)<br />3. Prekomjerna tjelesna masa (25 - 29.9)<br />4. Gojaznost prvog stepena (30 - 34.9)<br />5. Gojaznost drugog stepena (> 35)<br />TDEE (eng. <i>Total Daily Energy Expenditure</i>) vrijednost je koja pokazuje broj kalorija koje naše tijelo troši unutar jednog dana.",
       "nutriVrijednosti": [{
         "skraćenica": "BMI",
         "puniNaziv": "Body Mass Index"
       }, {
-        "skraćenica": "TDEE",
+        "skraćenica": "TDEE [kcal/dan]",
         "puniNaziv": "Total Daily Energy Expenditure "
       }]
     });
