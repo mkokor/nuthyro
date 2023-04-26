@@ -1,9 +1,5 @@
 #ishrana {
   height: 100%;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  gap: 10px;
 }
 
 #jela {
@@ -17,9 +13,11 @@
   position: absolute;
   background-color: #f0fcf3;
   border-radius: 5px;
-  top: 365px;
-  left: 192px;
+  top: 52px;
+  left: -5px;
   box-shadow: 0px 0px 2px rgba(55, 93, 74, 0.4);
+  z-index: 200;
+  visibility: hidden;
 }
 
 .jelo {
@@ -38,15 +36,25 @@
   opacity: 0.6;
 }
 
+#uneseneNamirnice {
+  box-shadow: 0 -5px 2px -5px rgba(129, 196, 162, 0.9);
+}
+
+#obavještenjeZaIshranu,
 #unosJela {
   position: relative;
-  height: 400px;
-  width: 400px;
+  height: 318px;
+  width: 430px;
   padding: 20px 0px 20px;
   font-family: "Lato", sans-serif;
   display: flex;
+  justify-content: start;
   flex-direction: column;
   gap: 5px;
+}
+
+#unosJela {
+  padding-bottom: 45px !important;
 }
 
 #količina,
@@ -73,13 +81,218 @@
   color: white;
 }
 
+#gramaža:focus, 
+#gramaža:hover {
+  outline: none;
+  border: 1px solid #375d4a;
+  background-color: rgba(255, 255, 255, 0);
+  color: #375d4a;
+}
+
+
+#odabranoJelo {
+  justify-content: space-between;
+  position: relative;
+}
+
 #unosJela p {
   text-align: justify;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 2px -5px rgba(129, 196, 162, 0.9);
   padding-bottom: 10px;
   margin: 10px 0px 20px 0px;
 }
 
+#obavještenjeZaIshranu h1,
 #unosJela h1 {
   margin: 0px 0px 0px 0px;
+}
+
+.karticaNamirnice {
+  padding: 10px 20px 10px;
+  box-shadow: 0px 0px 5px rgba(55, 93, 74, 0.3);
+  border-radius: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.informacijeONamirnici {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.informacijeONamirnici img {
+  width: 50px;
+}
+
+.informacijeONamirnici .ikonaNamirnice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tekstualneInformacijeONamirnici .nazivNamirnice {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.tekstualneInformacijeONamirnici .količinaNamirnice {
+  font-size: 15px;
+}
+
+#potvrdiUnosJela {
+  display: block;
+  width: 100%;
+  height: 52px !important;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 25px;
+  background-color: #375d4a;
+  font-family: "Lato", sans-serif;
+  padding: 6px 20px 6px;
+  font-weight: 700px;
+  color: white;
+  font-size: 15px;
+  margin-top: 10px
+}
+
+#potvrdiUnosJela:hover {
+  cursor: pointer;
+  background-color: #2b4b3b;
+  transition: background-color 0.2s;
+}
+
+#potvrdiUnosJela:active {
+  background-color: #223c2f;
+}
+
+.karticaNamirnice button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.karticaNamirnice button img {
+  height: 22px;
+}
+
+.karticaNamirnice button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+#uneseneNamirnice {
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 10px 10px;
+  margin-top: 10px;
+}
+
+#odabranaJelaNaslov {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#generisanjeIzvještajaOIshrani {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 25px;
+  background-color: #375d4a;
+  font-family: "Lato", sans-serif;
+  padding: 6px 20px 6px;
+  font-weight: 700px;
+  color: white;
+  font-size: 12px;
+}
+
+#generisanjeIzvještajaOIshrani:hover {
+  cursor: pointer;
+  background-color: #2b4b3b;
+  transition: background-color 0.2s;
+}
+
+#generisanjeIzvještajaOIshrani:active {
+  background-color: #223c2f;
+}
+
+#pretragaJela {
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 0px 0px 0px;
+  transition: opacity 0.2s;
+}
+
+#pretragaJela:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+#pretragaJela img {
+  width: 100%;
+}
+
+#prazanOdabir {
+  width: 50px;
+}
+
+#prazno {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 870px) {
+  
+  #ishrana {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+    padding-left: 38px;
+    margin-right: 18px;
+  }
+
+  body {
+    padding-top: 150px;
+    padding-bottom: 85px;
+  }
+
+  #unosJela {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    padding: 0px 0px 20px;
+    margin: 0px 0px 0px 0px;
+  }
+
+}
+
+@media screen and (min-width: 871px) {
+
+  #ishrana {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #obavještenjeZaIshranu {
+    border-left: 1px solid rgba(0, 0, 0, 0.4);
+    padding-left: 20px;
+    padding-top: 0px;
+  }
+
 }

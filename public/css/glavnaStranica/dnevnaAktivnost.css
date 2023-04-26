@@ -290,6 +290,8 @@ th, td {
     align-items: center;
     gap: 20px;
     flex-direction: column-reverse;
+    padding-top: 70px;
+    padding-bottom: 150px;
   }
 
   #objašnjenje {
@@ -300,7 +302,7 @@ th, td {
 
   body {
     padding-top: 150px;
-    padding-bottom: 85px;
+    padding-bottom: 5px;
   }
 
 }

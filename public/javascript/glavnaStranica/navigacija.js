@@ -76,6 +76,36 @@ const prebaciNaDnevnuAktivnost = () => {
   }); 
 }
 
+const prebaciNaIshranu = () => {
+  upravljačZahtjevima.uputiZahtjevZaTipoveAktivnosti((greška, rezultat) => {
+    if (greška) {
+      location.href = "/html/prijava.html";
+      return;
+    }
+    prebaciTab(ishrana, [...dnevnaAktivnost, ...početna], Ishrana, {
+      "uputeZaKorisnika": "Unesite namirnice koje ste konzumirali u toku dana, a NuThyro će Vam prikazati količinu važnih nutrijenata koji su obuhvaćeni Vašom ishranom.",
+      "dostupnaJela": [
+        {
+          "id": 1,
+          "naziv": "Kuhana jaja"
+        }, {
+          "id": 2,
+          "naziv": "Riba"
+        }, {
+          "id": 3,
+          "naziv": "Grah"
+        }, {
+          "id": 4,
+          "naziv": "Tjestanina"
+        }, {
+          "id": 5,
+          "naziv": "Prženi krompir"
+        }
+      ]
+    });
+  }); 
+}
+
 početna.forEach(stavka => {
   stavka.addEventListener("click", () => { 
     prebaciTab(početna, [...dnevnaAktivnost, ...ishrana], Početna); 
@@ -87,7 +117,5 @@ dnevnaAktivnost.forEach(stavka => {
 });
 
 ishrana.forEach(stavka => {
-  stavka.addEventListener("click", () => { 
-    prebaciTab(ishrana, [...dnevnaAktivnost, ...početna], Ishrana); 
-  });
+  stavka.addEventListener("click", prebaciNaIshranu);
 });

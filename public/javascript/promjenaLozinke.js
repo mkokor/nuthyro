@@ -65,7 +65,9 @@ const kreirajFormuZaUnosNoveLozinke = () => {
   potvrdaUnosa.addEventListener("click", potvrdiLozinku);
   infoTekst.innerText = "Unesite novu lozinku.";
   document.getElementById("unosKoda").remove();
-  sadržaj.insertBefore(kreirajPoljeZaUnos("unosLozinke", "Lozinka"), potvrdaUnosa);
+  const poljeZaUnosLozinke = kreirajPoljeZaUnos("unosLozinke", "Lozinka");
+  poljeZaUnosLozinke.type = "password"
+  sadržaj.insertBefore(poljeZaUnosLozinke, potvrdaUnosa);
 }
 
 // U ovom slučaju, "greška" se ne koristi jer se u odgovoru na konkretno ovaj zahtjev kriju svi potrebni podaci za njegovu obradu
