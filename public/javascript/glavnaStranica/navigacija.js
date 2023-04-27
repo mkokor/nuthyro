@@ -87,19 +87,20 @@ const prebaciNaIshranu = () => {
       "dostupnaJela": [
         {
           "id": 1,
-          "naziv": "Kuhana jaja"
+          "naziv": "Kuhana jaja",
+          "ikona": "../slike/ikone/jaja.png"
         }, {
           "id": 2,
-          "naziv": "Riba"
+          "naziv": "Piletina",
+          "ikona": "../slike/ikone/piletina.png"
         }, {
           "id": 3,
-          "naziv": "Grah"
+          "naziv": "Prženi krompir",
+          "ikona": "../slike/ikone/prženiKrompir.png"
         }, {
           "id": 4,
-          "naziv": "Tjestanina"
-        }, {
-          "id": 5,
-          "naziv": "Prženi krompir"
+          "naziv": "Sladoled",
+          "ikona": "../slike/ikone/sladoled.png"
         }
       ]
     });

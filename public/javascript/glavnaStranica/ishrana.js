@@ -30,6 +30,15 @@ const Ishrana = (korijen, pomoćneInformacije) => {
     return dugme;
   }
 
+  const kreirajObavijestOPraznomOdabiru = () => {
+    const prazanOdabir = document.createElement("img");
+    prazanOdabir.id = "prazanOdabir";
+    prazanOdabir.src = "../slike/ikone/prazanOdabir.png";
+    prazanOdabir.alt = "prazno";
+    const prazno = kreirajOmotač("prazno");
+    prazno.appendChild(prazanOdabir);
+    return prazno;
+  }
 
   // KOMPONENTE MODULA
 
@@ -140,13 +149,7 @@ const Ishrana = (korijen, pomoćneInformacije) => {
 
     const kreirajListuOdabranihJlea = () => {
       const lista = kreirajOmotač("uneseneNamirnice")
-      const prazanOdabir = document.createElement("img");
-      prazanOdabir.id = "prazanOdabir";
-      prazanOdabir.src = "../slike/ikone/prazanOdabir.png";
-      prazanOdabir.alt = "prazno";
-      const prazno = kreirajOmotač("prazno");
-      prazno.appendChild(prazanOdabir)
-      lista.appendChild(prazno);
+      lista.appendChild(kreirajObavijestOPraznomOdabiru());
       return lista;
     }
 
@@ -176,15 +179,134 @@ const Ishrana = (korijen, pomoćneInformacije) => {
   // Nakon što je korisnički interfejs generisan, moguće je postaviti
   // odgovarajuće EventListener-e na kontrole.
 
-
+  
   const pretragaJela = document.getElementById("pretragaJela");
   const meniJela = document.getElementById("jela");
-  let meniJelaOtvoren = false;
+  const jela = Array.from(document.getElementsByClassName("jelo"));
+  const odabranoJelo = document.getElementById("trenutnoOdabrano");
+  const dugmeZaPotvrdu = document.getElementById("potvrdiUnosJela");
+  const gramažaPolje = document.getElementById("gramaža");
+  const uneseneNamirniceSekcija = document.getElementById("uneseneNamirnice");
 
-  pretragaJela.addEventListener("click", () => {
+  let meniJelaOtvoren = false;
+  let selektovanoJelo = pomoćneInformacije.dostupnaJela[0];
+  let odabranaJela = [];
+
+
+  const obradiPrikazivanjeListeDostupnihNamirnica = () => {
     pretragaJela.children[0].src = `../slike/ikone/strelica${meniJelaOtvoren ? "Dole" : "Gore"}Bijela.png`;
     meniJela.style.visibility = meniJelaOtvoren ? "hidden" : "visible";
     meniJelaOtvoren = !meniJelaOtvoren;
+  }
+
+  pretragaJela.addEventListener("click", obradiPrikazivanjeListeDostupnihNamirnica);
+
+  jela.forEach(jelo => {
+    jelo.addEventListener("click", (event) => {
+      selektovanoJelo = pomoćneInformacije.dostupnaJela.filter(jelo => jelo.naziv === event.target.innerText)[0]; // Element sigurno postoji!
+      odabranoJelo.innerText = selektovanoJelo.naziv;
+      obradiPrikazivanjeListeDostupnihNamirnica();
+    });
+  });
+
+  const kreirajKarticuJela = (odabranoJelo) => {
+
+    const kreirajDugmeZaBrisanje = () => {
+
+      const obrišiKarticu = (event) => {
+        let roditelj = event.target.parentNode;
+        if (roditelj.tagName.toUpperCase() === "BUTTON")
+          roditelj = roditelj.parentNode;
+        odabranaJela = odabranaJela.filter(jelo => jelo.naziv !== roditelj.children[0].children[1].children[0].innerText);
+        roditelj.remove();
+        if (uneseneNamirniceSekcija.innerHTML === "")
+          uneseneNamirniceSekcija.appendChild(kreirajObavijestOPraznomOdabiru());
+      }
+
+      const dugmeZaBrisanje = kreirajDugme("brisanjeNamirnice", "");
+      const ikona = document.createElement("img");
+      ikona.src = "../slike/ikone/brisanje.png";
+      dugmeZaBrisanje.appendChild(ikona);
+      dugmeZaBrisanje.addEventListener("click", (event) => { obrišiKarticu(event); });
+      
+      return dugmeZaBrisanje;
+    
+    }
+
+    const kreirajSekcijuZaInformacijeONamirnici = () => {
+
+      const kreirajTekstualneInformacijeONamirnici = () => {
+
+        const kreirajNazivNamirnice = () => {
+          const nazivNamirnice = kreirajOmotač();
+          nazivNamirnice.classList.add("nazivNamirnice");
+          nazivNamirnice.innerText = odabranoJelo.naziv;
+          return nazivNamirnice;
+        }
+
+        const kreirajKoličinuNamirnice = () => {
+          const količinaNamirnice = kreirajOmotač();
+          količinaNamirnice.classList.add("količinaNamirnice");
+          količinaNamirnice.innerText = odabranoJelo.gramaža + "g";
+          return količinaNamirnice;
+        }
+
+        const tekstualneInformacije = kreirajOmotač();
+        tekstualneInformacije.classList.add("tekstualneInformacijeONamirnici");
+        tekstualneInformacije.appendChild(kreirajNazivNamirnice());
+        tekstualneInformacije.appendChild(kreirajKoličinuNamirnice());
+
+        return tekstualneInformacije;
+
+      }
+
+      const kreirajIkonuNamirnice = () => {
+        const ikona = document.createElement("img");
+        ikona.src = odabranoJelo.ikona;
+        ikona.alt = odabranoJelo.naziv.toLowerCase();
+        return ikona;
+      }
+
+      const informacijeONamirnici = kreirajOmotač();
+      informacijeONamirnici.classList.add("informacijeONamirnici");
+      informacijeONamirnici.appendChild(kreirajIkonuNamirnice());
+      informacijeONamirnici.appendChild(kreirajTekstualneInformacijeONamirnici());
+
+      return informacijeONamirnici;
+
+    }
+
+    if (document.getElementById("prazno"))
+      uneseneNamirniceSekcija.innerText = "";
+    const karticaJela = kreirajOmotač();
+    karticaJela.classList.add("karticaNamirnice");
+    karticaJela.appendChild(kreirajSekcijuZaInformacijeONamirnici());
+    karticaJela.appendChild(kreirajDugmeZaBrisanje());
+    
+    uneseneNamirniceSekcija.appendChild(karticaJela);
+
+  }
+
+  const dajGramažu = () => {
+    if (gramažaPolje.value === "" || isNaN(gramažaPolje.value) || parseFloat(gramažaPolje.value) <= 0)
+      return null;
+    return parseFloat(gramažaPolje.value);
+  }
+
+  const dodajJeloNaListu = () => {
+    const gramaža = dajGramažu();
+    if (gramaža === null) {
+      gramažaPolje.classList.add("neispravanUnos");
+      return;
+    }
+    kreirajKarticuJela({ ...selektovanoJelo, "gramaža": gramaža });
+    odabranaJela.push({ ...selektovanoJelo, "gramaža": gramaža });
+  }
+
+  dugmeZaPotvrdu.addEventListener("click", dodajJeloNaListu);
+
+  gramažaPolje.addEventListener("focus", () => {
+    gramažaPolje.classList.remove("neispravanUnos");
   });
 
 }

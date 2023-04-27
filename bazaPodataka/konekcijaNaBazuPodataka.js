@@ -27,6 +27,7 @@ bazaPodataka.KorisničkiRačun = require("./modeli/korisničkiRačun.js")(bazaPo
 bazaPodataka.SigurnosniToken = require("./modeli/sigurnosniToken.js")(bazaPodataka.konekcijaNaBazuPodataka);
 bazaPodataka.DnevnaAktivnost = require("./modeli/dnevnaAktivnost.js")(bazaPodataka.konekcijaNaBazuPodataka);
 bazaPodataka.EnergetskaVrijednost = require("./modeli/energetskaVrijednost.js")(bazaPodataka.konekcijaNaBazuPodataka);
+bazaPodataka.Namirnica = require("./modeli/namirnica.js")(bazaPodataka.konekcijaNaBazuPodataka);
 
 
 // POSTAVLJANJE RELACIJA IZMEĐU MODELA
