@@ -37,7 +37,9 @@
 }
 
 #uneseneNamirnice {
-  box-shadow: 0 -5px 2px -5px rgba(129, 196, 162, 0.9);
+  height: 100%;
+  box-shadow: 0 -5px 2px -5px rgba(129, 196, 162, 0.9),
+              0 5px 2px -5px rgba(129, 196, 162, 0.9);
 }
 
 #obavještenjeZaIshranu,
@@ -253,6 +255,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 @media screen and (max-width: 870px) {

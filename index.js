@@ -54,6 +54,14 @@ Sigurnosni kod: ${sigurnosniKod}
 NuThyro`;
 }
 
+const sumirajNutritivnuVrijednost = (namirnice, nazivNutritivneVrijednosti) => {
+  let suma = 0;
+  namirnice.forEach(element => {
+    suma = suma + (element.gramaža / element.referentnaMasa) * element[nazivNutritivneVrijednosti];
+  });
+  return suma;
+} 
+
 
 // RUTE
 
@@ -301,10 +309,38 @@ application.post("/ukloniNamirnicuSaSpiska", (request, response) => {
 application.get("/dajSpisakNamirnica", (request, response) => {
   if (obradiNepostojanjeSesije(request, response))
     return;
-  const spisakNamirnica = request.session.spisakNamirnica == undefined ? [] : request.session.spisakNamirnica;
+  const spisakNamirnica = request.session.spisakNamirnica === undefined ? [] : request.session.spisakNamirnica;
   response.setHeader("Content-Type", "application/json");
   response.status(200);
   response.send(JSON.stringify(spisakNamirnica));
+});
+
+application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
+  if (obradiNepostojanjeSesije(request, response))
+    return;
+  response.setHeader("Content-Type", "application/json");
+  if (request.session.spisakNamirnica === undefined) {
+    response.status(404);
+    response.send(JSON.stringify({ "poruka": "Nije unesena niti jedna namirnica!" }));
+    return;
+  }
+  const namirnice = request.session.spisakNamirnica;
+  response.status(200);
+  response.send(JSON.stringify({
+    "energija": sumirajNutritivnuVrijednost(namirnice, "energija"),
+    "proteini": sumirajNutritivnuVrijednost(namirnice, "proteini"),
+    "masti": sumirajNutritivnuVrijednost(namirnice, "masti"),
+    "ugljikohidrati": sumirajNutritivnuVrijednost(namirnice, "ugljikohidrati"),
+    "vitaminA": sumirajNutritivnuVrijednost(namirnice, "vitaminA"),
+    "vitaminE": sumirajNutritivnuVrijednost(namirnice, "vitaminE"),
+    "vitaminD": sumirajNutritivnuVrijednost(namirnice, "vitaminD"),
+    "vitaminC": sumirajNutritivnuVrijednost(namirnice, "vitaminC"),
+    "željezo": sumirajNutritivnuVrijednost(namirnice, "željezo"),
+    "magnezij": sumirajNutritivnuVrijednost(namirnice, "magnezij"),
+    "cink": sumirajNutritivnuVrijednost(namirnice, "cink"),
+    "bakar": sumirajNutritivnuVrijednost(namirnice, "bakar"),
+    "selen": sumirajNutritivnuVrijednost(namirnice, "selen") 
+  }));
 });
 
 application.listen(3000, (greška) => {
