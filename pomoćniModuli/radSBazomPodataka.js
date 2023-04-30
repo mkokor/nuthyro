@@ -299,6 +299,31 @@ const dajEnergetskeVrijednostiZaKorisnika = (korisničkoIme) => {
   });
 }
 
+const dajDostupneNamirnice = () => {
+  return new Promise((resolve, reject) => {
+    bazaPodataka.Namirnica.findAll()
+      .then(rezultat => {
+        resolve(rezultat);
+      })
+      .catch(() => {
+        reject("Greška pri pristupu bazi podataka!");
+      });
+  });  
+}
+
+const dajIkonuNamirnice = (id) => {
+  return new Promise((resolve, reject) => {
+    bazaPodataka.Namirnica.findOne({ "where": { "id": id }})
+      .then((rezultat) => {
+        resolve(rezultat.ikona);
+      })
+      .catch(() => {
+        reject("Greška pri pristupu bazi podataka!");
+      });
+  });
+}
+
+
 module.exports = {
   "postojiLiKorisničkiRačun": postojiLiKorisničkiRačun,
   "kreirajKorisničkiRačun": kreirajKorisničkiRačun,
@@ -308,5 +333,7 @@ module.exports = {
   "promijeniLozinkuZaKorisničkiRačun": promijeniLozinkuZaKorisničkiRačun,
   "dajSveTipoveAktivnosti": dajSveTipoveAktivnosti,
   "dodajEnergetskeVrijednostiZaKorisnika": dodajEnergetskeVrijednostiZaKorisnika,
-  "dajEnergetskeVrijednostiZaKorisnika": dajEnergetskeVrijednostiZaKorisnika
+  "dajEnergetskeVrijednostiZaKorisnika": dajEnergetskeVrijednostiZaKorisnika,
+  "dajDostupneNamirnice": dajDostupneNamirnice,
+  "dajIkonuNamirnice": dajIkonuNamirnice
 }

@@ -1,7 +1,9 @@
 const bazaPodataka = require("./konekcijaNaBazuPodataka.js");
 const fs = require("fs");
+const path = require("path");
 
-const tipoviAktivnosti = JSON.parse(fs.readFileSync("../resurs/tipoviAktivnosti.json", "utf-8"));
+const tipoviAktivnosti = JSON.parse(fs.readFileSync(path.join(__dirname, "../resursi/tipoviAktivnosti.json")));
+const namirnice = require("../resursi/namirnice.js");
 
 
 bazaPodataka.konekcijaNaBazuPodataka.sync({ "force": true })

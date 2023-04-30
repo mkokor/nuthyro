@@ -3,6 +3,9 @@
 // ove stranice biti pohranjen.
 
 
+const upravljačZahtjevimaZaIshranu = UpravljačZahtjevima;
+
+
 const Ishrana = (korijen, pomoćneInformacije) => {
 
   // POMOĆNE FUNKCIJE ZA RAD MODULA I NJEGOVIH KOMPONENTI
@@ -261,10 +264,9 @@ const Ishrana = (korijen, pomoćneInformacije) => {
       }
 
       const kreirajIkonuNamirnice = () => {
-        const ikona = document.createElement("img");
-        ikona.src = odabranoJelo.ikona;
-        ikona.alt = odabranoJelo.naziv.toLowerCase();
-        return ikona;
+        const slikaIkone = document.createElement("img");
+        slikaIkone.src = `/ikonaNamirnice/${encodeURIComponent(selektovanoJelo.id)}`;
+        return slikaIkone;
       }
 
       const informacijeONamirnici = kreirajOmotač();
@@ -303,7 +305,16 @@ const Ishrana = (korijen, pomoćneInformacije) => {
     odabranaJela.push({ ...selektovanoJelo, "gramaža": gramaža });
   }
 
-  dugmeZaPotvrdu.addEventListener("click", dodajJeloNaListu);
+  dugmeZaPotvrdu.addEventListener("click", () => {
+    upravljačZahtjevimaZaIshranu.uputiZahtjevZaProvjeruPrijave((greška, rezultat) => {
+      upravljač.uputiZahtjevZaProvjeruPrijave((greška, rezultat) => {
+        if (greška)
+          location.href = "/html/prijava.html";
+        else
+          dodajJeloNaListu();
+      });
+    });
+  });
 
   gramažaPolje.addEventListener("focus", () => {
     gramažaPolje.classList.remove("neispravanUnos");

@@ -11,6 +11,7 @@ const application = express();
 
 application.use(express.static("public"));
 application.use(bodyParser.json());
+application.use(bodyParser.urlencoded({ "extended": true }));
 application.use(session({
   "secret": "tajniKodKojimSePotpisujeKolačić",
   "saveUninitialized": false,
@@ -216,6 +217,48 @@ application.get("/energetskeVrijednostiZaKorisnika", (request, response) => {
       response.send(JSON.stringify({ "bmr": rezultat.bmr, "tdee": rezultat.tdee, "bmi": rezultat.bmi }));
     });
 });
+
+// URL: http://localhost:3000/dostupneNamirnice
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: [ {...namirnica...}, {...namirnica...},... ] / { poruka: "Korisnik nije prijavljen na korisnički račun!" }
+application.get("/dostupneNamirnice", (request, response) => {
+  if (obradiNepostojanjeSesije(request, response))
+    return;
+  response.setHeader("Content-Type", "application/json");
+  bazaPodataka.dajDostupneNamirnice()
+    .then(rezultat => {
+      rezultat.forEach(namirnica => { delete namirnica.dataValues.ikona; }); // Ne vraća se zapis ikone (to radi odvojena ruta)!
+      response.status(200);
+      response.send(JSON.stringify(rezultat));
+    }); 
+});
+
+// URL: http://localhost:3000/ikonaNamirnice/{ID}
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: { poruka: "Nevalidan format ID-a namirnice!" / "Namirnica sa datom ID vrijednosti ne postoji!" / "Korisnik nije prijavljen na korisnički račun!" } / slika.png
+application.get(/\/ikonaNamirnice\/[1-9]\d*/, (request, response) => {
+  if(obradiNepostojanjeSesije(request, response))
+    return;
+  const id = parseInt(request.url.toString().split("/").reverse()[0]);
+  if (isNaN(id)) {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400);
+    response.send(JSON.stringify({ "poruka": "Nevalidan format ID-a namirnice!" }));
+  }
+  bazaPodataka.dajIkonuNamirnice(id)
+    .then((rezultat) => {
+      if (rezultat === null) {
+        response.setHeader("Content-Type", "application/json");
+        response.status(404);
+        response.send(JSON.stringify({ "poruka": "Namirnica sa datom ID vrijednosti ne postoji!" }));
+        return;
+      }
+      response.setHeader("Content-Type", "image/png");
+      const bufferSlike = Buffer.from(rezultat, "binary");
+      response.setHeader("Content-Length", bufferSlike.length);
+      response.send(Buffer.from(rezultat, "binary"));
+    });
+})
 
 application.listen(3000, (greška) => {
   if (greška)

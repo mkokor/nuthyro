@@ -114,6 +114,20 @@ const UpravljačZahtjevima = (() => {
     http.send();
   }
 
+  const uputiZahtjevZaDobavljanjeDostupnihNamirnica = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/dostupneNamirnice");
+    http.send();
+  }
+
+  const uputiZahtjevZaDobavljanjeIkoneNamirnice = (id, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", `/ikonaNamirnice?id=${id}`);
+    http.send();
+  }
+
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
@@ -124,7 +138,9 @@ const UpravljačZahtjevima = (() => {
     "uputiZahtjevZaPromjenuLozinke": uputiZahtjevZaPromjenuLozinke,
     "uputiZahtjevZaTipoveAktivnosti": uputiZahtjevZaTipoveAktivnosti,
     "uputiZahtjevZaDodavanjeEnergetskihVrijednosti": uputiZahtjevZaDodavanjeEnergetskihVrijednosti,
-    "uputiZahtjevZaDobavljanjeEnergetskihVrijedosti": uputiZahtjevZaDobavljanjeEnergetskihVrijednosti
+    "uputiZahtjevZaDobavljanjeEnergetskihVrijedosti": uputiZahtjevZaDobavljanjeEnergetskihVrijednosti,
+    "uputiZahtjevZaDobavljanjeDostupnihNamirnica": uputiZahtjevZaDobavljanjeDostupnihNamirnica,
+    "uputiZahtjevZaDobavljanjeIkoneNamirnice": uputiZahtjevZaDobavljanjeIkoneNamirnice
   }
 
 })();

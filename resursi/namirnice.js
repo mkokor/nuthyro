@@ -1,6 +1,7 @@
 const fs = require("fs");
+const path = require("path");
 
-const ikoneNamirnica = fs.readdirSync("./ikoneNamirnica");
+const ikoneNamirnica = fs.readdirSync(path.join(__dirname, "../resursi/ikoneNamirnica")); // Obratiti pažnju na putanju jer se gleda u odnosu na skriptu koja je pozvala ovu skriptu.
 
 const naziviNamirnica = ikoneNamirnica.map(nazivDatoteke => {
   let bezEkstenzije = nazivDatoteke.split(".")[0];
@@ -10,8 +11,10 @@ const naziviNamirnica = ikoneNamirnica.map(nazivDatoteke => {
 });
 
 const slikeZaBazu = ikoneNamirnica.map(ikona => {
-  const sadržajSlike = fs.readFileSync(`./ikoneNamirnica/${ikona}`);
-  return new Blob([sadržajSlike], { "type": 'image/png' });
+  const sadržajSlike = fs.readFileSync(path.join(__dirname, `../resursi/ikoneNamirnica/${ikona}`));
+  return sadržajSlike;
 });
 
-// Imaš nazive namirnica i slike kao blob varijable, sada ih trebaš pohraniti u bazu!
+module.exports = naziviNamirnica.map((naziv, indeks) => {
+ return { "naziv": naziv, "ikona": slikeZaBazu[indeks] };
+});

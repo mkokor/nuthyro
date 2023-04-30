@@ -6,7 +6,8 @@ module.exports = (konekcijaNaBazuPodataka) => {
     "ikona": DataTypes.BLOB
   }
   const dodatneOpcije = {
-    "tableName": "Namirnica"
+    "tableName": "Namirnica",
+    "timestamps": false
   }
   return konekcijaNaBazuPodataka.define("Namirnica", atributiModela, dodatneOpcije);
 }

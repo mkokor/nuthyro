@@ -77,32 +77,14 @@ const prebaciNaDnevnuAktivnost = () => {
 }
 
 const prebaciNaIshranu = () => {
-  upravljačZahtjevima.uputiZahtjevZaTipoveAktivnosti((greška, rezultat) => {
+  upravljačZahtjevima.uputiZahtjevZaDobavljanjeDostupnihNamirnica((greška, rezultat) => {
     if (greška) {
       location.href = "/html/prijava.html";
       return;
     }
     prebaciTab(ishrana, [...dnevnaAktivnost, ...početna], Ishrana, {
       "uputeZaKorisnika": "Unesite namirnice koje ste konzumirali u toku dana, a NuThyro će Vam prikazati količinu važnih nutrijenata koji su obuhvaćeni Vašom ishranom.",
-      "dostupnaJela": [
-        {
-          "id": 1,
-          "naziv": "Kuhana jaja",
-          "ikona": "../slike/ikone/jaja.png"
-        }, {
-          "id": 2,
-          "naziv": "Piletina",
-          "ikona": "../slike/ikone/piletina.png"
-        }, {
-          "id": 3,
-          "naziv": "Prženi krompir",
-          "ikona": "../slike/ikone/prženiKrompir.png"
-        }, {
-          "id": 4,
-          "naziv": "Sladoled",
-          "ikona": "../slike/ikone/sladoled.png"
-        }
-      ]
+      "dostupnaJela": JSON.parse(rezultat)
     });
   }); 
 }
