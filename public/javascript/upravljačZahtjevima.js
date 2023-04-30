@@ -124,7 +124,30 @@ const UpravljačZahtjevima = (() => {
   const uputiZahtjevZaDobavljanjeIkoneNamirnice = (id, obradiOdgovor) => {
     const http = new XMLHttpRequest();
     postaviObraduOdgovora(http, obradiOdgovor);
-    http.open("GET", `/ikonaNamirnice?id=${id}`);
+    http.open("GET", `/ikonaNamirnice?id=${encodeURIComponent(id)}`);
+    http.send();
+  }
+
+  const uputiZahtjevZaDodavanjeNamirniceNaSpisak = (namirnica, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("POST", "/dodajNamirnicuNaSpisak");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(JSON.stringify({ "namirnica": namirnica }));
+  }
+
+  const uputiZahtjevZaUklanjanjeNamirniceSaSpiska = (id, gramaža, obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("POST", "/ukloniNamirnicuSaSpiska");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(JSON.stringify({ "id": id, "gramaža": gramaža }));
+  }
+
+  const uputiZahtjevZaDobavljanjeSpiskaNamirnica = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/dajSpisakNamirnica");
     http.send();
   }
 
@@ -140,7 +163,10 @@ const UpravljačZahtjevima = (() => {
     "uputiZahtjevZaDodavanjeEnergetskihVrijednosti": uputiZahtjevZaDodavanjeEnergetskihVrijednosti,
     "uputiZahtjevZaDobavljanjeEnergetskihVrijedosti": uputiZahtjevZaDobavljanjeEnergetskihVrijednosti,
     "uputiZahtjevZaDobavljanjeDostupnihNamirnica": uputiZahtjevZaDobavljanjeDostupnihNamirnica,
-    "uputiZahtjevZaDobavljanjeIkoneNamirnice": uputiZahtjevZaDobavljanjeIkoneNamirnice
+    "uputiZahtjevZaDobavljanjeIkoneNamirnice": uputiZahtjevZaDobavljanjeIkoneNamirnice,
+    "uputiZahtjevZaDodavanjeNamirniceNaSpisak": uputiZahtjevZaDodavanjeNamirniceNaSpisak,
+    "uputiZahtjevZaUklanjanjeNamirniceSaSpiska": uputiZahtjevZaUklanjanjeNamirniceSaSpiska,
+    "uputiZahtjevZaDobavljanjeSpiskaNamirnica": uputiZahtjevZaDobavljanjeSpiskaNamirnica
   }
 
 })();

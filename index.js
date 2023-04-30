@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const bazaPodataka = require("./pomoćniModuli/radSBazomPodataka.js");
 const komunikacija = require("./pomoćniModuli/elektronskaKomunikacija.js");
+const namirnica = require("./bazaPodataka/modeli/namirnica.js");
 
 
 const application = express();
@@ -258,7 +259,53 @@ application.get(/\/ikonaNamirnice\/[1-9]\d*/, (request, response) => {
       response.setHeader("Content-Length", bufferSlike.length);
       response.send(Buffer.from(rezultat, "binary"));
     });
-})
+});
+
+// URL: http://localhost:3000/dodajNamirnicuNaSpisak
+// TIJELO ZAHTJEVA: { namirnica }
+// ODGOVOR: { poruka: "Namirnica uspješno dodana!" / "Korisnik nije prijavljen na korisnički računa!" }
+application.post("/dodajNamirnicuNaSpisak", (request, response) => {
+  if (obradiNepostojanjeSesije(request, response))
+    return;
+  if (request.session.spisakNamirnica === undefined)
+    request.session.spisakNamirnica = [request.body.namirnica];
+  else
+    request.session.spisakNamirnica.push(request.body.namirnica);
+  response.setHeader("Content-Type", "application/json");
+  response.status(200);
+  response.send(JSON.stringify({ "poruka": "Namirnica uspješno dodana!" }));
+});
+
+// URL: http://localhost:3000/ukloniNamirnicuSaSpiska/{id}
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: { poruka: "Korisnik nije prijavljen na korisnički računa!" / "Namirnica nije ni bila na spisku!" } / [namirnice]
+application.post("/ukloniNamirnicuSaSpiska", (request, response) => {
+  if (obradiNepostojanjeSesije(request, response))
+    return;
+  response.setHeader("Content-Type", "application/json");
+  if (request.session.spisakNamirnica === undefined || request.session.spisakNamirnica.filter(element => element.id == request.body.id && element.gramaža == request.body.gramaža).length == 0) {
+    response.status(404);
+    response.send(JSON.stringify({ "poruka": "Namirnica nije ni bila na spisku!" }));
+    return;
+  }
+  const spisak = request.session.spisakNamirnica;
+  request.session.spisakNamirnica = [...spisak.slice(0, spisak.findIndex(element => element.id == request.body.id && element.gramaža == request.body.gramaža)), ...spisak.slice(spisak.findIndex(element => element.id == request.body.id && element.gramaža == request.body.gramaža) + 1, spisak.length)];
+  response.setHeader("Content-Type", "application/json");
+  response.status(200);
+  response.send(JSON.stringify(request.session.spisakNamirnica));
+});
+
+// URL: http://localhost:3000/dajSpisakNamirnica
+// TIJELO ZAHTJEVA: /
+// ODGOVOR: { poruka: "Korisnik nije prijavljen na korisnički račun!" } / [namirnice]
+application.get("/dajSpisakNamirnica", (request, response) => {
+  if (obradiNepostojanjeSesije(request, response))
+    return;
+  const spisakNamirnica = request.session.spisakNamirnica == undefined ? [] : request.session.spisakNamirnica;
+  response.setHeader("Content-Type", "application/json");
+  response.status(200);
+  response.send(JSON.stringify(spisakNamirnica));
+});
 
 application.listen(3000, (greška) => {
   if (greška)

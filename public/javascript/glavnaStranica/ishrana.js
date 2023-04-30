@@ -193,7 +193,6 @@ const Ishrana = (korijen, pomoćneInformacije) => {
 
   let meniJelaOtvoren = false;
   let selektovanoJelo = pomoćneInformacije.dostupnaJela[0];
-  let odabranaJela = [];
 
 
   const obradiPrikazivanjeListeDostupnihNamirnica = () => {
@@ -212,6 +211,13 @@ const Ishrana = (korijen, pomoćneInformacije) => {
     });
   });
 
+  // Ako u trenutnoj sesiji korisnik ima odabrane namirnice, prikazat će se!
+  upravljačZahtjevimaZaIshranu.uputiZahtjevZaDobavljanjeSpiskaNamirnica((greška, podaci) => {
+      JSON.parse(podaci).forEach(element => {
+        kreirajKarticuJela(element);
+      });
+  });
+
   const kreirajKarticuJela = (odabranoJelo) => {
 
     const kreirajDugmeZaBrisanje = () => {
@@ -220,10 +226,20 @@ const Ishrana = (korijen, pomoćneInformacije) => {
         let roditelj = event.target.parentNode;
         if (roditelj.tagName.toUpperCase() === "BUTTON")
           roditelj = roditelj.parentNode;
-        odabranaJela = odabranaJela.filter(jelo => jelo.naziv !== roditelj.children[0].children[1].children[0].innerText);
-        roditelj.remove();
-        if (uneseneNamirniceSekcija.innerHTML === "")
-          uneseneNamirniceSekcija.appendChild(kreirajObavijestOPraznomOdabiru());
+        const id = pomoćneInformacije.dostupnaJela.filter(jelo => jelo.naziv === roditelj.children[0].children[1].children[0].innerText)[0].id;
+        const gramaža = parseInt(roditelj.children[0].children[1].children[1].innerText.split("g")[0]);
+        upravljačZahtjevimaZaIshranu.uputiZahtjevZaProvjeruPrijave((greška, podaci) => {
+          if (greška)
+            location.href = "/html/prijava.html";
+          else {
+            upravljačZahtjevimaZaIshranu.uputiZahtjevZaUklanjanjeNamirniceSaSpiska(id, gramaža, (greška, podaci) => {
+              uneseneNamirniceSekcija.innerHTML = "";
+              JSON.parse(podaci).forEach(element => kreirajKarticuJela(element));
+              if (uneseneNamirniceSekcija.innerHTML === "")
+                uneseneNamirniceSekcija.appendChild(kreirajObavijestOPraznomOdabiru());
+            });
+          }
+        })
       }
 
       const dugmeZaBrisanje = kreirajDugme("brisanjeNamirnice", "");
@@ -301,8 +317,12 @@ const Ishrana = (korijen, pomoćneInformacije) => {
       gramažaPolje.classList.add("neispravanUnos");
       return;
     }
-    kreirajKarticuJela({ ...selektovanoJelo, "gramaža": gramaža });
-    odabranaJela.push({ ...selektovanoJelo, "gramaža": gramaža });
+    upravljačZahtjevimaZaIshranu.uputiZahtjevZaDodavanjeNamirniceNaSpisak({ ...selektovanoJelo, "gramaža": gramaža, }, (greška, podaci) => {
+      if (greška)
+        location.href = "/html/prijava.html";
+      else
+        kreirajKarticuJela({ ...selektovanoJelo, "gramaža": gramaža });
+    });
   }
 
   dugmeZaPotvrdu.addEventListener("click", () => {

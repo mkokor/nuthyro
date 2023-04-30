@@ -1,0 +1,36 @@
+[
+  {
+    "naziv": "Banana",
+    "referentnaMasa": 100,
+    "energija": 98.69,
+    "proteini": 1.1,
+    "masti": 0.3,
+    "ugljikohidrati": 22.8,
+    "vitaminA": 0.000003,
+    "vitaminE": 0.0001,
+    "vitaminD": 0,
+    "vitaminC": 0.0087,
+    "željezo": 0.0003,
+    "magnezij": 0.027,
+    "cink": 0.0002,
+    "bakar": 0.000078,
+    "selen": 0.000001
+  },
+  {
+    "naziv": "Kruh",
+    "referentnaMasa": 100,
+    "energija": 282.6,
+    "proteini": 9.8,
+    "masti": 2.6,
+    "ugljikohidrati": 55,
+    "vitaminA": 0,
+    "vitaminE": 0.0006,
+    "vitaminD": 0,
+    "vitaminC": 0,
+    "željezo": 0.0031,
+    "magnezij": 0.069,
+    "cink": 0.0015,
+    "bakar": 0.000290,
+    "selen": 0.000044
+  }
+]
