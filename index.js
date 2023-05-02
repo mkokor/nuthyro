@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 
 const bazaPodataka = require("./pomoćniModuli/radSBazomPodataka.js");
 const komunikacija = require("./pomoćniModuli/elektronskaKomunikacija.js");
-const namirnica = require("./bazaPodataka/modeli/namirnica.js");
 
 
 const application = express();
@@ -55,13 +54,53 @@ NuThyro`;
 }
 
 const sumirajNutritivnuVrijednost = (namirnice, nazivNutritivneVrijednosti) => {
-  let suma = 0;
-  namirnice.forEach(element => {
-    suma = suma + (element.gramaža / element.referentnaMasa) * element[nazivNutritivneVrijednosti];
-  });
-  return suma;
+  return namirnice.map(element => element[nazivNutritivneVrijednosti]).reduce((vrijednost, suma = 0) => suma = suma + vrijednost);
 } 
 
+const sumirajNutritivneVrijednosti = (namirnice) => {
+  return {
+    "energija": sumirajNutritivnuVrijednost(namirnice, "energija"),
+    "proteini": sumirajNutritivnuVrijednost(namirnice, "proteini"),
+    "masti": sumirajNutritivnuVrijednost(namirnice, "masti"),
+    "ugljikohidrati": sumirajNutritivnuVrijednost(namirnice, "ugljikohidrati"),
+    "vitaminA": sumirajNutritivnuVrijednost(namirnice, "vitaminA"),
+    "vitaminE": sumirajNutritivnuVrijednost(namirnice, "vitaminE"),
+    "vitaminD": sumirajNutritivnuVrijednost(namirnice, "vitaminD"),
+    "vitaminC": sumirajNutritivnuVrijednost(namirnice, "vitaminC"),
+    "željezo": sumirajNutritivnuVrijednost(namirnice, "željezo"),
+    "magnezij": sumirajNutritivnuVrijednost(namirnice, "magnezij"),
+    "cink": sumirajNutritivnuVrijednost(namirnice, "cink"),
+    "bakar": sumirajNutritivnuVrijednost(namirnice, "bakar"),
+    "selen": sumirajNutritivnuVrijednost(namirnice, "selen")
+  }
+}
+
+const sumirajDuplikate = (namirnice) => {
+  const jedinstveniElementi = [];
+  for (let i = 0; i < namirnice.length; i++)
+    if (jedinstveniElementi.filter(element => element.id == namirnice[i].id).length == 0)
+      jedinstveniElementi.push({...namirnice[i]});
+  jedinstveniElementi.forEach(jedinstveniElement => {
+    duplikatiJedinstvenogElementa = namirnice.filter(element => element.id == jedinstveniElement.id);
+    const sumiraneVrijednostiJedinstvenogElementa = sumirajNutritivneVrijednosti(duplikatiJedinstvenogElementa);
+    jedinstveniElement.energija = sumiraneVrijednostiJedinstvenogElementa.energija;
+    jedinstveniElement.proteini = sumiraneVrijednostiJedinstvenogElementa.proteini;
+    jedinstveniElement.masti = sumiraneVrijednostiJedinstvenogElementa.masti;
+    jedinstveniElement.ugljikohidrati = sumiraneVrijednostiJedinstvenogElementa.ugljikohidrati;
+    jedinstveniElement.vitaminA = sumiraneVrijednostiJedinstvenogElementa.vitaminA;
+    jedinstveniElement.vitaminE = sumiraneVrijednostiJedinstvenogElementa.vitaminE;
+    jedinstveniElement.vitaminD = sumiraneVrijednostiJedinstvenogElementa.vitaminD;
+    jedinstveniElement.vitaminC = sumiraneVrijednostiJedinstvenogElementa.vitaminC;
+    jedinstveniElement.željezo = sumiraneVrijednostiJedinstvenogElementa.željezo;
+    jedinstveniElement.magnezij = sumiraneVrijednostiJedinstvenogElementa.magnezij;
+    jedinstveniElement.cink = sumiraneVrijednostiJedinstvenogElementa.cink;
+    jedinstveniElement.bakar = sumiraneVrijednostiJedinstvenogElementa.bakar;
+    jedinstveniElement.selen = sumiraneVrijednostiJedinstvenogElementa.selen;
+    jedinstveniElement.gramaža = duplikatiJedinstvenogElementa.map(element => element.gramaža).reduce((vrijednost, suma = 0) => suma = suma + vrijednost);
+    delete jedinstveniElement.referentnaMasa;
+  });
+  return jedinstveniElementi;
+}
 
 // RUTE
 
@@ -275,13 +314,21 @@ application.get(/\/ikonaNamirnice\/[1-9]\d*/, (request, response) => {
 application.post("/dodajNamirnicuNaSpisak", (request, response) => {
   if (obradiNepostojanjeSesije(request, response))
     return;
-  if (request.session.spisakNamirnica === undefined)
-    request.session.spisakNamirnica = [request.body.namirnica];
-  else
-    request.session.spisakNamirnica.push(request.body.namirnica);
-  response.setHeader("Content-Type", "application/json");
-  response.status(200);
-  response.send(JSON.stringify({ "poruka": "Namirnica uspješno dodana!" }));
+    response.setHeader("Content-Type", "application/json");
+  bazaPodataka.postojiLiNamirnica(request.body.namirnica)
+    .then((rezultat) => {
+      if (!rezultat.namirnica) {
+        response.status(400);
+        response.send(JSON.stringify({ "poruka": "Nepostojeća namirnica!" }));
+        return;
+      }
+      if (request.session.spisakNamirnica === undefined)
+        request.session.spisakNamirnica = [request.body.namirnica];
+      else
+        request.session.spisakNamirnica.push(request.body.namirnica);
+      response.status(200);
+      response.send(JSON.stringify({ "poruka": "Namirnica uspješno dodana!" }));
+    });
 });
 
 // URL: http://localhost:3000/ukloniNamirnicuSaSpiska/{id}
@@ -327,19 +374,8 @@ application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
   const namirnice = request.session.spisakNamirnica;
   response.status(200);
   response.send(JSON.stringify({
-    "energija": sumirajNutritivnuVrijednost(namirnice, "energija"),
-    "proteini": sumirajNutritivnuVrijednost(namirnice, "proteini"),
-    "masti": sumirajNutritivnuVrijednost(namirnice, "masti"),
-    "ugljikohidrati": sumirajNutritivnuVrijednost(namirnice, "ugljikohidrati"),
-    "vitaminA": sumirajNutritivnuVrijednost(namirnice, "vitaminA"),
-    "vitaminE": sumirajNutritivnuVrijednost(namirnice, "vitaminE"),
-    "vitaminD": sumirajNutritivnuVrijednost(namirnice, "vitaminD"),
-    "vitaminC": sumirajNutritivnuVrijednost(namirnice, "vitaminC"),
-    "željezo": sumirajNutritivnuVrijednost(namirnice, "željezo"),
-    "magnezij": sumirajNutritivnuVrijednost(namirnice, "magnezij"),
-    "cink": sumirajNutritivnuVrijednost(namirnice, "cink"),
-    "bakar": sumirajNutritivnuVrijednost(namirnice, "bakar"),
-    "selen": sumirajNutritivnuVrijednost(namirnice, "selen") 
+    "pojedinačneVrijednosti": sumirajDuplikate(namirnice),
+    "sumarneVrijednosti": sumirajNutritivneVrijednosti(namirnice) 
   }));
 });
 

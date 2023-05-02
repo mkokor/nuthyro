@@ -323,6 +323,38 @@ const dajIkonuNamirnice = (id) => {
   });
 }
 
+const postojiLiNamirnica = (namirnica) => {
+  return new Promise((resolve, reject) => {
+    bazaPodataka.Namirnica.findOne({ "where": {
+      "id": namirnica.id,
+      "naziv": namirnica.naziv,
+      "referentnaMasa": namirnica.referentnaMasa,
+      "energija": namirnica.energija,
+      "proteini": namirnica.proteini,
+      "masti": namirnica.masti,
+      "ugljikohidrati": namirnica.ugljikohidrati,
+      "vitaminA": namirnica.vitaminA,
+      "vitaminE": namirnica.vitaminE,
+      "vitaminD": namirnica.vitaminD,
+      "vitaminC": namirnica.vitaminC,
+      "željezo": namirnica.željezo,
+      "magnezij": namirnica.magnezij,
+      "cink": namirnica.cink,
+      "bakar": namirnica.bakar,
+      "selen": namirnica.selen
+    }})
+      .then((rezultat) => {
+        if (rezultat)
+          resolve({ "namirnica": true });
+        else
+          resolve({ "namirnica": false })
+      })
+      .catch(() => {
+        reject("Greška u pristupu bazi podataka!");
+      });
+  });
+}
+
 
 module.exports = {
   "postojiLiKorisničkiRačun": postojiLiKorisničkiRačun,
@@ -335,5 +367,6 @@ module.exports = {
   "dodajEnergetskeVrijednostiZaKorisnika": dodajEnergetskeVrijednostiZaKorisnika,
   "dajEnergetskeVrijednostiZaKorisnika": dajEnergetskeVrijednostiZaKorisnika,
   "dajDostupneNamirnice": dajDostupneNamirnice,
-  "dajIkonuNamirnice": dajIkonuNamirnice
+  "dajIkonuNamirnice": dajIkonuNamirnice,
+  "postojiLiNamirnica": postojiLiNamirnica
 }
