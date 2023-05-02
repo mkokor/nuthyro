@@ -258,6 +258,35 @@
   height: 100%;
 }
 
+#izvještajOIshrani {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#sumarneVrijednostiNutrijenata {
+  font-family: "Lato", sans-serif;
+  width: 1200px;
+  table-layout: fixed;
+}
+
+#sumarneVrijednostiNutrijenata th {
+  font-size: 16px !important;
+}
+
+#sumarneVrijednostiNutrijenata th,
+#sumarneVrijednostiNutrijenata td {
+  width: 80px;
+}
+
+.širaKolona {
+  width: 110px !important;
+}
+
+.broj {
+  text-align: right;
+}
+
 @media screen and (max-width: 870px) {
   
   #ishrana {
