@@ -190,6 +190,7 @@ const Ishrana = (korijen, pomoćneInformacije) => {
   const dugmeZaPotvrdu = document.getElementById("potvrdiUnosJela");
   const gramažaPolje = document.getElementById("gramaža");
   const uneseneNamirniceSekcija = document.getElementById("uneseneNamirnice");
+  const generisanjeIzvještajaOIshrani = document.getElementById("generisanjeIzvještajaOIshrani");
 
   let meniJelaOtvoren = false;
   let selektovanoJelo = pomoćneInformacije.dostupnaJela[0];
@@ -338,6 +339,87 @@ const Ishrana = (korijen, pomoćneInformacije) => {
 
   gramažaPolje.addEventListener("focus", () => {
     gramažaPolje.classList.remove("neispravanUnos");
+  });
+
+  generisanjeIzvještajaOIshrani.addEventListener("click", () => {
+    upravljačZahtjevimaZaIshranu.uputiZahtjevZaSumarneNutritivneVrijednosti((greška, podaci) => {
+      if (greška) {
+        location.href = "/html/prijava.html";
+        return;
+      }
+      IzvještajOIshrani(korijen, {
+        "izvještaj": {
+          "nasloviKolona": [
+            {
+              "naslov": "",
+              "klase": []
+            },
+            {
+              "naslov": "Naziv",
+              "klase": []
+            },
+            {
+              "naslov": "Količina [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Energija [kcal]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Proteini [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Masti [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Saharidi [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Vitamin A [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Vitamin E [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Vitamin C [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Vitamin D [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Željezo [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Magnezij [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Cink [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Bakar [g]",
+              "klase": ["zaglavljeBroj"]
+            },
+            {
+              "naslov": "Selen [g]",
+              "klase": ["zaglavljeBroj"]
+            }
+          ],
+          "pojedinačneVrijednosti": JSON.parse(podaci).pojedinačneVrijednosti,
+          "sumarneVrijednosti": JSON.parse(podaci).sumarneVrijednosti
+        }
+      });
+    });
   });
 
 }

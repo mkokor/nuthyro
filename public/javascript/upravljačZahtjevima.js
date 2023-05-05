@@ -151,6 +151,13 @@ const UpravljačZahtjevima = (() => {
     http.send();
   }
 
+  const uputiZahtjevZaSumarneNutritivneVrijednosti = (obradiOdgovor) => {
+    const http = new XMLHttpRequest();
+    postaviObraduOdgovora(http, obradiOdgovor);
+    http.open("GET", "/dajSumarneNutritivneVrijednosti");
+    http.send();
+  }
+
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
@@ -166,7 +173,8 @@ const UpravljačZahtjevima = (() => {
     "uputiZahtjevZaDobavljanjeIkoneNamirnice": uputiZahtjevZaDobavljanjeIkoneNamirnice,
     "uputiZahtjevZaDodavanjeNamirniceNaSpisak": uputiZahtjevZaDodavanjeNamirniceNaSpisak,
     "uputiZahtjevZaUklanjanjeNamirniceSaSpiska": uputiZahtjevZaUklanjanjeNamirniceSaSpiska,
-    "uputiZahtjevZaDobavljanjeSpiskaNamirnica": uputiZahtjevZaDobavljanjeSpiskaNamirnica
+    "uputiZahtjevZaDobavljanjeSpiskaNamirnica": uputiZahtjevZaDobavljanjeSpiskaNamirnica,
+    "uputiZahtjevZaSumarneNutritivneVrijednosti": uputiZahtjevZaSumarneNutritivneVrijednosti
   }
 
 })();

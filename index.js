@@ -54,11 +54,12 @@ NuThyro`;
 }
 
 const sumirajNutritivnuVrijednost = (namirnice, nazivNutritivneVrijednosti) => {
-  return namirnice.map(element => element[nazivNutritivneVrijednosti]).reduce((vrijednost, suma = 0) => suma = suma + vrijednost);
+  return namirnice.map(element => element[nazivNutritivneVrijednosti]).reduce((vrijednost, suma) => suma = suma + vrijednost, 0);
 } 
 
 const sumirajNutritivneVrijednosti = (namirnice) => {
   return {
+    "naziv": "TOTAL",
     "energija": sumirajNutritivnuVrijednost(namirnice, "energija"),
     "proteini": sumirajNutritivnuVrijednost(namirnice, "proteini"),
     "masti": sumirajNutritivnuVrijednost(namirnice, "masti"),
@@ -71,7 +72,8 @@ const sumirajNutritivneVrijednosti = (namirnice) => {
     "magnezij": sumirajNutritivnuVrijednost(namirnice, "magnezij"),
     "cink": sumirajNutritivnuVrijednost(namirnice, "cink"),
     "bakar": sumirajNutritivnuVrijednost(namirnice, "bakar"),
-    "selen": sumirajNutritivnuVrijednost(namirnice, "selen")
+    "selen": sumirajNutritivnuVrijednost(namirnice, "selen"),
+    "gramaža": sumirajNutritivnuVrijednost(namirnice, "gramaža")
   }
 }
 
@@ -96,7 +98,7 @@ const sumirajDuplikate = (namirnice) => {
     jedinstveniElement.cink = sumiraneVrijednostiJedinstvenogElementa.cink;
     jedinstveniElement.bakar = sumiraneVrijednostiJedinstvenogElementa.bakar;
     jedinstveniElement.selen = sumiraneVrijednostiJedinstvenogElementa.selen;
-    jedinstveniElement.gramaža = duplikatiJedinstvenogElementa.map(element => element.gramaža).reduce((vrijednost, suma = 0) => suma = suma + vrijednost);
+    jedinstveniElement.gramaža = duplikatiJedinstvenogElementa.map(element => element.gramaža).reduce((vrijednost, suma) => suma = suma + vrijednost, 0);
     delete jedinstveniElement.referentnaMasa;
   });
   return jedinstveniElementi;
@@ -366,16 +368,11 @@ application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
   if (obradiNepostojanjeSesije(request, response))
     return;
   response.setHeader("Content-Type", "application/json");
-  if (request.session.spisakNamirnica === undefined) {
-    response.status(404);
-    response.send(JSON.stringify({ "poruka": "Nije unesena niti jedna namirnica!" }));
-    return;
-  }
   const namirnice = request.session.spisakNamirnica;
   response.status(200);
   response.send(JSON.stringify({
-    "pojedinačneVrijednosti": sumirajDuplikate(namirnice),
-    "sumarneVrijednosti": sumirajNutritivneVrijednosti(namirnice) 
+    "pojedinačneVrijednosti": namirnice === undefined ? [] : sumirajDuplikate(namirnice),
+    "sumarneVrijednosti": sumirajNutritivneVrijednosti(namirnice === undefined ? [] : namirnice) 
   }));
 });
 
