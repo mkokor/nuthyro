@@ -200,6 +200,14 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
       porukaObavijesti.style.opacity = "0";
     });
 
+    dugmeZaPreuzimanje.addEventListener("click", () => {
+      const izvještajOIshrani = new jsPDF();
+      const sadržajIzvještaj = document.createElement("h1");
+      sadržajIzvještaj.innerText = "Izvještaj";
+      izvještajOIshrani.fromHTML(sadržajIzvještaj, 10, 10, { "isUnicode": true });
+      izvještajOIshrani.save("izvještaj.pdf");
+    });
+
     povratniLink.addEventListener("click", () => {
       upravljačZahtjevimaZaIzvještaj.uputiZahtjevZaDobavljanjeDostupnihNamirnica((greška, rezultat) => {
         if (greška) {
