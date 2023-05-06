@@ -77,6 +77,14 @@ const sumirajNutritivneVrijednosti = (namirnice) => {
   }
 }
 
+const dajTrenutniDatum = () => {
+  const datum = new Date();
+  const dan = String(datum.getDate()).padStart(2, '0');
+  const mjesec = String(datum.getMonth() + 1).padStart(2, '0');
+  const godina = datum.getFullYear();
+  return `${dan}.${mjesec}.${godina}.`;
+}
+
 const sumirajDuplikate = (namirnice) => {
   const jedinstveniElementi = [];
   for (let i = 0; i < namirnice.length; i++)
@@ -371,6 +379,8 @@ application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
   const namirnice = request.session.spisakNamirnica;
   response.status(200);
   response.send(JSON.stringify({
+    "korisničkoIme": request.session.korisničkoIme,
+    "datum": dajTrenutniDatum(),
     "pojedinačneVrijednosti": namirnice === undefined ? [] : sumirajDuplikate(namirnice),
     "sumarneVrijednosti": sumirajNutritivneVrijednosti(namirnice === undefined ? [] : namirnice) 
   }));

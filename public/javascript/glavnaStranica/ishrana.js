@@ -347,78 +347,84 @@ const Ishrana = (korijen, pomoćneInformacije) => {
         location.href = "/html/prijava.html";
         return;
       }
-      IzvještajOIshrani(korijen, {
-        "izvještaj": {
-          "nasloviKolona": [
-            {
-              "naslov": "",
-              "klase": []
-            },
-            {
-              "naslov": "Naziv",
-              "klase": []
-            },
-            {
-              "naslov": "Količina [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Energija [kcal]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Proteini [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Masti [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Saharidi [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Vitamin A [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Vitamin E [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Vitamin C [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Vitamin D [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Željezo [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Magnezij [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Cink [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Bakar [g]",
-              "klase": ["zaglavljeBroj"]
-            },
-            {
-              "naslov": "Selen [g]",
-              "klase": ["zaglavljeBroj"]
-            }
-          ],
-          "pojedinačneVrijednosti": JSON.parse(podaci).pojedinačneVrijednosti,
-          "sumarneVrijednosti": JSON.parse(podaci).sumarneVrijednosti
-        }
-      });
+      upravljačZahtjevimaZaIshranu.uputiZahtjevZaDobavljanjeEnergetskihVrijedosti((pronađeni, energetskeVrijednosti) => {
+        IzvještajOIshrani(korijen, {
+          "izvještaj": {
+            "nasloviKolona": [
+              {
+                "naslov": "",
+                "klase": []
+              },
+              {
+                "naslov": "Naziv",
+                "klase": []
+              },
+              {
+                "naslov": "Količina [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Energija [kcal]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Proteini [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Masti [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Saharidi [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Vitamin A [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Vitamin E [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Vitamin C [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Vitamin D [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Željezo [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Magnezij [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Cink [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Bakar [g]",
+                "klase": ["zaglavljeBroj"]
+              },
+              {
+                "naslov": "Selen [g]",
+                "klase": ["zaglavljeBroj"]
+              }
+            ],
+            "korisničkoIme": JSON.parse(podaci).korisničkoIme,
+            "datum": JSON.parse(podaci).datum,
+            "bmi": pronađeni == false ? JSON.parse(energetskeVrijednosti).bmi : "/",
+            "tdee": pronađeni == false ? JSON.parse(energetskeVrijednosti).tdee : "/",
+            "pojedinačneVrijednosti": JSON.parse(podaci).pojedinačneVrijednosti,
+            "sumarneVrijednosti": JSON.parse(podaci).sumarneVrijednosti
+          }
+        });
+      })
     });
   });
 

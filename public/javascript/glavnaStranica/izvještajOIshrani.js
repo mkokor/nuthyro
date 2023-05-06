@@ -72,8 +72,8 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
 
       const kreirajSekcijuObavijesti = () => {
         const omotač = kreirajOmotač("porukaObavijesti");
-        const obavijest = kreirajOmotač("porukaObavijestiPdf");
-        obavijest.innerText = "Preuzmi izvještaj u PDF formatu"
+        const obavijest = kreirajOmotač("porukaObavijestiJson");
+        obavijest.innerText = "Preuzmite izvještaj u JSON formatu"
         omotač.appendChild(obavijest);
         return omotač;
       }
@@ -190,9 +190,11 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
     const dugmeZaPreuzimanje = document.getElementById("dugmeZaPreuzimanje");
     const porukaObavijesti = document.getElementById("porukaObavijesti");
     const povratniLink = document.getElementById("povratniLink");
+    const porukaObavijestiTekst = document.getElementById("porukaObavijstiJson");
 
 
     dugmeZaPreuzimanje.addEventListener("mouseover", () => {
+      porukaObavijestiJson.innerText = "Preuzmite izvještaj u JSON formatu";
       porukaObavijesti.style.opacity = "1";
     });
 
@@ -201,11 +203,33 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
     });
 
     dugmeZaPreuzimanje.addEventListener("click", () => {
-      const izvještajOIshrani = new jsPDF();
-      const sadržajIzvještaj = document.createElement("h1");
-      sadržajIzvještaj.innerText = "Izvještaj";
-      izvještajOIshrani.fromHTML(sadržajIzvještaj, 10, 10, { "isUnicode": true });
-      izvještajOIshrani.save("izvještaj.pdf");
+      if (pomoćneInformacije.izvještaj.bmi == "/") {
+        porukaObavijesti.style.opacity = "1";
+        porukaObavijestiJson.innerText = "Popunite formu Nutri Kalkulatora";
+        return;
+      }
+      upravljačZahtjevimaZaIzvještaj.uputiZahtjevZaProvjeruPrijave((greška, podaci) => {
+        if (greška) {
+          location.href = "/html/prijava.html";
+          return;
+        }
+        const izvještaj = {
+          "datum": pomoćneInformacije.izvještaj.datum,
+          "korisničkoIme": pomoćneInformacije.izvještaj.korisničkoIme,
+          "mjernaJedinicaZaEnergiju": "kcal",
+          "mjernaJedinicaZaMasu": "g",
+          "bmi": pomoćneInformacije.izvještaj.bmi,
+          "tdee": pomoćneInformacije.izvještaj.tdee,
+          "pojedinačneNamirnice": pomoćneInformacije.izvještaj.pojedinačneVrijednosti.sort((a, b) => (a.id > b.id ? 1 : -1)),
+          "sumarneVrijednosti": pomoćneInformacije.izvještaj.sumarneVrijednosti
+        }
+        const blob = new Blob([JSON.stringify(izvještaj, null, 2)], { "type": "application/json"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "izvještajOIshrani.json");
+        link.click();
+      });
     });
 
     povratniLink.addEventListener("click", () => {
