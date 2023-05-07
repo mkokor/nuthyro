@@ -70,6 +70,37 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
         return omotač;
       }
 
+      const kreirajPorukuUpozorenja = () => {
+
+        const kreirajIkonuUpozorenja = () => {
+          const omotač = kreirajOmotač();
+          const ikona = document.createElement("img");
+          ikona.src = "../slike/ikone/upozorenje.png";
+          ikona.alt = "upozorenje";
+          omotač.appendChild(ikona);
+          return omotač;
+        }
+
+        const kreirajTekst = () => {
+          const omotač = kreirajOmotač();
+          const naslov = document.createElement("h1");
+          naslov.innerText = "Nepotpun unos!"
+          const opis = document.createElement("p");
+          opis.innerText = "Popunite formu Nutri Kalkulatora kako bi generisali vrijednosti BMI i TDEE.";
+          omotač.appendChild(naslov);
+          omotač.appendChild(opis);
+          return omotač;
+        }
+
+        const porukaUpozorenja = kreirajOmotač("porukaUpozorenja");
+        porukaUpozorenja.appendChild(kreirajIkonuUpozorenja());
+        porukaUpozorenja.appendChild(kreirajTekst());
+        porukaUpozorenja.classList.add("porukaUpozorenja");
+        
+        return porukaUpozorenja;
+      
+      }
+
       const kreirajSekcijuObavijesti = () => {
         const omotač = kreirajOmotač("porukaObavijesti");
         const obavijest = kreirajOmotač("porukaObavijestiJson");
@@ -87,6 +118,7 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
 
       const naslovIzvještaja = kreirajOmotač("naslovIzvještaja");
       naslovIzvještaja.appendChild(kreirajSekcijuNaziva());
+      naslovIzvještaja.appendChild(kreirajPorukuUpozorenja());
       naslovIzvještaja.appendChild(kreirajSekcijuObavijesti());
       naslovIzvještaja.appendChild(kreirajDugmeZaPreuzimanjeIzvještaja());
 
@@ -190,11 +222,10 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
     const dugmeZaPreuzimanje = document.getElementById("dugmeZaPreuzimanje");
     const porukaObavijesti = document.getElementById("porukaObavijesti");
     const povratniLink = document.getElementById("povratniLink");
-    const porukaObavijestiTekst = document.getElementById("porukaObavijstiJson");
+    const porukaUpozorenja = Array.from(document.getElementsByClassName("porukaUpozorenja"))[0];
 
 
     dugmeZaPreuzimanje.addEventListener("mouseover", () => {
-      porukaObavijestiJson.innerText = "Preuzmite izvještaj u JSON formatu";
       porukaObavijesti.style.opacity = "1";
     });
 
@@ -204,8 +235,10 @@ const IzvještajOIshrani = (korijen, pomoćneInformacije) => {
 
     dugmeZaPreuzimanje.addEventListener("click", () => {
       if (pomoćneInformacije.izvještaj.bmi == "/") {
-        porukaObavijesti.style.opacity = "1";
-        porukaObavijestiJson.innerText = "Popunite formu Nutri Kalkulatora";
+        porukaUpozorenja.style.opacity = "1";
+        setTimeout(() => {
+          porukaUpozorenja.style.opacity = "0";
+        }, 5000);
         return;
       }
       upravljačZahtjevimaZaIzvještaj.uputiZahtjevZaProvjeruPrijave((greška, podaci) => {

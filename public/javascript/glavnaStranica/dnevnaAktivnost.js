@@ -282,7 +282,7 @@ const DnevnaAktivnost = (korijen, podaci) => {
       "poljeZaUnos": unosVisine
     },
     {
-      "regularniIzraz": /^(\d{2,3})(\.{0,1})(\d*)$/,
+      "regularniIzraz": /^(\d{1,3})(\.{0,1})(\d*)$/,
       "poljeZaUnos": unosTežine
     }
   ]

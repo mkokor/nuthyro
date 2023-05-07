@@ -150,6 +150,44 @@
   margin-top: -20px;
 }
 
+.porukaUpozorenja {
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lato", sans-serif;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  padding: 10px 10px 10px;
+  color: white;
+  background-color: #1D1C1A;
+  border-radius: 10px;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.porukaUpozorenja:nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.porukaUpozorenja h1 {
+  font-size: 20px !important;
+  margin: 0px 0px 0px 0px;
+}
+
+.porukaUpozorenja p {
+  color: rgba(255, 255, 255, 0.8);
+  text-align: justify;
+  margin: 0px 0px 0px 0px;
+  font-size: 12px;
+}
+
 @media screen and (max-width: 870px) {
 
   #izvještajOIshrani {
