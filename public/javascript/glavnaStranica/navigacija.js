@@ -18,6 +18,30 @@ window.onload = () => {
   upravljačZahtjevima.uputiZahtjevZaProvjeruPrijave((greška, sadržaj) => {
     if (greška)
       location.href = "/html/prijava.html";
+    else {
+      prebaciTab(početna, [...dnevnaAktivnost, ...ishrana], Početna, {
+        "meniStavke": [
+          {
+            "id": "hashimotoOboljenje",
+            "naziv": "Hashimoto oboljenje",
+            "ikona": "../slike/ikone/štitnaŽlijezda.png",
+            "alternativniTekst": "štitnaŽlijezda",
+          },
+          {
+            "id": "prehrana",
+            "naziv": "Prehrana",
+            "ikona": "../slike/ikone/jabuka.png",
+            "alternativniTekst": "jabuka",
+          },
+          {
+            "id": "oAplikaciji",
+            "naziv": "O Aplikaciji",
+            "ikona": "../slike/ikone/oAplikaciji.png",
+            "alternativniTekst": "oAplikaciji",
+          },
+        ]
+      });
+    }
   });
 }
 
@@ -91,7 +115,28 @@ const prebaciNaIshranu = () => {
 
 početna.forEach(stavka => {
   stavka.addEventListener("click", () => { 
-    prebaciTab(početna, [...dnevnaAktivnost, ...ishrana], Početna); 
+    prebaciTab(početna, [...dnevnaAktivnost, ...ishrana], Početna, {
+      "meniStavke": [
+        {
+          "id": "hashimotoOboljenje",
+          "naziv": "Hashimoto oboljenje",
+          "ikona": "../slike/ikone/štitnaŽlijezda.png",
+          "alternativniTekst": "štitnaŽlijezda",
+        },
+        {
+          "id": "prehrana",
+          "naziv": "Prehrana",
+          "ikona": "../slike/ikone/jabuka.png",
+          "alternativniTekst": "jabuka",
+        },
+        {
+          "id": "oAplikaciji",
+          "naziv": "O Aplikaciji",
+          "ikona": "../slike/ikone/oAplikaciji.png",
+          "alternativniTekst": "oAplikaciji",
+        },
+      ]
+    }); 
   });
 });
 

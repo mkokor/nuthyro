@@ -159,7 +159,7 @@ input[type="text"]:hover {
   transition: all 0.2s;
 }
 
-.spol img{
+.spol img {
   width: 50%;
 }
 
@@ -295,7 +295,7 @@ th, td {
   }
 
   #objašnjenje {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 2px -5px rgba(55, 93, 74, 0.8);
     padding: 0px 0px 20px;
     margin: 0px 0px 0px 0px;
   }
@@ -317,7 +317,7 @@ th, td {
   }
 
   #objašnjenje {
-    border-left: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: -5px 0 2px -5px rgba(55, 93, 74, 0.8);
   }
 
 }

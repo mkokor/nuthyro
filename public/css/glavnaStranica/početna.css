@@ -1,3 +1,121 @@
-#meniStavkaPočetna img {
-  width: 70px;
+#početna {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Lato", sans-serif;
+  gap: 21px;
+}
+
+#meniPočetna {
+  height: 360px;
+  position: relative;
+}
+
+#meniPočetna {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 600px;
+  height: 180px;
+  gap: 10px;
+}
+
+.meniStavkaPočetna img {
+  width: 90px;
+}
+
+#naslovPočetna {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#sakrijTekstDugme {
+  background-color: transparent;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+#sakrijTekstDugme img:hover,
+#sakrijTekstDugme:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+#sakrijTekstDugme img {
+  width: 30px;
+}
+
+.meniStavkaPočetna {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  border-radius: 25px;
+  box-shadow: 0px 0px 2px rgba(55, 93, 74, 0.8);
+  font-weight: bold;
+  transition: all 0.2s;
+  opacity: 0.6;
+}
+
+.meniStavkaPočetna:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.meniStavkaPočetna label:hover {
+  cursor: pointer;
+}
+
+.meniStavkaPočetna:hover {
+  box-shadow: 0px 0px 4px rgba(55, 93, 74, 0.6);
+}
+
+.odabranaMeniStavkaPočetna:hover,
+.odabranaMeniStavkaPočetna {
+  cursor: default;
+  box-shadow: 0px 0px 4px rgba(55, 93, 74, 0.8);
+  opacity: 1;
+}
+
+#tekstPočetna {
+  width: 600px;
+  box-shadow: 0px -5px 2px -5px rgba(55, 93, 74, 0.8);
+  position: absolute;
+  top: 200px;
+  visibility: hidden;
+}
+
+#tekstPočetna p {
+  text-align: justify;
+  margin-top: 0px;
+}
+
+.neodabranaMeniStavkaPočetna {
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
+
+.neodabranaMeniStavkaPočetna:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 850px) {
+
+  #početna {
+    margin-top: -250px;
+  }
+  
+}
+
+@media screen and (min-width: 851px) {
+  
+  #početna {
+    margin-top: -100px;
+  }
+
 }
