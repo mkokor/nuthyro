@@ -1,7 +1,11 @@
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
 
+
+const { CLIENT_ID, CLIENT_SECRET } = require("./pomoćniModuli/env.js");
 const bazaPodataka = require("./pomoćniModuli/radSBazomPodataka.js");
 const komunikacija = require("./pomoćniModuli/elektronskaKomunikacija.js");
 
@@ -16,6 +20,19 @@ application.use(session({
   "secret": "tajniKodKojimSePotpisujeKolačić",
   "saveUninitialized": false,
   "resave": false
+}));
+
+// INICIJALIZACIJA Passport PAKETA ZA Google OAuth2
+application.use(passport.initialize());
+application.use(passport.session());
+passport.use(new GoogleStrategy({
+  "clientID": CLIENT_ID,
+  "clientSecret": CLIENT_SECRET,
+  "callbackURL": "http://localhost:3000/googlePrijava",
+  "session": false
+}, (accessToken, refreshToken, profile, done) => {
+  console.log(profile);
+  return done(null, profile);
 }));
 
 
@@ -385,6 +402,7 @@ application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
     "sumarneVrijednosti": sumirajNutritivneVrijednosti(namirnice === undefined ? [] : namirnice) 
   }));
 });
+
 
 application.listen(3000, (greška) => {
   if (greška)
