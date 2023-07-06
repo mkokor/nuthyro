@@ -158,13 +158,6 @@ const UpravljačZahtjevima = (() => {
     http.send();
   }
 
-  const uputiZahtjevZaGoogleOAuth2 = (obradiOdgovor) => {
-    const http = new XMLHttpRequest();
-    postaviObraduOdgovora(http, obradiOdgovor);
-    http.open("POST", "/googlePrijava");
-    http.send();
-  }
-
   return {
     "uputiZahtjevZaRegistraciju": uputiZahtjevZaRegistraciju,
     "uputiZahtjevZaPrijavu": uputiZahtjevZaPrijavu,
@@ -181,8 +174,7 @@ const UpravljačZahtjevima = (() => {
     "uputiZahtjevZaDodavanjeNamirniceNaSpisak": uputiZahtjevZaDodavanjeNamirniceNaSpisak,
     "uputiZahtjevZaUklanjanjeNamirniceSaSpiska": uputiZahtjevZaUklanjanjeNamirniceSaSpiska,
     "uputiZahtjevZaDobavljanjeSpiskaNamirnica": uputiZahtjevZaDobavljanjeSpiskaNamirnica,
-    "uputiZahtjevZaSumarneNutritivneVrijednosti": uputiZahtjevZaSumarneNutritivneVrijednosti,
-    "uputiZahtjevZaGoogleOAuth2": uputiZahtjevZaGoogleOAuth2
+    "uputiZahtjevZaSumarneNutritivneVrijednosti": uputiZahtjevZaSumarneNutritivneVrijednosti
   }
 
 })();

@@ -403,25 +403,17 @@ application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
   }));
 });
 
-application.post("/googlePrijava", obradiPostojanjeSesijeGoogleOAuth2, passport.authenticate("google", {
+application.get("/googlePrijava", obradiPostojanjeSesijeGoogleOAuth2, passport.authenticate("google", {
   "scope": ["profile"]
 }));
 
 application.get("/googlePrijavaPovratak", obradiPostojanjeSesijeGoogleOAuth2, (request, response) => {
   passport.authenticate("google", (greška, korisnik, info) => {
-    if (!korisnik) {
-      response.setHeader("Content-Type", "application/json");
-      response.status(401);
-      response.send(JSON.stringify({
-        "googleOAuth2": false
-      }));
-    } else {
+    if (!korisnik)
+      response.redirect("/html/prijava.html");
+    else {
       request.session.korisničkoIme = `${korisnik.name.givenName} ${korisnik.name.familyName}`;
-      response.setHeader("Content-Type", "application/json");
-      response.status(200);
-      response.send(JSON.stringify({
-        "googleOAuth2": true
-      }));
+      response.redirect("/html/glavna.html");
     }
   })(request, response);
 });

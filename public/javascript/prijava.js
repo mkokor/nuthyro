@@ -69,3 +69,7 @@ unosKorisničkogImena.addEventListener("focus", () => {
 unosLozinke.addEventListener("focus", () => {
   unosLozinke.classList.remove("neispravanUnos");
 });
+
+googlePrijavaDugme.addEventListener("click", () => {
+  location.href = "/googlePrijava";
+});
