@@ -5,6 +5,7 @@ const unosKorisničkogImena = document.getElementById("korisničkoIme");
 const unosLozinke = document.querySelector("input[type=password]");
 const registracija = document.getElementById("registracijaDugme");
 const promjenaLozinke = document.getElementById("promjenaLozinke");
+const googlePrijavaDugme = document.getElementById("googlePrijavaDugme");
 
 const upravljačZahtjevima = UpravljačZahtjevima;
 

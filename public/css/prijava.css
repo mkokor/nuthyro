@@ -105,36 +105,36 @@ button:active {
   display: block;
 }
 
-#googlePrijava {
+#googlePrijavaDugme {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#googlePrijava img {
+#googlePrijavaDugme img {
   left: 20px;
   position: absolute;
   width: 30px;
 }
 
-#googlePrijava label:hover {
+#googlePrijavaDugme label:hover {
   cursor: pointer;
 }
 
-#googlePrijava,
+#googlePrijavaDugme,
 #registracijaDugme {
   background-color: white;
   border: 2px solid #375d4a;
   color: #375d4a;
 }
 
-#googlePrijava:hover,
+#googlePrijavaDugme:hover,
 #registracijaDugme:hover {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
-#googlePrijava:active,
+#googlePrijavaDugme:active,
 #registracijaDugme:active {
   background-color: rgba(255, 255, 255, 0.5);
 }
