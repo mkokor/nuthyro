@@ -1,13 +1,10 @@
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
 
-
-const { CLIENT_ID, CLIENT_SECRET } = require("./pomoćniModuli/env.js");
 const bazaPodataka = require("./pomoćniModuli/radSBazomPodataka.js");
 const komunikacija = require("./pomoćniModuli/elektronskaKomunikacija.js");
+const passport = require("./pomoćniModuli/googleOAuth2Konfiguracija.js");
 
 
 const application = express();
@@ -22,21 +19,24 @@ application.use(session({
   "resave": false
 }));
 
-// INICIJALIZACIJA Passport PAKETA ZA Google OAuth2
 application.use(passport.initialize());
 application.use(passport.session());
-passport.use(new GoogleStrategy({
-  "clientID": CLIENT_ID,
-  "clientSecret": CLIENT_SECRET,
-  "callbackURL": "http://localhost:3000/googlePrijava",
-  "session": false
-}, (accessToken, refreshToken, profile, done) => {
-  console.log(profile);
-  return done(null, profile);
-}));
 
 
 // POMOĆNE FUNKCIJE
+
+const obradiPostojanjeSesijeGoogleOAuth2 = (request, response, next) => {
+  if (request.session.korisničkoIme) {
+    response.setHeader("Content-Type", "application/json");
+    response.status(403);
+    response.send(JSON.stringify({ 
+      "poruka": "Postoji aktivna sesija",
+      "prijavljeniKorisnik": request.session.korisničkoIme 
+    }));
+    return;
+  }
+  next();  
+}
 
 const obradiPostojanjeSesije = (request, response) => {
   if (request.session.korisničkoIme) {
@@ -401,6 +401,22 @@ application.get("/dajSumarneNutritivneVrijednosti", (request, response) => {
     "pojedinačneVrijednosti": namirnice === undefined ? [] : sumirajDuplikate(namirnice),
     "sumarneVrijednosti": sumirajNutritivneVrijednosti(namirnice === undefined ? [] : namirnice) 
   }));
+});
+
+application.get("/googlePrijava", obradiPostojanjeSesijeGoogleOAuth2, passport.authenticate("google", {
+  "scope": ["profile"]
+}));
+
+application.get("/googlePrijavaPovratak", obradiPostojanjeSesijeGoogleOAuth2, (request, response) => {
+  passport.authenticate("google", (greška, korisnik, info) => {
+    if (!korisnik)
+      response.redirect("/html/prijava.html");
+    else {
+      request.session.korisničkoIme = `${korisnik.name.givenName} ${korisnik.name.familyName}`;
+      console.log(request.session);
+      response.redirect("/html/glavna.html");
+    }
+  })(request, response);
 });
 
 

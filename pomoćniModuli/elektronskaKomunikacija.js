@@ -4,15 +4,16 @@
 
 
 const nodemailer = require("nodemailer");
-const { EMAIL, PASSWORD } = require("./env.js");
+
+require("dotenv").config();
 
 
 const kreirajTransportera = () => {
   return nodemailer.createTransport({
     "host": "smtp.gmail.com",
     "auth": {
-      "user": EMAIL,
-      "pass": PASSWORD
+      "user": process.env.APPLICATION_EMAIL,
+      "pass": process.env.APPLICATION_EMAIL_APP_PASSWORD
     }
   });
 }
