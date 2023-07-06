@@ -413,7 +413,6 @@ application.get("/googlePrijavaPovratak", obradiPostojanjeSesijeGoogleOAuth2, (r
       response.redirect("/html/prijava.html");
     else {
       request.session.korisničkoIme = `${korisnik.name.givenName} ${korisnik.name.familyName}`;
-      console.log(request.session);
       response.redirect("/html/glavna.html");
     }
   })(request, response);
