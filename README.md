@@ -18,4 +18,6 @@ In application root folder, enter command below to run application.
 node index.js
 ```
 
-When the ExpressJS server, is running you can access application by entering <a>http://localhost:3000/html/prijava.html</a> in a web browser.
+<p align="justify">
+  When the ExpressJS server, is running you can access application by entering <a>http://localhost:3000/html/prijava.html</a> in a web browser.
+</p>
