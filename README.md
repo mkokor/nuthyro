@@ -1,6 +1,6 @@
 # NuThyro
 <p align="justify">
-  NuThyro is a web application for helping people in diet control. It is intended to be used by people with chronic diseases because of theirs specific diet needs. 
+NuThyro is a web application for helping people in diet control. It is intended to be used by people with chronic diseases because of theirs specific diet needs. 
 </p>
 
 
