@@ -218,6 +218,7 @@ const Ishrana = (korijen, pomoćneInformacije) => {
         selektovanoJelo = element;
         kreirajKarticuJela(element);
       });
+      selektovanoJelo = pomoćneInformacije.dostupnaJela[0];
   });
 
   const kreirajKarticuJela = (odabranoJelo) => {
