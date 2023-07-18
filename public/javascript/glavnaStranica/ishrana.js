@@ -215,6 +215,7 @@ const Ishrana = (korijen, pomoćneInformacije) => {
   // Ako u trenutnoj sesiji korisnik ima odabrane namirnice, prikazat će se!
   upravljačZahtjevimaZaIshranu.uputiZahtjevZaDobavljanjeSpiskaNamirnica((greška, podaci) => {
       JSON.parse(podaci).forEach(element => {
+        selektovanoJelo = element;
         kreirajKarticuJela(element);
       });
   });
