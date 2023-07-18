@@ -1,19 +1,27 @@
 # NuThyro
-
 <p align="justify">
-  NuThyro is a web application for helping people in diet control. It is intended to be used by people with chronic diseases because of theirs specific diet needs. 
+NuThyro is a web application for helping people in diet control. It is intended to be used by people with chronic diseases because of theirs specific diet needs. 
 </p>
 
+
 ## Execution
-
-This is a NodeJS application, so it can be started by entering the command bellow in its root folder.
-
-```bash
-node node.js
-```
-
-Use the command bellow to run scripts.
+<p align="justify">
+In application root folder, enter command below to install required packages.
+</p>
 
 ```bash
-python scriptName.py
+npm install
 ```
+
+<p align="justify">
+In application root folder, enter command below to run application.
+</p>
+
+```bash
+node index.js
+```
+
+<p align="justify">
+  When the ExpressJS server, is running you can access application by entering 
+  <a href="http://localhost:3000/html/prijava.html">http://localhost:3000/html/prijava.html</a> in a web browser.
+</p>
