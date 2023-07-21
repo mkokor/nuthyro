@@ -6,7 +6,7 @@ NuThyro is a web application for helping people in diet control. It is intended 
 
 ## Execution
 <p align="justify">
-In application root folder, enter command below to install required packages.
+Some features require a set up of .env file. In application root folder, enter command below to install required packages.
 </p>
 
 ```bash
