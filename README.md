@@ -14,11 +14,12 @@ npm install
 ```
 
 <p align="justify">
-In application root folder, enter command below to run application.
+In application root folder, enter one of the two following commands to run application.
 </p>
 
 ```bash
 node index.js
+npm start
 ```
 
 <p align="justify">
