@@ -14,14 +14,15 @@ npm install
 ```
 
 <p align="justify">
-In application root folder, enter command below to run application.
+In application root folder, enter one of the two following commands to run application.
 </p>
 
 ```bash
 node index.js
+npm start
 ```
 
 <p align="justify">
-  When the ExpressJS server, is running you can access application by entering 
+  When the Express.js server is running you can access application by entering 
   <a href="http://localhost:3000/html/prijava.html">http://localhost:3000/html/prijava.html</a> in a web browser.
 </p>
