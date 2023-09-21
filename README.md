@@ -46,7 +46,7 @@ NuThyro is a web application for helping people in diet control. It is intended 
 
 #### Sign Out
 <div>
-    <img src="./screenshots/odjava.png" alt="sign-out" style="display: inline-block; width: 100%;">
+    <img src="./screenshots/odjavi-se.png" alt="sign-out" style="display: inline-block; width: 100%;">
 </div>
 
 ### Home page
